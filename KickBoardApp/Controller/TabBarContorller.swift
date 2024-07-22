@@ -9,30 +9,29 @@ import UIKit
 
 class TabBarContorller: UITabBarController {
   lazy var homeController = {
-    let controller = ViewController()
+    let controller = HomeController()
     controller.tabBarItem.image = UIImage(systemName: "house")
     controller.view.backgroundColor = .white
     return controller
   }()
   
-  lazy var secondController = {
-    let controller = ViewController()
+  lazy var editController = {
+    let controller = EditController()
     controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
     controller.view.backgroundColor = .red
     return controller
   }()
   
-  lazy var thirdController = {
-    let controller = ViewController()
+  lazy var myPageController = {
+    let controller = MypageController()
     controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
     controller.view.backgroundColor = .blue
     return controller
   }()
 
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    viewControllers = [homeController, secondController, thirdController]
+    viewControllers = [homeController, editController, myPageController]
   }
 }

@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,swift,xcode,cocoapods
 
 # API_KEY
-Secrets.xcconfig
+*.xcconfig
 
 ### CocoaPods ###
 ## CocoaPods GitIgnore Template

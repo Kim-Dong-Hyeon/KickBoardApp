@@ -24,6 +24,11 @@
 		7674BCFA2C4E12D9000F5C53 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 7674BCF92C4E12D9000F5C53 /* KakaoMapsSDK-SPM */; };
 		7674BCFF2C4E47DB000F5C53 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCFE2C4E47DB000F5C53 /* Model.swift */; };
 		7674BD012C4E47E8000F5C53 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD002C4E47E8000F5C53 /* HomeView.swift */; };
+		DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680232C4E4F570018F531 /* MyPageView.swift */; };
+		DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680252C4E64D20018F531 /* UsageHistoryController.swift */; };
+		DDB680282C4E64E00018F531 /* RegisterHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistory.swift */; };
+		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
+		DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +48,11 @@
 		7674BCF02C4E110F000F5C53 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		7674BCFE2C4E47DB000F5C53 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		7674BD002C4E47E8000F5C53 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DDB680232C4E4F570018F531 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		DDB680252C4E64D20018F531 /* UsageHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryController.swift; sourceTree = "<group>"; };
+		DDB680272C4E64E00018F531 /* RegisterHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistory.swift; sourceTree = "<group>"; };
+		DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryView.swift; sourceTree = "<group>"; };
+		DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				7674BD002C4E47E8000F5C53 /* HomeView.swift */,
+				DDB6802E2C4E66E00018F531 /* UserProfiles */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -115,10 +126,30 @@
 			children = (
 				7458E0552C4E461C003BDAF3 /* EditController.swift */,
 				7458E0542C4E461C003BDAF3 /* HomeController.swift */,
-				7458E0562C4E461C003BDAF3 /* MypageController.swift */,
 				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
+				DDB680292C4E66720018F531 /* UserProfiles */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		DDB680292C4E66720018F531 /* UserProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				7458E0562C4E461C003BDAF3 /* MypageController.swift */,
+				DDB680252C4E64D20018F531 /* UsageHistoryController.swift */,
+				DDB680272C4E64E00018F531 /* RegisterHistory.swift */,
+			);
+			path = UserProfiles;
+			sourceTree = "<group>";
+		};
+		DDB6802E2C4E66E00018F531 /* UserProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				DDB680232C4E4F570018F531 /* MyPageView.swift */,
+				DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */,
+				DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */,
+			);
+			path = UserProfiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,12 +236,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				7674BD012C4E47E8000F5C53 /* HomeView.swift in Sources */,
+				DDB680282C4E64E00018F531 /* RegisterHistory.swift in Sources */,
+				DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */,
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,
 				7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */,
 				7458E0592C4E461C003BDAF3 /* EditController.swift in Sources */,
 				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
+				DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */,
+				DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */,
 				7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */,
 				7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */,
+				DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */,
 				7458E0582C4E461C003BDAF3 /* HomeController.swift in Sources */,
 				7674BCFF2C4E47DB000F5C53 /* Model.swift in Sources */,
 			);

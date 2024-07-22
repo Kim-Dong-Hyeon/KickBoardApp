@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7458E0582C4E461C003BDAF3 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0542C4E461C003BDAF3 /* HomeController.swift */; };
+		7458E0592C4E461C003BDAF3 /* EditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0552C4E461C003BDAF3 /* EditController.swift */; };
+		7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0562C4E461C003BDAF3 /* MypageController.swift */; };
+		7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */; };
 		7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCC12C4E0114000F5C53 /* AppDelegate.swift */; };
 		7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCC32C4E0114000F5C53 /* SceneDelegate.swift */; };
-		7674BCC62C4E0114000F5C53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCC52C4E0114000F5C53 /* ViewController.swift */; };
 		7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCCA2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld */; };
 		7674BCCE2C4E0119000F5C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7674BCCD2C4E0119000F5C53 /* Assets.xcassets */; };
 		7674BCD12C4E0119000F5C53 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 7674BCD02C4E0119000F5C53 /* Base */; };
@@ -22,10 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7458E0542C4E461C003BDAF3 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		7458E0552C4E461C003BDAF3 /* EditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditController.swift; sourceTree = "<group>"; };
+		7458E0562C4E461C003BDAF3 /* MypageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MypageController.swift; sourceTree = "<group>"; };
+		7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarContorller.swift; sourceTree = "<group>"; };
 		7674BCBE2C4E0114000F5C53 /* KickBoardApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KickBoardApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7674BCC12C4E0114000F5C53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7674BCC32C4E0114000F5C53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7674BCC52C4E0114000F5C53 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7674BCCB2C4E0114000F5C53 /* KickBoardApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KickBoardApp.xcdatamodel; sourceTree = "<group>"; };
 		7674BCCD2C4E0119000F5C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7674BCD02C4E0119000F5C53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -101,7 +107,10 @@
 		7674BCEB2C4E10A4000F5C53 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7674BCC52C4E0114000F5C53 /* ViewController.swift */,
+				7458E0552C4E461C003BDAF3 /* EditController.swift */,
+				7458E0542C4E461C003BDAF3 /* HomeController.swift */,
+				7458E0562C4E461C003BDAF3 /* MypageController.swift */,
+				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -190,9 +199,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,
-				7674BCC62C4E0114000F5C53 /* ViewController.swift in Sources */,
+				7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */,
+				7458E0592C4E461C003BDAF3 /* EditController.swift in Sources */,
+				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
 				7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */,
 				7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */,
+				7458E0582C4E461C003BDAF3 /* HomeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

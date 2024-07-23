@@ -48,7 +48,7 @@ class RegisterKickboardView: UIView {
   }()
   let retalStackView: UIStackView = {
     let stackView = UIStackView()
-    stackView.axis = .horizontal
+    stackView.axis = .vertical
     stackView.spacing = 16
     return stackView
   }()
@@ -74,13 +74,13 @@ class RegisterKickboardView: UIView {
   let modelNameStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
-    stackView.spacing = 8
+    stackView.spacing = 4
     return stackView
   }()
   let registerInformationStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 16
+    stackView.spacing = 8
     return stackView
   }()
   let buttonStackView: UIStackView = {
@@ -90,7 +90,34 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 16
     return stackView
   }()
-  
+  let selectPhotoButton: AnimationButton = {
+    let button = AnimationButton()
+    button.setTitle("사진 선택", for: .normal)
+    button.backgroundColor = .blue
+    button.layer.cornerRadius = 5
+    return button
+  }()
+  let PhotoView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.backgroundColor = .gray
+    imageView.contentMode = .scaleAspectFit
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.layer.cornerRadius = 5
+    return imageView
+  }()
+  let addPhotoStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .vertical
+    stackView.spacing = 16
+    return stackView
+  }()
+  let aStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.spacing = 16
+    return stackView
+  }()
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     configureUI()
@@ -103,7 +130,7 @@ class RegisterKickboardView: UIView {
   
   func configureUI() {
     [
-      registerInformationStackView,
+      aStackView,
       buttonStackView
     ].forEach { self.addSubview($0) }
     
@@ -119,22 +146,31 @@ class RegisterKickboardView: UIView {
     ].forEach {
       retalStackView.addArrangedSubview($0)
     }
-    
+    [
+      PhotoView,
+      selectPhotoButton
+    ].forEach {
+      addPhotoStackView.addArrangedSubview($0)
+    }
     [
       adressLabel,
       registrantLabel,
       modelNameStackView,
       rentalPeriodLabel,
-      retalStackView
+      retalStackView,
     ].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
-    
+    [
+    addPhotoStackView,
+    registerInformationStackView
+    ].forEach {
+      aStackView.addArrangedSubview($0)
+    }
     [
       registerButton,
       cancelButton
     ].forEach {
-      $0.tintColor = .white
       $0.layer.cornerRadius = 5
       $0.backgroundColor = .blue
       buttonStackView.addArrangedSubview($0)
@@ -142,21 +178,29 @@ class RegisterKickboardView: UIView {
   }
   
   func setConstraints() {
+    modelNameLabel.snp.makeConstraints {
+      $0.width.equalTo(60)
+    }
+    addPhotoStackView.snp.makeConstraints {
+      $0.width.equalTo(120)
+    }
+    selectPhotoButton.snp.makeConstraints {
+      $0.height.equalTo(30)
+    }
     buttonStackView.snp.makeConstraints {
       $0.bottom.equalToSuperview().inset(120)
       $0.centerX.equalToSuperview()
       $0.width.equalTo(300)
-      $0.height.equalTo(40)
+      $0.height.equalTo(50)
     }
     
-    registerInformationStackView.snp.makeConstraints {
+    aStackView.snp.makeConstraints {
+      $0.height.equalTo(200)
       $0.bottom.equalTo(buttonStackView.snp.top).offset(-30)
       $0.centerX.equalToSuperview()
-      $0.width.equalToSuperview().multipliedBy(0.7)
+      $0.width.equalToSuperview().multipliedBy(0.8)
     }
     
-    modelNameTextField.snp.makeConstraints {
-      $0.width.equalTo(200)
-    }
+
   }
 }

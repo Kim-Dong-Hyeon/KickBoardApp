@@ -9,4 +9,10 @@
         <attribute name="phoneNumber" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
+    <entity name="KickBoard" representedClassName="KickBoard" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isRented" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
 </model>

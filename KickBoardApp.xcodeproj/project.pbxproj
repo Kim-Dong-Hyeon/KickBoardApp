@@ -13,6 +13,12 @@
 		7458E0582C4E461C003BDAF3 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0542C4E461C003BDAF3 /* HomeController.swift */; };
 		7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0562C4E461C003BDAF3 /* MypageController.swift */; };
 		7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */; };
+		7458E0642C4E8AE5003BDAF3 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0622C4E8AE5003BDAF3 /* User+CoreDataClass.swift */; };
+		7458E0652C4E8AE5003BDAF3 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0632C4E8AE5003BDAF3 /* User+CoreDataProperties.swift */; };
+		748EDF3F2C4EA16F000B74DB /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0612C4E889C003BDAF3 /* LoginController.swift */; };
+		748EDF402C4EA248000B74DB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E05D2C4E87F6003BDAF3 /* LoginView.swift */; };
+		748EDF412C4EA248000B74DB /* JoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E05E2C4E8855003BDAF3 /* JoinView.swift */; };
+		748EDF422C4EA257000B74DB /* JoinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0602C4E8884003BDAF3 /* JoinController.swift */; };
 		7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCC12C4E0114000F5C53 /* AppDelegate.swift */; };
 		7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCC32C4E0114000F5C53 /* SceneDelegate.swift */; };
 		7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCCA2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld */; };
@@ -40,6 +46,12 @@
 		7458E0542C4E461C003BDAF3 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7458E0562C4E461C003BDAF3 /* MypageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MypageController.swift; sourceTree = "<group>"; };
 		7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarContorller.swift; sourceTree = "<group>"; };
+		7458E05D2C4E87F6003BDAF3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7458E05E2C4E8855003BDAF3 /* JoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinView.swift; sourceTree = "<group>"; };
+		7458E0602C4E8884003BDAF3 /* JoinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinController.swift; sourceTree = "<group>"; };
+		7458E0612C4E889C003BDAF3 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		7458E0622C4E8AE5003BDAF3 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7458E0632C4E8AE5003BDAF3 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7674BCBE2C4E0114000F5C53 /* KickBoardApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KickBoardApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7674BCC12C4E0114000F5C53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7674BCC32C4E0114000F5C53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +123,8 @@
 		7674BCE92C4E108B000F5C53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7458E0622C4E8AE5003BDAF3 /* User+CoreDataClass.swift */,
+				7458E0632C4E8AE5003BDAF3 /* User+CoreDataProperties.swift */,
 				7674BCFE2C4E47DB000F5C53 /* Model.swift */,
 				4F07CA262C4E8A2200A19E5C /* AnimaitionButton.swift */,
 			);
@@ -120,6 +134,8 @@
 		7674BCEA2C4E1095000F5C53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7458E05E2C4E8855003BDAF3 /* JoinView.swift */,
+				7458E05D2C4E87F6003BDAF3 /* LoginView.swift */,
 				7674BD002C4E47E8000F5C53 /* HomeView.swift */,
 				4F07CA222C4E83F800A19E5C /* RegisterKickboardView.swift */,
 				DDB6802E2C4E66E00018F531 /* UserProfiles */,
@@ -130,6 +146,10 @@
 		7674BCEB2C4E10A4000F5C53 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+
+				7458E0612C4E889C003BDAF3 /* LoginController.swift */,
+				7458E0602C4E8884003BDAF3 /* JoinController.swift */,
+				7458E0552C4E461C003BDAF3 /* EditController.swift */,
 				7458E0542C4E461C003BDAF3 /* HomeController.swift */,
 				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
 				4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */,
@@ -244,11 +264,17 @@
 				7674BD012C4E47E8000F5C53 /* HomeView.swift in Sources */,
 				DDB680282C4E64E00018F531 /* RegisterHistory.swift in Sources */,
 				DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */,
+				748EDF422C4EA257000B74DB /* JoinController.swift in Sources */,
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,
 				7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */,
 				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
+				7458E0642C4E8AE5003BDAF3 /* User+CoreDataClass.swift in Sources */,
+				7458E0652C4E8AE5003BDAF3 /* User+CoreDataProperties.swift in Sources */,
 				DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */,
 				DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */,
+				748EDF3F2C4EA16F000B74DB /* LoginController.swift in Sources */,
+				748EDF402C4EA248000B74DB /* LoginView.swift in Sources */,
+				748EDF412C4EA248000B74DB /* JoinView.swift in Sources */,
 				7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */,
 				7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */,
 				DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */,

@@ -36,6 +36,8 @@
 		7674BD052C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD032C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift */; };
 		7674BD122C4F77D9000F5C53 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD112C4F77D9000F5C53 /* LocationManager.swift */; };
 		7674BD132C4F9BDD000F5C53 /* RegisterHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */; };
+		7674BD152C4FD0D7000F5C53 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD142C4FD0D7000F5C53 /* HomeController.swift */; };
+		7674BD172C4FD1C5000F5C53 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD162C4FD1C5000F5C53 /* HomeView.swift */; };
 		DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680232C4E4F570018F531 /* MyPageView.swift */; };
 		DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680252C4E64D20018F531 /* UsageHistoryController.swift */; };
 		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
@@ -72,6 +74,8 @@
 		7674BD022C4EC1DA000F5C53 /* KickBoard+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KickBoard+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7674BD032C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KickBoard+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7674BD112C4F77D9000F5C53 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		7674BD142C4FD0D7000F5C53 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		7674BD162C4FD1C5000F5C53 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DDB680232C4E4F570018F531 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		DDB680252C4E64D20018F531 /* UsageHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryController.swift; sourceTree = "<group>"; };
 		DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryController.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 		7674BCEA2C4E1095000F5C53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7674BD162C4FD1C5000F5C53 /* HomeView.swift */,
 				7674BD002C4E47E8000F5C53 /* MapView.swift */,
 				7458E05E2C4E8855003BDAF3 /* JoinView.swift */,
 				7458E05D2C4E87F6003BDAF3 /* LoginView.swift */,
@@ -159,6 +164,7 @@
 		7674BCEB2C4E10A4000F5C53 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7674BD142C4FD0D7000F5C53 /* HomeController.swift */,
 				7458E0612C4E889C003BDAF3 /* LoginController.swift */,
 				7458E0602C4E8884003BDAF3 /* JoinController.swift */,
 				7458E0542C4E461C003BDAF3 /* MapController.swift */,
@@ -286,10 +292,12 @@
 				7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */,
 				DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */,
 				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
+				7674BD172C4FD1C5000F5C53 /* HomeView.swift in Sources */,
 				7458E0642C4E8AE5003BDAF3 /* User+CoreDataClass.swift in Sources */,
 				7458E0652C4E8AE5003BDAF3 /* User+CoreDataProperties.swift in Sources */,
 				DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */,
 				DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */,
+				7674BD152C4FD0D7000F5C53 /* HomeController.swift in Sources */,
 				748EDF3F2C4EA16F000B74DB /* LoginController.swift in Sources */,
 				748EDF402C4EA248000B74DB /* LoginView.swift in Sources */,
 				748EDF412C4EA248000B74DB /* JoinView.swift in Sources */,

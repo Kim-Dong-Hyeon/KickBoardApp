@@ -19,5 +19,6 @@ public class User: NSManagedObject {
     static let phoneNumber = "phoneNumber"
     static let memberType = "memberType"
     static let name = "name"
+    static let gender = "gender"
   }
 }

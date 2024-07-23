@@ -11,6 +11,7 @@ class TabBarContorller: UITabBarController {
   lazy var homeController = {
     let controller = HomeController()
     controller.tabBarItem.image = UIImage(systemName: "house")
+    controller.tabBarItem.title = "Home"
     controller.view.backgroundColor = .white
     return controller
   }()
@@ -31,7 +32,8 @@ class TabBarContorller: UITabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
     let navigationController = UINavigationController(rootViewController: MypageController())
+    let naviCon = UINavigationController(rootViewController: HomeController())
     navigationController.navigationBar.prefersLargeTitles = true
-    viewControllers = [homeController, editController, navigationController]
+    viewControllers = [naviCon, editController, navigationController]
   }
 }

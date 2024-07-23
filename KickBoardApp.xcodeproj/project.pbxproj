@@ -34,7 +34,7 @@
 		7674BD012C4E47E8000F5C53 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD002C4E47E8000F5C53 /* HomeView.swift */; };
 		DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680232C4E4F570018F531 /* MyPageView.swift */; };
 		DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680252C4E64D20018F531 /* UsageHistoryController.swift */; };
-		DDB680282C4E64E00018F531 /* RegisterHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistory.swift */; };
+		DDB680282C4E64E00018F531 /* RegisterHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */; };
 		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
 		DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */; };
 /* End PBXBuildFile section */
@@ -66,7 +66,7 @@
 		7674BD002C4E47E8000F5C53 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DDB680232C4E4F570018F531 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		DDB680252C4E64D20018F531 /* UsageHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryController.swift; sourceTree = "<group>"; };
-		DDB680272C4E64E00018F531 /* RegisterHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistory.swift; sourceTree = "<group>"; };
+		DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryController.swift; sourceTree = "<group>"; };
 		DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryView.swift; sourceTree = "<group>"; };
 		DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,7 +163,7 @@
 			children = (
 				7458E0562C4E461C003BDAF3 /* MypageController.swift */,
 				DDB680252C4E64D20018F531 /* UsageHistoryController.swift */,
-				DDB680272C4E64E00018F531 /* RegisterHistory.swift */,
+				DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */,
 			);
 			path = UserProfiles;
 			sourceTree = "<group>";
@@ -262,7 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7674BD012C4E47E8000F5C53 /* HomeView.swift in Sources */,
-				DDB680282C4E64E00018F531 /* RegisterHistory.swift in Sources */,
+				DDB680282C4E64E00018F531 /* RegisterHistoryController.swift in Sources */,
 				DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */,
 				748EDF422C4EA257000B74DB /* JoinController.swift in Sources */,
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,

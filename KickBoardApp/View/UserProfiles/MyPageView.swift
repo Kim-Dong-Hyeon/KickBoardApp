@@ -66,6 +66,7 @@ class MyPageView: UIView {
   private lazy var logOut: UIButton = {
     let button = UIButton()
     button.setTitle("로그아웃", for: .normal)
+    button.setTitleColor(.blue, for: .normal)
     return button
   }()
   

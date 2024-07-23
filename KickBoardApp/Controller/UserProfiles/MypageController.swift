@@ -45,7 +45,7 @@ extension MypageController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let controllerArray = [UsageHistoryController(), RegisterHistory()]
+    let controllerArray = [UsageHistoryController(), RegisterHistoryController()]
     self.navigationController?.pushViewController(controllerArray[indexPath.row], animated: true)
   }
 }

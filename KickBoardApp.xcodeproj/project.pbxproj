@@ -10,7 +10,7 @@
 		4F07CA232C4E83F800A19E5C /* RegisterKickboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F07CA222C4E83F800A19E5C /* RegisterKickboardView.swift */; };
 		4F07CA252C4E840F00A19E5C /* RegisterKickboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */; };
 		4F07CA272C4E8A2200A19E5C /* AnimaitionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F07CA262C4E8A2200A19E5C /* AnimaitionButton.swift */; };
-		7458E0582C4E461C003BDAF3 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0542C4E461C003BDAF3 /* HomeController.swift */; };
+		7458E0582C4E461C003BDAF3 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0542C4E461C003BDAF3 /* MapController.swift */; };
 		7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0562C4E461C003BDAF3 /* MypageController.swift */; };
 		7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */; };
 		7458E0642C4E8AE5003BDAF3 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458E0622C4E8AE5003BDAF3 /* User+CoreDataClass.swift */; };
@@ -31,19 +31,23 @@
 		7674BCF72C4E12CF000F5C53 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7674BCF62C4E12CF000F5C53 /* Alamofire */; };
 		7674BCFA2C4E12D9000F5C53 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 7674BCF92C4E12D9000F5C53 /* KakaoMapsSDK-SPM */; };
 		7674BCFF2C4E47DB000F5C53 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCFE2C4E47DB000F5C53 /* Model.swift */; };
-		7674BD012C4E47E8000F5C53 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD002C4E47E8000F5C53 /* HomeView.swift */; };
+		7674BD012C4E47E8000F5C53 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD002C4E47E8000F5C53 /* MapView.swift */; };
+		7674BD042C4EC1DA000F5C53 /* KickBoard+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD022C4EC1DA000F5C53 /* KickBoard+CoreDataClass.swift */; };
+		7674BD052C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD032C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift */; };
+		7674BD122C4F77D9000F5C53 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD112C4F77D9000F5C53 /* LocationManager.swift */; };
+		7674BD132C4F9BDD000F5C53 /* RegisterHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */; };
 		DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680232C4E4F570018F531 /* MyPageView.swift */; };
 		DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680252C4E64D20018F531 /* UsageHistoryController.swift */; };
-		DDB680282C4E64E00018F531 /* RegisterHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistory.swift */; };
 		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
 		DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */; };
+		DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6806C2C4F86600018F531 /* UsageListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4F07CA222C4E83F800A19E5C /* RegisterKickboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterKickboardView.swift; sourceTree = "<group>"; };
 		4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterKickboardController.swift; sourceTree = "<group>"; };
 		4F07CA262C4E8A2200A19E5C /* AnimaitionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimaitionButton.swift; sourceTree = "<group>"; };
-		7458E0542C4E461C003BDAF3 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		7458E0542C4E461C003BDAF3 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		7458E0562C4E461C003BDAF3 /* MypageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MypageController.swift; sourceTree = "<group>"; };
 		7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarContorller.swift; sourceTree = "<group>"; };
 		7458E05D2C4E87F6003BDAF3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -63,12 +67,16 @@
 		7674BCEE2C4E10D3000F5C53 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		7674BCF02C4E110F000F5C53 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		7674BCFE2C4E47DB000F5C53 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		7674BD002C4E47E8000F5C53 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		7674BD002C4E47E8000F5C53 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		7674BD022C4EC1DA000F5C53 /* KickBoard+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KickBoard+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7674BD032C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KickBoard+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7674BD112C4F77D9000F5C53 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		DDB680232C4E4F570018F531 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		DDB680252C4E64D20018F531 /* UsageHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryController.swift; sourceTree = "<group>"; };
-		DDB680272C4E64E00018F531 /* RegisterHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistory.swift; sourceTree = "<group>"; };
+		DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryController.swift; sourceTree = "<group>"; };
 		DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryView.swift; sourceTree = "<group>"; };
 		DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryView.swift; sourceTree = "<group>"; };
+		DDB6806C2C4F86600018F531 /* UsageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +133,10 @@
 			children = (
 				7458E0622C4E8AE5003BDAF3 /* User+CoreDataClass.swift */,
 				7458E0632C4E8AE5003BDAF3 /* User+CoreDataProperties.swift */,
+				7674BD022C4EC1DA000F5C53 /* KickBoard+CoreDataClass.swift */,
+				7674BD032C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift */,
 				7674BCFE2C4E47DB000F5C53 /* Model.swift */,
+				7674BD112C4F77D9000F5C53 /* LocationManager.swift */,
 				4F07CA262C4E8A2200A19E5C /* AnimaitionButton.swift */,
 			);
 			path = Model;
@@ -134,9 +145,9 @@
 		7674BCEA2C4E1095000F5C53 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7674BD002C4E47E8000F5C53 /* MapView.swift */,
 				7458E05E2C4E8855003BDAF3 /* JoinView.swift */,
 				7458E05D2C4E87F6003BDAF3 /* LoginView.swift */,
-				7674BD002C4E47E8000F5C53 /* HomeView.swift */,
 				4F07CA222C4E83F800A19E5C /* RegisterKickboardView.swift */,
 				DDB6802E2C4E66E00018F531 /* UserProfiles */,
 			);
@@ -148,7 +159,7 @@
 			children = (
 				7458E0612C4E889C003BDAF3 /* LoginController.swift */,
 				7458E0602C4E8884003BDAF3 /* JoinController.swift */,
-				7458E0542C4E461C003BDAF3 /* HomeController.swift */,
+				7458E0542C4E461C003BDAF3 /* MapController.swift */,
 				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
 				4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */,
 				DDB680292C4E66720018F531 /* UserProfiles */,
@@ -161,7 +172,7 @@
 			children = (
 				7458E0562C4E461C003BDAF3 /* MypageController.swift */,
 				DDB680252C4E64D20018F531 /* UsageHistoryController.swift */,
-				DDB680272C4E64E00018F531 /* RegisterHistory.swift */,
+				DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */,
 			);
 			path = UserProfiles;
 			sourceTree = "<group>";
@@ -172,6 +183,7 @@
 				DDB680232C4E4F570018F531 /* MyPageView.swift */,
 				DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */,
 				DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */,
+				DDB6806C2C4F86600018F531 /* UsageListCell.swift */,
 			);
 			path = UserProfiles;
 			sourceTree = "<group>";
@@ -259,12 +271,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7674BD012C4E47E8000F5C53 /* HomeView.swift in Sources */,
-				DDB680282C4E64E00018F531 /* RegisterHistory.swift in Sources */,
+				7674BD012C4E47E8000F5C53 /* MapView.swift in Sources */,
+				7674BD122C4F77D9000F5C53 /* LocationManager.swift in Sources */,
+				7674BD042C4EC1DA000F5C53 /* KickBoard+CoreDataClass.swift in Sources */,
+				7674BD052C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift in Sources */,
 				DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */,
+				7674BD132C4F9BDD000F5C53 /* RegisterHistoryController.swift in Sources */,
 				748EDF422C4EA257000B74DB /* JoinController.swift in Sources */,
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,
 				7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */,
+				DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */,
 				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
 				7458E0642C4E8AE5003BDAF3 /* User+CoreDataClass.swift in Sources */,
 				7458E0652C4E8AE5003BDAF3 /* User+CoreDataProperties.swift in Sources */,
@@ -276,7 +292,7 @@
 				7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */,
 				7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */,
 				DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */,
-				7458E0582C4E461C003BDAF3 /* HomeController.swift in Sources */,
+				7458E0582C4E461C003BDAF3 /* MapController.swift in Sources */,
 				4F07CA252C4E840F00A19E5C /* RegisterKickboardController.swift in Sources */,
 				7674BCFF2C4E47DB000F5C53 /* Model.swift in Sources */,
 				4F07CA272C4E8A2200A19E5C /* AnimaitionButton.swift in Sources */,
@@ -425,8 +441,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KickBoardApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱을 사용하는 동안 위치를 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -452,8 +470,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KickBoardApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱을 사용하는 동안 위치를 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -29,7 +29,7 @@ class RegisterHistoryView: UIView {
   
   func setConstraints() {
     historyView.snp.makeConstraints {
-      $0.edges.equalTo(self.safeAreaLayoutGuide).inset(10)
+      $0.edges.equalTo(self.safeAreaLayoutGuide).inset(25)
     }
   }
 }

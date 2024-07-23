@@ -37,6 +37,7 @@
 		DDB680282C4E64E00018F531 /* RegisterHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */; };
 		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
 		DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */; };
+		DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6806C2C4F86600018F531 /* UsageListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryController.swift; sourceTree = "<group>"; };
 		DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryView.swift; sourceTree = "<group>"; };
 		DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryView.swift; sourceTree = "<group>"; };
+		DDB6806C2C4F86600018F531 /* UsageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,10 +148,8 @@
 		7674BCEB2C4E10A4000F5C53 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-
 				7458E0612C4E889C003BDAF3 /* LoginController.swift */,
 				7458E0602C4E8884003BDAF3 /* JoinController.swift */,
-				7458E0552C4E461C003BDAF3 /* EditController.swift */,
 				7458E0542C4E461C003BDAF3 /* HomeController.swift */,
 				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
 				4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */,
@@ -174,6 +174,7 @@
 				DDB680232C4E4F570018F531 /* MyPageView.swift */,
 				DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */,
 				DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */,
+				DDB6806C2C4F86600018F531 /* UsageListCell.swift */,
 			);
 			path = UserProfiles;
 			sourceTree = "<group>";
@@ -267,6 +268,7 @@
 				748EDF422C4EA257000B74DB /* JoinController.swift in Sources */,
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,
 				7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */,
+				DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */,
 				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
 				7458E0642C4E8AE5003BDAF3 /* User+CoreDataClass.swift in Sources */,
 				7458E0652C4E8AE5003BDAF3 /* User+CoreDataProperties.swift in Sources */,

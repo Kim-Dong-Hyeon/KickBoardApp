@@ -18,6 +18,9 @@ class UsageHistoryController: UIViewController {
   override func viewDidLoad() {
     self.title = "나의 이용 내역"
     self.navigationItem.largeTitleDisplayMode = .automatic
+    usageHistoryView.usageList.delegate = self
+    usageHistoryView.usageList.dataSource = self
+    usageHistoryView.usageList.register(UsageListCell.self, forCellReuseIdentifier: UsageListCell.identifier)
   }
 }
 
@@ -27,8 +30,13 @@ extension UsageHistoryController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return UITableViewCell()
+    guard let cell = usageHistoryView.usageList.dequeueReusableCell(withIdentifier: UsageListCell.identifier, for: indexPath) as? UsageListCell
+    else { return UITableViewCell() }
+    
+    return cell
   }
   
-  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    10.0
+  }
 }

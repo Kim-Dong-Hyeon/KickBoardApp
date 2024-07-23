@@ -11,9 +11,11 @@ import SnapKit
 
 class UsageHistoryView: UIView {
   
-  private lazy var usageList = {
+  lazy var usageList = {
     let tableView = UITableView()
     tableView.backgroundColor = .green
+    tableView.rowHeight = 100
+
     return tableView
   }()
   

@@ -15,12 +15,14 @@ class RegisterHistoryController: UIViewController {
   override func loadView() {
     registerHistory = RegisterHistoryView(frame: UIScreen.main.bounds)
     self.view = registerHistory
+    self.title = "나의 등록 내역"
+    self.navigationItem.largeTitleDisplayMode = .automatic
   }
   
   override func viewDidLoad() {
     registerHistory.historyView.dataSource = self
     registerHistory.historyView.delegate = self
-    registerHistory.historyView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+    registerHistory.historyView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UsageListCell")
   }
 }
 

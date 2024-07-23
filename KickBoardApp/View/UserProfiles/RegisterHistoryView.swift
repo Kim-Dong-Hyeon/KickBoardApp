@@ -12,8 +12,11 @@ import SnapKit
 class RegisterHistoryView: UIView {
   
   lazy var historyView: UICollectionView = {
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    collectionView.backgroundColor = .gray
+    let layout = UICollectionViewFlowLayout()
+    layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    layout.minimumLineSpacing = 10
+    layout.minimumInteritemSpacing = 10
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     return collectionView
   }()
   

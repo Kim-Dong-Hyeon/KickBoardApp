@@ -35,8 +35,4 @@ extension UsageHistoryController: UITableViewDelegate, UITableViewDataSource {
     
     return cell
   }
-  
-  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    10.0
-  }
 }

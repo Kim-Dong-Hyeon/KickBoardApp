@@ -22,7 +22,7 @@ class RegisterHistoryController: UIViewController {
   override func viewDidLoad() {
     registerHistory.historyView.dataSource = self
     registerHistory.historyView.delegate = self
-    registerHistory.historyView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UsageListCell")
+    registerHistory.historyView.register(RegisterCell.self, forCellWithReuseIdentifier: RegisterCell.identifier)
   }
 }
 
@@ -32,6 +32,20 @@ extension RegisterHistoryController: UICollectionViewDelegate, UICollectionViewD
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    UICollectionViewCell()
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RegisterCell.identifier, for: indexPath) as? RegisterCell else {
+      return UICollectionViewCell()
+    }
+    return cell
+  }
+}
+
+extension RegisterHistoryController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+    let padding: CGFloat = 20
+    let spacing: CGFloat = 10
+    let width = collectionView.frame.width - padding - spacing
+    let cellWidth = width / 2
+    return CGSize(width: cellWidth, height: 300)
   }
 }

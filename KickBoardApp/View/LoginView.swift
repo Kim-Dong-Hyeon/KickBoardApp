@@ -56,11 +56,11 @@ class LoginView: UIView {
     return textField
   }()
   
-  private let forgotPasswordButton: UIButton = {
-    let bt = UIButton(type: .system)
-    bt.setTitle("비밀번호찾기", for: .normal)
-    return bt
-  }()
+//  private let forgotPasswordButton: UIButton = {
+//    let bt = UIButton(type: .system)
+//    bt.setTitle("비밀번호찾기", for: .normal)
+//    return bt
+//  }()
   
   let loginButton: UIButton = {
     let button = UIButton()
@@ -98,19 +98,19 @@ class LoginView: UIView {
       $0.center.equalToSuperview()
     }
         
-    [forgotPasswordButton, joinButton]
+    [joinButton]
       .forEach { self.addSubview($0) }
     
-    forgotPasswordButton.snp.makeConstraints {
+//    forgotPasswordButton.snp.makeConstraints {
+//      $0.width.equalTo(200)
+//      $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-8)
+//      $0.centerX.equalToSuperview()
+//    }
+    
+    joinButton.snp.makeConstraints {
       $0.width.equalTo(200)
       $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-8)
       $0.centerX.equalToSuperview()
-    }
-    
-    joinButton.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.width.equalTo(200)
-      $0.bottom.equalTo(forgotPasswordButton.snp.top).offset(-8)
     }
   }
 

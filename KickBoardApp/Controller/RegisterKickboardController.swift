@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import PhotosUI
 class RegisterKickboardController: UIViewController {
   var registerKickboardView: RegisterKickboardView!
   override func loadView() {
@@ -17,6 +18,34 @@ class RegisterKickboardController: UIViewController {
     super.viewDidLoad()
     self.registerKickboardView.backgroundColor = .systemBackground
     self.title = "킥보드 등록"
-    
+    registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
   }
+  @objc private func selectPhotoButtonTapped() {
+    presentPhotoPicker()
+  }
+}
+
+extension RegisterKickboardController: PHPickerViewControllerDelegate {
+  func presentPhotoPicker() {
+    var configuration = PHPickerConfiguration()
+    configuration.selectionLimit = 1
+    configuration.filter = .images
+    
+    let picker = PHPickerViewController(configuration: configuration)
+    picker.delegate = self
+    present(picker, animated: true)
+  }
+  func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+    picker.dismiss(animated: true)
+    
+    guard let provider = results.first?.itemProvider else { return }
+    if provider.canLoadObject(ofClass: UIImage.self) {
+      provider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+        DispatchQueue.main.async {
+          self?.registerKickboardView.PhotoView.image = image as? UIImage
+        }
+      }
+    }
+  }
+  
 }

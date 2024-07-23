@@ -9,7 +9,6 @@
         <attribute name="phoneNumber" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="KickBoard" representedClassName="KickBoard" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isRented" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>

@@ -19,7 +19,7 @@ class MypageController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.myPageView.backgroundColor = .systemBackground
-    self.title = "마이페이지"
+    self.navigationItem.title = "마이페이지"
     self.navigationItem.largeTitleDisplayMode = .automatic
     setUpTableView()
   }

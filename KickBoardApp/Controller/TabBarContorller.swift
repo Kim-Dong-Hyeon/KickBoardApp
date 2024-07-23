@@ -15,10 +15,10 @@ class TabBarContorller: UITabBarController {
     return controller
   }()
   
-  lazy var editController = {
-    let controller = EditController()
+  lazy var registerKickboardController = {
+    let controller = UINavigationController(rootViewController: RegisterKickboardController())
     controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
-    controller.view.backgroundColor = .red
+    controller.view.backgroundColor = .white
     return controller
   }()
   
@@ -27,11 +27,11 @@ class TabBarContorller: UITabBarController {
     controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
     return controller
   }()
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     let navigationController = UINavigationController(rootViewController: MypageController())
     navigationController.navigationBar.prefersLargeTitles = true
-    viewControllers = [mapController, editController, navigationController]
+    viewControllers = [mapController, registerKickboardController, navigationController]
   }
 }

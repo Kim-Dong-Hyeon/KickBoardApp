@@ -8,8 +8,8 @@
 import UIKit
 
 class TabBarContorller: UITabBarController {
-  lazy var homeController = {
-    let controller = HomeController()
+  lazy var mapController = {
+    let controller = MapController()
     controller.tabBarItem.image = UIImage(systemName: "house")
     controller.view.backgroundColor = .white
     return controller
@@ -32,6 +32,6 @@ class TabBarContorller: UITabBarController {
     super.viewDidLoad()
     let navigationController = UINavigationController(rootViewController: MypageController())
     navigationController.navigationBar.prefersLargeTitles = true
-    viewControllers = [homeController, editController, navigationController]
+    viewControllers = [mapController, editController, navigationController]
   }
 }

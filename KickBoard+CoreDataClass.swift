@@ -11,5 +11,12 @@ import CoreData
 
 @objc(KickBoard)
 public class KickBoard: NSManagedObject {
+  public static let className = "KickBoard"
+  public enum Key {
+    static let id = "id"
+    static let latitude = "latitude"
+    static let longitude = "longitude"
+    static let isRented = "isRented"
+  }
 
 }

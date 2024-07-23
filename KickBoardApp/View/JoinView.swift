@@ -117,6 +117,7 @@ class JoinView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     configureUI()
+    configureGenderMenu()
   }
   
   required init?(coder: NSCoder) {
@@ -152,4 +153,17 @@ class JoinView: UIView {
     }
   }
   
+  private func configureGenderMenu() {
+    var actions: [UIAction] = []
+    for gender in ["남자", "여자"] {
+        let action = UIAction(title: gender, handler: { [weak self] (action) in
+          guard let self = self else { return }
+          self.genderLabel.text = gender
+        })
+        actions.append(action)
+    }
+    
+    genderChangeButton.menu = UIMenu(title: "성별", children: actions)
+    genderChangeButton.showsMenuAsPrimaryAction = true
+  }
 }

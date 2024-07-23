@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import PhotosUI
 class RegisterKickboardController: UIViewController {
+  var mapController: MapController!
   var registerKickboardView: RegisterKickboardView!
   override func loadView() {
     registerKickboardView = RegisterKickboardView(frame: UIScreen.main.bounds)
@@ -19,9 +20,21 @@ class RegisterKickboardController: UIViewController {
     self.registerKickboardView.backgroundColor = .systemBackground
     self.title = "킥보드 등록"
     registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
+    
+    setupMapView()
   }
   @objc private func selectPhotoButtonTapped() {
     presentPhotoPicker()
+  }
+  
+  private func setupMapView() {
+    mapController = MapController()
+    registerKickboardView.mapView.addSubview(mapController.view)
+    
+    DispatchQueue.main.async {
+      self.mapController.view.frame = self.registerKickboardView.mapView.bounds
+      self.mapController.prepaerAndActivateEngine()
+    }
   }
 }
 

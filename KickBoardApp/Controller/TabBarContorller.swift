@@ -34,6 +34,6 @@ class TabBarContorller: UITabBarController {
     let navigationController = UINavigationController(rootViewController: MypageController())
     let naviCon = UINavigationController(rootViewController: HomeController())
     navigationController.navigationBar.prefersLargeTitles = true
-    viewControllers = [naviCon, registerKickboardController, navigationController]
+    viewControllers = [mapController, registerKickboardController, navigationController]
   }
 }

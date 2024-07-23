@@ -9,6 +9,11 @@ import UIKit
 import SnapKit
 
 class RegisterKickboardView: UIView {
+  let mapView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .lightGray // 디버깅을 위한 배경색, 필요에 따라 변경
+    return view
+  }()
   let adressLabel: UILabel = {
     let label = UILabel()
     label.text = "주소: "
@@ -130,6 +135,7 @@ class RegisterKickboardView: UIView {
   
   func configureUI() {
     [
+      mapView,
       aStackView,
       buttonStackView
     ].forEach { self.addSubview($0) }
@@ -178,6 +184,12 @@ class RegisterKickboardView: UIView {
   }
   
   func setConstraints() {
+    mapView.snp.makeConstraints {
+      $0.top.equalToSuperview().inset(100)
+      $0.leading.equalToSuperview().inset(30)
+      $0.trailing.equalToSuperview().inset(30)
+      $0.bottom.equalTo(aStackView.snp.top).inset(-30)
+    }
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)
     }

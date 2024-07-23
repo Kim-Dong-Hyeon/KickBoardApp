@@ -40,6 +40,7 @@
 		DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680252C4E64D20018F531 /* UsageHistoryController.swift */; };
 		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
 		DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */; };
+		DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6806C2C4F86600018F531 /* UsageListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryController.swift; sourceTree = "<group>"; };
 		DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryView.swift; sourceTree = "<group>"; };
 		DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryView.swift; sourceTree = "<group>"; };
+		DDB6806C2C4F86600018F531 /* UsageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 				DDB680232C4E4F570018F531 /* MyPageView.swift */,
 				DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */,
 				DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */,
+				DDB6806C2C4F86600018F531 /* UsageListCell.swift */,
 			);
 			path = UserProfiles;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				748EDF422C4EA257000B74DB /* JoinController.swift in Sources */,
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,
 				7458E05B2C4E461C003BDAF3 /* TabBarContorller.swift in Sources */,
+				DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */,
 				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
 				7458E0642C4E8AE5003BDAF3 /* User+CoreDataClass.swift in Sources */,
 				7458E0652C4E8AE5003BDAF3 /* User+CoreDataProperties.swift in Sources */,

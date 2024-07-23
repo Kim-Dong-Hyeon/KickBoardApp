@@ -22,6 +22,7 @@ extension User {
   @NSManaged public var phoneNumber: String?
   @NSManaged public var memberType: String?
   @NSManaged public var name: String?
+  @NSManaged public var gender: String?
 }
 
 extension User : Identifiable {

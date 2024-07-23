@@ -27,8 +27,6 @@ class LoginController: UIViewController {
       guard let self else { return }
       self.joinViewPush()
     }, for: .touchDown)
-    
-    
   }
   
   private func joinViewPush() {

@@ -19,23 +19,22 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   private var mapView = MapView()
   private var kakaoMapView: KakaoMap?
   private var currentLocationMarker: Poi?
+  // 지도 상태를 저장할 변수
+  private var lastCameraPosition: MapPoint?
+  private var lastZoomLevel: Float?
   
   override func loadView() {
     mapView = MapView(frame: UIScreen.main.bounds)
     self.view = mapView
   }
   
-  private var apiSampleView: MapView {
-    return self.view as! MapView
-  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    apiSampleView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
-    
-    mapController = KMController(viewContainer: apiSampleView.mapContainer)
+    mapController = KMController(viewContainer: mapView.mapContainer)
     mapController?.delegate = self
+    
+    mapView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
     
     LocationManager.shared.onLocationUpdate = { [weak self] location in
       self?.updateCurrentLocation(location: location)
@@ -48,24 +47,39 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     super.viewWillAppear(animated)
     addObservers()
     isAppear = true
+
+    prepaerAndActivateEngine()
+
     if mapController?.isEnginePrepared == false {
       mapController?.prepareEngine()
     }
     if mapController?.isEngineActive == false {
       mapController?.activateEngine()
     }
+    restoreMapState()
+
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     isAppear = false
     mapController?.pauseEngine()
+    saveMapState()
   }
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     removeObservers()
     mapController?.resetEngine()
+  }
+  
+  func prepaerAndActivateEngine() {
+    if mapController?.isEnginePrepared == false {
+      mapController?.prepareEngine()
+    }
+    if mapController?.isEngineActive == false {
+      mapController?.activateEngine()
+    }
   }
   
   func authenticationSucceeded() {
@@ -83,15 +97,15 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     isAuth = false
     switch errorCode {
     case 400:
-      apiSampleView.showToast(message: "지도 종료(API인증 파라미터 오류)")
+      mapView.showToast(message: "지도 종료(API인증 파라미터 오류)")
     case 401:
-      apiSampleView.showToast(message: "지도 종료(API인증 키 오류)")
+      mapView.showToast(message: "지도 종료(API인증 키 오류)")
     case 403:
-      apiSampleView.showToast(message: "지도 종료(API인증 권한 오류)")
+      mapView.showToast(message: "지도 종료(API인증 권한 오류)")
     case 429:
-      apiSampleView.showToast(message: "지도 종료(API 사용쿼터 초과)")
+      mapView.showToast(message: "지도 종료(API 사용쿼터 초과)")
     case 499:
-      apiSampleView.showToast(message: "지도 종료(네트워크 오류) 5초 후 재시도..")
+      mapView.showToast(message: "지도 종료(네트워크 오류) 5초 후 재시도..")
       DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
         print("retry auth...")
         self.mapController?.prepareEngine()
@@ -113,7 +127,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   
   func addViewSucceeded(_ viewName: String, viewInfoName: String) {
     if let view = mapController?.getView("mapview") as? KakaoMap {
-      view.viewRect = apiSampleView.mapContainer.bounds
+      view.viewRect = mapView.mapContainer.bounds
       kakaoMapView = view
       viewInit(viewName: viewName)
     }
@@ -150,10 +164,12 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   }
   
   @objc private func goToCurrentLocation() {
-    LocationManager.shared.startUpdatingLocation()
+    if let currentLocation = LocationManager.shared.currentLocation {
+      updateCurrentLocation(location: currentLocation)
+    }
   }
   
-  private func updateCurrentLocation(location: CLLocation) {
+  func updateCurrentLocation(location: CLLocation) {
     let currentPosition = MapPoint(longitude: location.coordinate.longitude, latitude: location.coordinate.latitude)
     guard let kakaoMapView = kakaoMapView else { return }
     
@@ -195,5 +211,19 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     
     currentLocationMarker?.show()
     print("Current location marker shown")
+  }
+  
+  // 지도 상태를 저장하는 메서드
+  private func saveMapState() {
+    guard let kakaoMapView = kakaoMapView else { return }
+//    lastCameraPosition = kakaoMapView.getCamera().target
+    lastZoomLevel = Float(kakaoMapView.zoomLevel)
+  }
+  
+  // 저장된 지도 상태를 복원하는 메서드
+  private func restoreMapState() {
+    guard let kakaoMapView = kakaoMapView, let position = lastCameraPosition, let zoomLevel = lastZoomLevel else { return }
+    let cameraUpdate = CameraUpdate.make(target: position, zoomLevel: Int(zoomLevel), mapView: kakaoMapView)
+    kakaoMapView.moveCamera(cameraUpdate)
   }
 }

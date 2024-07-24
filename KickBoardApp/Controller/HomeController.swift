@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 class HomeController: UIViewController {
-  private let mapController = MapController()
   var homeView: HomeView!
+  var mapController: MapController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -26,6 +26,7 @@ class HomeController: UIViewController {
     self.view = homeView
     homeView.backgroundColor = .white
     
+    setupMapController()
     setupNavigationBar()
     
     //테스트버튼(추후 삭제 예정)
@@ -33,6 +34,16 @@ class HomeController: UIViewController {
       guard let self else { return }
       self.setupHalfModal()
     }, for: .touchDown)
+  }
+  
+  private func setupMapController() {
+    mapController = MapController()
+    addChild(mapController)
+    homeView.mapView.addSubview(mapController.view)
+    mapController.didMove(toParent: self)
+    mapController.view.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
   
   //네비게이션바 검색 기능(+캔슬기능)

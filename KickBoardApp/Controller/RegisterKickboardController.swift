@@ -9,6 +9,7 @@ import UIKit
 import PhotosUI
 import CoreData
 
+
 class RegisterKickboardController: UIViewController {
   private var registerKickboardView: RegisterKickboardView!
   private var mapController: MapController!
@@ -26,6 +27,25 @@ class RegisterKickboardController: UIViewController {
     setButtonAction()
     setMapview()
     readRegistrant()
+    readCurrentAddress()
+  }
+
+  private func readCurrentAddress() {
+    let location = CLLocation(latitude: 37.50236, longitude: 127.04444)
+    let geocoder = CLGeocoder()
+    let locale = Locale(identifier: "ko-KR")
+    geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] placemarks, error in
+      guard let self = self else { return }
+      guard let placemark = placemarks?.first else {
+        print("Geocoding error: \(error?.localizedDescription ?? "Unknown error")")
+        return
+      }
+      let administrativeArea = placemark.administrativeArea ?? ""
+      let subLocality = placemark.subLocality ?? ""
+      let name = placemark.name ?? ""
+      let address = [administrativeArea, subLocality, name].joined(separator: " ")
+      self.registerKickboardView.adressValue.text = address
+    }
   }
   private func setButtonAction() {
     registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)

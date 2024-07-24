@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class HomeController: UIViewController {
-  
+  private let mapController = MapController()
   var homeView: HomeView!
   
   override func viewDidLoad() {
@@ -21,15 +21,17 @@ class HomeController: UIViewController {
     self.title = "자전거 찾기"
 //    self.add(mapController)
     self.tabBarController?.tabBarItem.image = UIImage(systemName: "house")
-//    self.tabBarItem.image = UIImage(systemName: "house")
     
     homeView = HomeView()
-    self.view = homeView
+    self.view.addSubview(homeView)
+    homeView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
     homeView.backgroundColor = .white
     
     setupNavigationBar()
     
-    //테스트버튼(추후 삭제 예정)
+    // 테스트버튼(추후 삭제 예정)
     homeView.testButton.addAction(UIAction { [weak self] _ in
       guard let self else { return }
       self.setupHalfModal()
@@ -43,7 +45,7 @@ class HomeController: UIViewController {
     child.didMove(toParent: self)
   }
   
-  //네비게이션바 검색 기능(+캔슬기능)
+  // 네비게이션바 검색 기능(+캔슬기능)
   func setupNavigationBar() {
     self.navigationItem.searchController = homeView.serchBar
   }
@@ -61,29 +63,24 @@ class HomeController: UIViewController {
       self.closeHalfModal()
     }, for: .touchDown)
     
-//    homeView.testButton.addAction(UIAction { [weak self] _ in
-//      guard let self else { return }
-//      self.setupHalfModal()
-//    }, for: .touchDown)
-    
-    //모달 상세 정보 사이즈 설정
+    // 모달 상세 정보 사이즈 설정
     if let sheet = homeView.halfModal.sheetPresentationController {
       sheet.detents = [.medium()]
     }
     present(homeView.halfModal, animated: true, completion: nil)
   }
   
-  //모달 닫는 버튼에 들어갈 메서드 설정
+  // 모달 닫는 버튼에 들어갈 메서드 설정
   func closeHalfModal() {
     dismiss(animated: true, completion: nil)
   }
   
-  //빈 화면 터치 시 모달 창 내리기
+  // 빈 화면 터치 시 모달 창 내리기
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     self.dismiss(animated: true, completion: nil)
   }
   
-  //대여하기 클릭 시 알럿
+  // 대여하기 클릭 시 알럿
   func setupAlert() {
     let alert = UIAlertController(
       title: "알림",
@@ -92,14 +89,15 @@ class HomeController: UIViewController {
     )
     
     let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
-    //let cancel = UIAlertAction(title: "취소", style: .destructive, handler: nil)
     
     alert.addAction(ok)
-    //alert.addAction(cancel)
     
-    //알럿이 모달 위로 뜨도록 설정
-    if let topController = UIApplication.shared.windows.first?.rootViewController?.presentedViewController {
+    // 알럿이 모달 위로 뜨도록 설정
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+       let topController = windowScene.windows.first?.rootViewController?.presentedViewController ?? windowScene.windows.first?.rootViewController {
       topController.present(alert, animated: true, completion: nil)
+    } else {
+      self.present(alert, animated: true, completion: nil)
     }
   }
 }

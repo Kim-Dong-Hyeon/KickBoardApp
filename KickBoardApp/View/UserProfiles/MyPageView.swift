@@ -29,14 +29,22 @@ class MyPageView: UIView {
   
   private lazy var phoneNumber: UILabel = {
     let label = UILabel()
-    label.text = "휴대전화 : "
+    label.text = "휴대전화: "
     label.textAlignment = .center
     return label
   }()
   
   private lazy var gender: UILabel = {
     let label = UILabel()
-    label.text = "회원등급"
+    label.text = "성별: "
+    label.textAlignment = .center
+    return label
+  }()
+  
+  private lazy var isUsing: UILabel = {
+    let label = UILabel()
+    label.text = "미사용중"
+    label.textColor = .red
     label.textAlignment = .center
     return label
   }()
@@ -50,7 +58,7 @@ class MyPageView: UIView {
     return stackView
   }()
   
-  private lazy var genderStackView: UIStackView = {
+  private lazy var infoStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.spacing = 10
@@ -93,8 +101,8 @@ class MyPageView: UIView {
     self.addSubview(myPageStackView)
     self.addSubview(logOut)
     [userImageView, myPageList].forEach{ myPageStackView.addArrangedSubview($0) }
-    [userImage, genderStackView].forEach { userImageView.addSubview($0) }
-    [nameLabel, phoneNumber, gender].forEach { genderStackView.addArrangedSubview($0) }
+    [userImage, infoStackView].forEach { userImageView.addSubview($0) }
+    [nameLabel, isUsing, phoneNumber, gender].forEach { infoStackView.addArrangedSubview($0) }
   }
   
   private func setConstraints() {
@@ -114,7 +122,7 @@ class MyPageView: UIView {
       $0.centerX.equalToSuperview()
     }
     
-    genderStackView.snp.makeConstraints {
+    infoStackView.snp.makeConstraints {
       $0.top.equalTo(userImage.snp.bottom).offset(10)
       $0.leading.trailing.bottom.equalToSuperview()
     }
@@ -126,6 +134,7 @@ class MyPageView: UIView {
       if result.id! == UserDefaults.standard.object(forKey: "userName") as! String {
         nameLabel.text! += result.name ?? ""
         phoneNumber.text! += result.phoneNumber ?? ""
+        gender.text! += result.gender ?? ""
       } else {
         print("값이없음")
         print("타입캐스팅 실패")

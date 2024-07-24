@@ -12,7 +12,7 @@ import CoreData
 class RegisterKickboardController: UIViewController {
   private var registerKickboardView: RegisterKickboardView!
   private var mapController: MapController!
-  let coreDataManager = CoreDataManager()
+  let coreDataManager = DataManager()
   let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
   
   override func loadView() {

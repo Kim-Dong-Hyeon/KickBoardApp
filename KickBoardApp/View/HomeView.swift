@@ -13,7 +13,8 @@ class HomeView: UIView {
   private let modalAddressLabel: UILabel = {
     let label = UILabel()
     label.text = "관악구 신림로 330 (신림동)"
-    label.textColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
+//    label.textColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
+    label.textColor = UIColor(named: "kickColor")
     label.font = UIFont.systemFont(ofSize: 20, weight: .black)
     label.textAlignment = .left
     label.backgroundColor = .clear
@@ -61,7 +62,8 @@ class HomeView: UIView {
     let button = UIButton()
     button.setTitle("대여하기", for: .normal)
     button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-    button.backgroundColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
+//    button.backgroundColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
+    button.backgroundColor = UIColor(named: "kickColor")
     button.layer.cornerRadius = 10
     return button
   }()
@@ -70,7 +72,8 @@ class HomeView: UIView {
     let button = UIButton()
     button.setTitle("닫기", for: .normal)
     button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-    button.backgroundColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
+//    button.backgroundColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
+    button.backgroundColor = UIColor(named: "kickColor")
     button.layer.cornerRadius = 10
     return button
   }()
@@ -108,10 +111,9 @@ class HomeView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.addSubview(testButton)
+    bringSubviewToFront(testButton)
     halfModalUI()
     setupLayout()
-    bringSubviewToFront(testButton)
   }
   
   required init?(coder: NSCoder) {

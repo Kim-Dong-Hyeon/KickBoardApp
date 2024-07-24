@@ -11,15 +11,21 @@ import UIKit
 class RegisterHistoryController: UIViewController {
   
   var registerHistory: RegisterHistoryView!
-  
+  let dataManager = DataManager()
+  var models: [KickBoard] = [] {
+    didSet {
+      registerHistory.historyView.reloadData()
+    }
+  }
   override func loadView() {
     registerHistory = RegisterHistoryView(frame: UIScreen.main.bounds)
     self.view = registerHistory
-    self.title = "나의 등록 내역"
-    self.navigationItem.largeTitleDisplayMode = .automatic
   }
   
   override func viewDidLoad() {
+    self.title = "나의 등록 내역"
+    self.navigationController?.navigationBar.prefersLargeTitles = true
+    self.navigationItem.largeTitleDisplayMode = .always
     view.backgroundColor = .white
     registerHistory.historyView.dataSource = self
     registerHistory.historyView.delegate = self
@@ -42,7 +48,6 @@ extension RegisterHistoryController: UICollectionViewDelegate, UICollectionViewD
 
 extension RegisterHistoryController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
     let padding: CGFloat = 20
     let spacing: CGFloat = 10
     let width = collectionView.frame.width - padding - spacing

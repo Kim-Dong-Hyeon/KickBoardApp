@@ -8,6 +8,7 @@
 import UIKit
 
 class RegisterCell: UICollectionViewCell {
+  let dataManager = DataManager()
   static let identifier = "registerCell"
   
   private lazy var kickBoardImage: UIImageView = {
@@ -18,19 +19,20 @@ class RegisterCell: UICollectionViewCell {
   
   private lazy var addressLabel: UILabel = {
     let label = UILabel()
-    label.text = "주소"
+    label.text = "주소: "
     return label
   }()
   
-  private lazy var nameLabel: UILabel = {
+  private lazy var locationLabel: UILabel = {
     let label = UILabel()
-    label.text = "이름"
+    label.text = "위치: "
     return label
   }()
   
   private lazy var modelName: UILabel = {
     let label = UILabel()
-    label.text = "모델명"
+    label.text = "모델명: "
+    label.adjustsFontSizeToFitWidth = true
     return label
   }()
   
@@ -47,7 +49,8 @@ class RegisterCell: UICollectionViewCell {
     configureUI()
     setConstraints()
     setupShadowAndCornerRadius()
-    self.backgroundColor = .yellow
+    setCellConfigure()
+    self.backgroundColor = UIColor(red: 12/255, green: 97/255, blue: 254/255, alpha: 1.0)
   }
   
   required init?(coder: NSCoder) {
@@ -56,7 +59,7 @@ class RegisterCell: UICollectionViewCell {
   
   func configureUI() {
     [kickBoardImage, labelStackView].forEach { contentView.addSubview($0) }
-    [addressLabel, nameLabel, modelName].forEach { labelStackView.addArrangedSubview($0) }
+    [addressLabel, locationLabel, modelName].forEach { labelStackView.addArrangedSubview($0) }
   }
   
   private func setupShadowAndCornerRadius() {
@@ -79,6 +82,19 @@ class RegisterCell: UICollectionViewCell {
     labelStackView.snp.makeConstraints {
       $0.top.equalTo(kickBoardImage.snp.bottom).offset(10)
       $0.leading.trailing.equalTo(kickBoardImage)
+    }
+  }
+  
+  private func setCellConfigure() {
+    let results = dataManager.readCoreData(entityType: KickBoard.self)
+    for result in results {
+      let userId = dataManager.readUserDefault(key: "userName")
+      if result.registrant! == userId {
+        modelName.text! += result.modelName ?? ""
+        addressLabel.text! += result.registedLocation ?? ""
+        kickBoardImage.image = UIImage(data: result.imageData!)
+        locationLabel.text! += result.registedLocation ?? ""
+      }
     }
   }
 }

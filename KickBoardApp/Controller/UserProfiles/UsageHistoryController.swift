@@ -17,6 +17,8 @@ class UsageHistoryController: UIViewController {
   }
   override func viewDidLoad() {
     self.title = "나의 이용 내역"
+    view.backgroundColor = .white
+    self.navigationController?.navigationBar.prefersLargeTitles = true
     self.navigationItem.largeTitleDisplayMode = .automatic
     usageHistoryView.usageList.delegate = self
     usageHistoryView.usageList.dataSource = self

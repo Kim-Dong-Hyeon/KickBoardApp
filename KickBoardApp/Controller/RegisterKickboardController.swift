@@ -5,11 +5,12 @@
 //  Created by pc on 7/22/24.
 //
 
-import Foundation
 import UIKit
 import PhotosUI
+
 class RegisterKickboardController: UIViewController {
-  var registerKickboardView: RegisterKickboardView!
+  private var registerKickboardView: RegisterKickboardView!
+  
   override func loadView() {
     registerKickboardView = RegisterKickboardView(frame: UIScreen.main.bounds)
     self.view = registerKickboardView
@@ -18,10 +19,29 @@ class RegisterKickboardController: UIViewController {
     super.viewDidLoad()
     self.registerKickboardView.backgroundColor = .systemBackground
     self.title = "킥보드 등록"
+    
     registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
+    registerKickboardView.mapView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
+    
+    // 지도 초기화
+    let mapController = MapController()
+    addChild(mapController)
+    registerKickboardView.mapView.addSubview(mapController.view)
+    mapController.didMove(toParent: self)
+    
+    mapController.view.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
+  
   @objc private func selectPhotoButtonTapped() {
     presentPhotoPicker()
+  }
+  
+  @objc private func goToCurrentLocation() {
+    if let currentLocation = LocationManager.shared.currentLocation {
+      (children.first as? MapController)?.updateCurrentLocation(location: currentLocation)
+    }
   }
 }
 

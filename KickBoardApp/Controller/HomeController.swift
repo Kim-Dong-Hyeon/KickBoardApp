@@ -10,6 +10,8 @@ import SnapKit
 
 class HomeController: UIViewController {
   
+  private let mapController = MapController()
+  
   private let modalAddressLabel = {
     let mAL = UILabel()
     mAL.text = "관악구 신림로 330 (신림동)"
@@ -96,12 +98,20 @@ class HomeController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.title = "자전거 찾기"
+    self.add(mapController)
     view.backgroundColor = .white
     
     setupNavigationBar()
     testButton()
   }
-
+  
+  private func add(_ child: UIViewController) {
+    addChild(child)
+    view.addSubview(child.view)
+    child.view.frame = view.bounds
+    child.didMove(toParent: self)
+  }
+  
   //네비게이션바 검색 기능(+캔슬기능)
   func setupNavigationBar() {
     let serchBar = UISearchController(searchResultsController: nil)

@@ -11,6 +11,8 @@ import SnapKit
 
 class MyPageView: UIView {
   
+  private let coreDataManager = DataManager()
+  
   private lazy var nameLabel: UILabel = {
     let label = UILabel()
     label.text = "이름: "
@@ -25,16 +27,24 @@ class MyPageView: UIView {
     return imageView
   }()
   
-  private lazy var isUsing: UILabel = {
+  private lazy var phoneNumber: UILabel = {
     let label = UILabel()
-    label.text = "이용여부: "
+    label.text = "휴대전화: "
     label.textAlignment = .center
     return label
   }()
   
-  private lazy var userInfo: UILabel = {
+  private lazy var gender: UILabel = {
     let label = UILabel()
-    label.text = "회원등급"
+    label.text = "성별: "
+    label.textAlignment = .center
+    return label
+  }()
+  
+  private lazy var isUsing: UILabel = {
+    let label = UILabel()
+    label.text = "미사용중"
+    label.textColor = .red
     label.textAlignment = .center
     return label
   }()
@@ -48,7 +58,7 @@ class MyPageView: UIView {
     return stackView
   }()
   
-  private lazy var userInfoStackView: UIStackView = {
+  private lazy var infoStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.spacing = 10
@@ -63,9 +73,10 @@ class MyPageView: UIView {
     return stackView
   }()
   
-  private lazy var logOut: UIButton = {
+  lazy var logOut: UIButton = {
     let button = UIButton()
     button.setTitle("로그아웃", for: .normal)
+    button.setTitleColor(.blue, for: .normal)
     return button
   }()
   
@@ -79,21 +90,22 @@ class MyPageView: UIView {
     super.init(frame: frame)
     configureUI()
     setConstraints()
+    getData()
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func configureUI() {
+  private func configureUI() {
     self.addSubview(myPageStackView)
     self.addSubview(logOut)
     [userImageView, myPageList].forEach{ myPageStackView.addArrangedSubview($0) }
-    [userImage, userInfoStackView].forEach { userImageView.addSubview($0) }
-    [nameLabel, isUsing, userInfo].forEach { userInfoStackView.addArrangedSubview($0) }
+    [userImage, infoStackView].forEach { userImageView.addSubview($0) }
+    [nameLabel, isUsing, phoneNumber, gender].forEach { infoStackView.addArrangedSubview($0) }
   }
   
-  func setConstraints() {
+  private func setConstraints() {
     myPageStackView.snp.makeConstraints {
       $0.leading.trailing.top.equalTo(self.safeAreaLayoutGuide).inset(20)
       $0.bottom.equalTo(logOut.snp.top).offset(10)
@@ -110,9 +122,24 @@ class MyPageView: UIView {
       $0.centerX.equalToSuperview()
     }
     
-    userInfoStackView.snp.makeConstraints {
+    infoStackView.snp.makeConstraints {
       $0.top.equalTo(userImage.snp.bottom).offset(10)
       $0.leading.trailing.bottom.equalToSuperview()
     }
   }
+  
+  private func getData() {
+    let results = coreDataManager.readCoreData(entityType: User.self)
+    for result in results {
+      if result.id! == UserDefaults.standard.object(forKey: "userName") as! String {
+        nameLabel.text! += result.name ?? ""
+        phoneNumber.text! += result.phoneNumber ?? ""
+        gender.text! += result.gender ?? ""
+      } else {
+        print("값이없음")
+        print("타입캐스팅 실패")
+      }
+    }
+  }
 }
+

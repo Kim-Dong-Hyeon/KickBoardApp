@@ -8,30 +8,66 @@
 import UIKit
 
 class TabBarContorller: UITabBarController {
-  lazy var homeController = {
+  
+  private var mapControllerInstance: MapController?
+  
+  lazy var homeController: UINavigationController = {
     let controller = HomeController()
-    controller.tabBarItem.image = UIImage(systemName: "house")
+    let navigationController = UINavigationController(rootViewController: controller)
+    navigationController.tabBarItem.image = UIImage(systemName: "house")
+    navigationController.tabBarItem.title = "Home"
+    return navigationController
+  }()
+  
+  lazy var registerKickboardController: UINavigationController = {
+    let controller = UINavigationController(rootViewController: RegisterKickboardController())
+    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
     controller.view.backgroundColor = .white
     return controller
   }()
   
-  lazy var editController = {
-    let controller = EditController()
-    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
-    controller.view.backgroundColor = .red
-    return controller
+  lazy var myPageController: UINavigationController = {
+    let controller = MypageController()
+    let navigationController = UINavigationController(rootViewController: controller)
+    navigationController.tabBarItem.image = UIImage(systemName: "play.house.fill")
+    return navigationController
   }()
   
-  lazy var myPageController = {
-    let controller = MypageController()
-    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
-    return controller
-  }()
-
   override func viewDidLoad() {
     super.viewDidLoad()
-    let navigationController = UINavigationController(rootViewController: MypageController())
-    navigationController.navigationBar.prefersLargeTitles = true
-    viewControllers = [homeController, editController, navigationController]
+    viewControllers = [homeController, registerKickboardController, myPageController]
   }
 }
+
+//import UIKit
+//
+//class TabBarContorller: UITabBarController {
+//  lazy var mapController = {
+//    let controller = MapController()
+//    controller.tabBarItem.image = UIImage(systemName: "house")
+//    controller.tabBarItem.title = "Home"
+//    controller.view.backgroundColor = .white
+//    return controller
+//  }()
+//
+//  lazy var registerKickboardController = {
+//    let controller = UINavigationController(rootViewController: RegisterKickboardController())
+//    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
+//    controller.view.backgroundColor = .white
+//    return controller
+//  }()
+//
+//  lazy var myPageController = {
+//    let controller = MypageController()
+//    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
+//    return controller
+//  }()
+//
+//  override func viewDidLoad() {
+//    super.viewDidLoad()
+//    let navigationController = UINavigationController(rootViewController: MypageController())
+//    let naviCon = UINavigationController(rootViewController: HomeController())
+//    navigationController.navigationBar.prefersLargeTitles = true
+//    viewControllers = [naviCon, registerKickboardController, navigationController]
+//  }
+//}

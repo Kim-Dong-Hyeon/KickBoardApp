@@ -2,7 +2,7 @@
 //  KickBoard+CoreDataClass.swift
 //  KickBoardApp
 //
-//  Created by 김동현 on 7/23/24.
+//  Created by 전성진 on 7/24/24.
 //
 //
 
@@ -23,5 +23,7 @@ public class KickBoard: NSManagedObject {
     static let registedDate = "registedDate"
     static let registedLocation = "registedLocation"
     static let registrant = "registrant"
+    static let userId = "userId"
+
   }
 }

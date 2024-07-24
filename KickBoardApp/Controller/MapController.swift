@@ -11,7 +11,6 @@ import CoreLocation
 import KakaoMapsSDK
 
 class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, CLLocationManagerDelegate {
-  
   private var mapController: KMController?
   private var observerAdded = false
   private var isAuth = false
@@ -46,6 +45,8 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     }
     
     LocationManager.shared.startUpdatingLocation()
+    
+
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +74,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     removeObservers()
     mapController?.resetEngine()
   }
+
   
   func authenticationSucceeded() {
     if !isAuth {
@@ -106,7 +108,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       break
     }
   }
-  
+
   func addViews() {
     let defaultPosition = MapPoint(longitude: 127.108678, latitude: 37.402001)
     let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)

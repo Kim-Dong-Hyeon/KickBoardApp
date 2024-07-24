@@ -19,6 +19,9 @@ class MypageController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.title = "마이페이지"
+    self.navigationController?.navigationBar.prefersLargeTitles = true
+    self.navigationItem.largeTitleDisplayMode = .always
     self.myPageView.backgroundColor = .white
     self.navigationItem.largeTitleDisplayMode = .automatic
     myPageView.logOut.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)

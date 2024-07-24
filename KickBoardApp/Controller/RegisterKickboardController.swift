@@ -9,6 +9,7 @@ import UIKit
 import PhotosUI
 import CoreData
 
+
 class RegisterKickboardController: UIViewController {
   private var registerKickboardView: RegisterKickboardView!
   private var mapController: MapController!
@@ -26,6 +27,25 @@ class RegisterKickboardController: UIViewController {
     setButtonAction()
     setMapview()
     readRegistrant()
+    readCurrentAddress()
+  }
+
+  private func readCurrentAddress() {
+    let location = CLLocation(latitude: 37.50236, longitude: 127.04444)
+    let geocoder = CLGeocoder()
+    let locale = Locale(identifier: "ko-KR")
+    geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] placemarks, error in
+      guard let self = self else { return }
+      guard let placemark = placemarks?.first else {
+        print("Geocoding error: \(error?.localizedDescription ?? "Unknown error")")
+        return
+      }
+      let administrativeArea = placemark.administrativeArea ?? ""
+      let subLocality = placemark.subLocality ?? ""
+      let name = placemark.name ?? ""
+      let address = [administrativeArea, subLocality, name].joined(separator: " ")
+      self.registerKickboardView.adressValue.text = address
+    }
   }
   private func setButtonAction() {
     registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
@@ -58,7 +78,6 @@ class RegisterKickboardController: UIViewController {
         newKickboard.setValue(imageData ,forKey: KickBoard.Key.imageData)
       }
     }
-    
     do {
       try container.viewContext.save()
       print("생성 성공")
@@ -66,24 +85,50 @@ class RegisterKickboardController: UIViewController {
       print("생성 실패")
     }
   }
-  
-  
+  private func alertMessage(message: String, no: Bool) {
+    let alertMessage = UIAlertController(title: message, message: "", preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+      if no {
+        self.clear()
+        self.registerKickBoardData()
+      }
+    }
+    alertMessage.addAction(okAction)
+    if no {
+      let noAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+      alertMessage.addAction(noAction)
+    }
+    present(alertMessage, animated: true, completion: nil)
+  }
   private func readRegistrant() {
     guard let registrantName = UserDefaults.standard.string(forKey: "userName") else { return }
     registerKickboardView.registrantValue.text! = registrantName
   }
-  @objc private func cancelButtonTapped() {
+  private func clear() {
     registerKickboardView.modelNameTextField.text = ""
     registerKickboardView.PhotoView.image = .none
     registerKickboardView.rentalPeriodDatePicker.date = Date()
   }
+  
+  @objc private func cancelButtonTapped() {
+    clear()
+  }
   @objc private func reigsterButtonTapped() {
-    registerKickBoardData()
+    switch (registerKickboardView.modelNameTextField.text!.isEmpty,
+            registerKickboardView.PhotoView.image == .none) {
+    case (true, false):
+      alertMessage(message: "모델명을 입력해주세요.", no: false)
+    case (false, true):
+      alertMessage(message: "사진을 업로드해주세요.", no: false)
+    case (true, true):
+      alertMessage(message: "등록 화면을 확인해주세요.", no: false)
+    default:
+      alertMessage(message: "등록하시겠습니까?", no: true)
+    }
   }
   @objc private func selectPhotoButtonTapped() {
     presentPhotoPicker()
   }
-  
   @objc private func goToCurrentLocation() {
     if let currentLocation = LocationManager.shared.currentLocation {
       (children.first as? MapController)?.updateCurrentLocation(location: currentLocation)

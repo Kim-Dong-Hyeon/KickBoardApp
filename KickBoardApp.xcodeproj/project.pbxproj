@@ -44,6 +44,7 @@
 		DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */; };
 		DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6806C2C4F86600018F531 /* UsageListCell.swift */; };
 		DDB6806F2C4FA1660018F531 /* RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6806E2C4FA1660018F531 /* RegisterCell.swift */; };
+		DDB680712C5000FA0018F531 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680702C5000FA0018F531 /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryView.swift; sourceTree = "<group>"; };
 		DDB6806C2C4F86600018F531 /* UsageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageListCell.swift; sourceTree = "<group>"; };
 		DDB6806E2C4FA1660018F531 /* RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCell.swift; sourceTree = "<group>"; };
+		DDB680702C5000FA0018F531 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				7674BCFE2C4E47DB000F5C53 /* Model.swift */,
 				7674BD112C4F77D9000F5C53 /* LocationManager.swift */,
 				4F07CA262C4E8A2200A19E5C /* AnimaitionButton.swift */,
+				DDB680702C5000FA0018F531 /* DataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,10 +169,10 @@
 			children = (
 				7674BD142C4FD0D7000F5C53 /* HomeController.swift */,
 				7458E0612C4E889C003BDAF3 /* LoginController.swift */,
-				7458E0602C4E8884003BDAF3 /* JoinController.swift */,
 				7458E0542C4E461C003BDAF3 /* MapController.swift */,
 				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
 				4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */,
+				7458E0602C4E8884003BDAF3 /* JoinController.swift */,
 				DDB680292C4E66720018F531 /* UserProfiles */,
 			);
 			path = Controller;
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7674BD012C4E47E8000F5C53 /* MapView.swift in Sources */,
+				DDB680712C5000FA0018F531 /* DataManager.swift in Sources */,
 				7674BD122C4F77D9000F5C53 /* LocationManager.swift in Sources */,
 				7674BD042C4EC1DA000F5C53 /* KickBoard+CoreDataClass.swift in Sources */,
 				7674BD052C4EC1DA000F5C53 /* KickBoard+CoreDataProperties.swift in Sources */,

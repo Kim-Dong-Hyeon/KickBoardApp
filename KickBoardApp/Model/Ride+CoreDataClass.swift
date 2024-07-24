@@ -14,14 +14,11 @@ public class Ride: NSManagedObject {
   public static let className = "Ride"
   public enum Key {
     static let id = "id"
-    static let isRented = "isRented"
-    static let currentLatitude = "currentLatitude"
-    static let currentLongitude = "currentLongitude"
-    static let expirationDate = "expirationDate"
-    static let imageData = "imageData"
-    static let modelName = "modelName"
-    static let registedDate = "registedDate"
-    static let registedLocation = "registedLocation"
-    static let registrant = "registrant"
+    static let name = "name"
+    static let price = "price"
+    static let statDate = "statDate"
+    static let endDate = "endDate"
+    static let time = "time"
+    static let userId = "userId"
   }
 }

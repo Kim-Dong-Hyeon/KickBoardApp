@@ -12,7 +12,9 @@ class UsageListCell: UITableViewCell {
   
   private lazy var cellImage: UIImageView = {
     let imageView = UIImageView()
-    imageView.backgroundColor = .gray
+    imageView.clipsToBounds = true
+    imageView.contentMode = .scaleAspectFit
+    imageView.image = UIImage(named: "testImage(Kickboard)")
     return imageView
   }()
   
@@ -25,9 +27,16 @@ class UsageListCell: UITableViewCell {
     return stackView
   }()
   
-  private lazy var id: UILabel = {
+  private lazy var userId: UILabel = {
     let label = UILabel()
-    label.text = "id"
+    label.text = "user"
+    label.font = .boldSystemFont(ofSize: 25)
+    return label
+  }()
+  
+  private lazy var modelName: UILabel = {
+    let label = UILabel()
+    label.text = "모델명 "
     return label
   }()
   
@@ -51,6 +60,7 @@ class UsageListCell: UITableViewCell {
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    self.backgroundColor = UIColor(red: 12/255, green: 97/255, blue: 254/255, alpha: 1.0)
     configureUI()
     setConstraints()
   }
@@ -60,15 +70,20 @@ class UsageListCell: UITableViewCell {
   }
   
   private func configureUI() {
-    [cellImage, cellStackView].forEach { contentView.addSubview($0) }
-    [id, depature, arrival, fee].forEach { cellStackView.addArrangedSubview($0) }
+    [cellImage, cellStackView, userId].forEach { contentView.addSubview($0) }
+    [modelName, depature, arrival, fee].forEach { cellStackView.addArrangedSubview($0) }
   }
   
   private func setConstraints() {
     cellImage.snp.makeConstraints {
+      $0.top.equalToSuperview().inset(10)
       $0.leading.equalToSuperview().inset(10)
-      $0.top.equalTo(cellStackView.snp.top)
       $0.width.height.equalTo(50)
+    }
+    
+    userId.snp.makeConstraints {
+      $0.leading.equalTo(cellStackView)
+      $0.centerY.equalTo(cellImage.snp.centerY)
     }
     
     cellStackView.snp.makeConstraints {
@@ -78,7 +93,10 @@ class UsageListCell: UITableViewCell {
     }
   }
   
-  func configureCell() {
-    
+  func configureCell(with ride: Ride) {
+    modelName.text = "모델명 \(String(describing: ride.name))"
+    depature.text = "출발 \(String(describing: ride.startDate))"
+    arrival.text = "도착 \(String(describing: ride.endDate))"
+    fee.text = "요금 \(ride.price)원"
   }
 }

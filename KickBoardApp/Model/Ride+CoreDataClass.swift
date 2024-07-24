@@ -1,5 +1,5 @@
 //
-//  KickBoard+CoreDataClass.swift
+//  Ride+CoreDataClass.swift
 //  KickBoardApp
 //
 //  Created by 전성진 on 7/24/24.
@@ -9,9 +9,9 @@
 import Foundation
 import CoreData
 
-@objc(KickBoard)
-public class KickBoard: NSManagedObject {
-  public static let className = "KickBoard"
+@objc(Ride)
+public class Ride: NSManagedObject {
+  public static let className = "Ride"
   public enum Key {
     static let id = "id"
     static let isRented = "isRented"

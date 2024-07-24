@@ -18,8 +18,8 @@ class MypageController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.myPageView.backgroundColor = .systemBackground
-    self.title = "마이페이지"
+    self.myPageView.backgroundColor = .white
+    self.navigationItem.title = "마이페이지"
     self.navigationItem.largeTitleDisplayMode = .automatic
     setUpTableView()
   }
@@ -45,7 +45,7 @@ extension MypageController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let controllerArray = [UsageHistoryController(), RegisterHistory()]
+    let controllerArray = [UsageHistoryController(), RegisterHistoryController()]
     self.navigationController?.pushViewController(controllerArray[indexPath.row], animated: true)
   }
 }

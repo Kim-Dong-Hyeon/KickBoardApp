@@ -9,20 +9,48 @@ import UIKit
 import SnapKit
 
 class RegisterKickboardView: UIView {
+
   let mapView: MapView = {
     let view = MapView()
     return view
   }()
+  
   let adressLabel: UILabel = {
     let label = UILabel()
-    label.text = "주소: "
+    label.text = "위치:"
     return label
   }()
+  let adressValue: UILabel = {
+    let label = UILabel()
+    label.text = ""
+    label.textAlignment = .left
+    return label
+  }()
+  let adressStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.spacing = 4
+    return stackView
+  }()
+  
   let registrantLabel: UILabel = {
     let label = UILabel()
-    label.text = "등록자: "
+    label.text = "등록자:"
     return label
   }()
+  let registrantValue: UILabel = {
+    let label = UILabel()
+    label.text = ""
+    label.textAlignment = .left
+    return label
+  }()
+  let registrantStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.spacing = 4
+    return stackView
+  }()
+  
   let modelNameLabel: UILabel = {
     let label = UILabel()
     label.text = "모델명:"
@@ -34,6 +62,13 @@ class RegisterKickboardView: UIView {
     textField.borderStyle = .roundedRect
     return textField
   }()
+  let modelNameStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.spacing = 4
+    return stackView
+  }()
+  
   let rentalPeriodLabel: UILabel = {
     let label = UILabel()
     label.text = "대여 기간"
@@ -44,17 +79,10 @@ class RegisterKickboardView: UIView {
     let label = UILabel()
     let currentDate = Date()
     let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .medium
-    dateFormatter.locale = Locale(identifier: "ko-KR")
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     label.text = dateFormatter.string(from: currentDate)
     label.font = UIFont.systemFont(ofSize: 18)
     return label
-  }()
-  let retalStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.axis = .vertical
-    stackView.spacing = 16
-    return stackView
   }()
   let rentalPeriodDatePicker: UIDatePicker = {
     let datePicker = UIDatePicker()
@@ -64,6 +92,13 @@ class RegisterKickboardView: UIView {
     datePicker.timeZone = .autoupdatingCurrent
     return datePicker
   }()
+  let rentalStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .vertical
+    stackView.spacing = 16
+    return stackView
+  }()
+ 
   let registerButton: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("등록", for: .normal)
@@ -74,19 +109,6 @@ class RegisterKickboardView: UIView {
     button.setTitle("취소", for: .normal)
     return button
   }()
-  
-  let modelNameStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.axis = .horizontal
-    stackView.spacing = 4
-    return stackView
-  }()
-  let registerInformationStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.axis = .vertical
-    stackView.spacing = 8
-    return stackView
-  }()
   let buttonStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
@@ -94,13 +116,14 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 16
     return stackView
   }()
-  let selectPhotoButton: AnimationButton = {
-    let button = AnimationButton()
-    button.setTitle("사진 선택", for: .normal)
-    button.backgroundColor = .blue
-    button.layer.cornerRadius = 5
-    return button
+ 
+  let registerInformationStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .vertical
+    stackView.spacing = 8
+    return stackView
   }()
+  
   let PhotoView: UIImageView = {
     let imageView = UIImageView()
     imageView.backgroundColor = .gray
@@ -109,12 +132,20 @@ class RegisterKickboardView: UIView {
     imageView.layer.cornerRadius = 5
     return imageView
   }()
+  let selectPhotoButton: AnimationButton = {
+    let button = AnimationButton()
+    button.setTitle("사진 선택", for: .normal)
+    button.backgroundColor = .blue
+    button.layer.cornerRadius = 5
+    return button
+  }()
   let addPhotoStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.spacing = 16
     return stackView
   }()
+  
   let aStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
@@ -138,7 +169,15 @@ class RegisterKickboardView: UIView {
       aStackView,
       buttonStackView
     ].forEach { self.addSubview($0) }
-    
+    [ adressLabel,
+      adressValue
+    ].forEach { adressStackView.addArrangedSubview($0)
+    }
+    [
+      registrantLabel,
+      registrantValue
+    ].forEach { registrantStackView.addArrangedSubview($0)
+    }
     [
       modelNameLabel,
       modelNameTextField
@@ -149,7 +188,7 @@ class RegisterKickboardView: UIView {
     currentDateLabel,
     rentalPeriodDatePicker
     ].forEach {
-      retalStackView.addArrangedSubview($0)
+      rentalStackView.addArrangedSubview($0)
     }
     [
       PhotoView,
@@ -158,11 +197,11 @@ class RegisterKickboardView: UIView {
       addPhotoStackView.addArrangedSubview($0)
     }
     [
-      adressLabel,
-      registrantLabel,
+      registrantStackView,
       modelNameStackView,
+      adressStackView,
       rentalPeriodLabel,
-      retalStackView,
+      rentalStackView,
     ].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
@@ -184,9 +223,13 @@ class RegisterKickboardView: UIView {
   
   func setConstraints() {
     mapView.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(50)
-      $0.leading.trailing.equalToSuperview().inset(10)
-      $0.bottom.equalTo(aStackView.snp.top).offset(-10)
+      $0.top.equalToSuperview().inset(100)
+      $0.leading.equalToSuperview().inset(30)
+      $0.trailing.equalToSuperview().inset(30)
+      $0.bottom.equalTo(aStackView.snp.top).inset(-30)
+//      $0.top.equalToSuperview().offset(50)
+//      $0.leading.trailing.equalToSuperview().inset(10)
+//      $0.bottom.equalTo(aStackView.snp.top).offset(-10)
     }
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)

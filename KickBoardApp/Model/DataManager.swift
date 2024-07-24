@@ -11,9 +11,10 @@ import CoreData
 protocol ReadCoreData {
   func readCoreData<T: NSManagedObject>(entityType: T.Type) -> [T]
   func readUserDefault(key: String) -> [Any?]
+  func deleteUserDefault(key: String)
 }
 
-class CoreDataManager: ReadCoreData {
+class DataManager: ReadCoreData {
   
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   
@@ -33,18 +34,9 @@ class CoreDataManager: ReadCoreData {
     return UserDefaults.standard.object(forKey: key) as! [Any?]
   }
   
-  
-  
-  //  저장은 필요없나..?
-  //  func saveData(key: String, value: Any) {
-  //    if context.hasChanges {
-  //      do {
-  //        try context.save()
-  //      } catch {
-  //        print(#function)
-  //      }
-  //    }
-  //  }
+  func deleteUserDefault(key: String) {
+    UserDefaults.standard.removeObject(forKey: key)
+  }
 }
 
 

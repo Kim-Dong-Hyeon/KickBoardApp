@@ -47,6 +47,9 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     super.viewWillAppear(animated)
     addObservers()
     isAppear = true
+
+    prepaerAndActivateEngine()
+
     if mapController?.isEnginePrepared == false {
       mapController?.prepareEngine()
     }
@@ -54,6 +57,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       mapController?.activateEngine()
     }
     restoreMapState()
+
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -67,6 +71,15 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     super.viewDidDisappear(animated)
     removeObservers()
     mapController?.resetEngine()
+  }
+  
+  func prepaerAndActivateEngine() {
+    if mapController?.isEnginePrepared == false {
+      mapController?.prepareEngine()
+    }
+    if mapController?.isEngineActive == false {
+      mapController?.activateEngine()
+    }
   }
   
   func authenticationSucceeded() {

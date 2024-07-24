@@ -10,7 +10,7 @@ import SnapKit
 
 class HomeView: UIView {
   
-  private let modalAddressLabel = {
+  private let modalAddressLabel: UILabel = {
     let label = UILabel()
     label.text = "관악구 신림로 330 (신림동)"
     label.textColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
@@ -20,7 +20,7 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalKickboardLabel = {
+  private let modalKickboardLabel: UILabel = {
     let label = UILabel()
     label.text = "킥보드 정보"
     label.textColor = .darkGray
@@ -30,14 +30,14 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalKickboardImage = {
+  private let modalKickboardImage: UIImageView = {
     let image = UIImageView()
     image.contentMode = .scaleAspectFit
     image.image = UIImage(named: "testImage(Kickboard)")
     return image
   }()
   
-  private let modalKickboardData1 = {
+  private let modalKickboardData1: UILabel = {
     let label = UILabel()
     label.text = "시리얼넘버  @@@@@@@@@@@@"
     label.textColor = .darkGray
@@ -47,7 +47,7 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalKickboardData2 = {
+  private let modalKickboardData2: UILabel = {
     let label = UILabel()
     label.text = "등록자명  김솔비"
     label.textColor = .darkGray
@@ -57,7 +57,7 @@ class HomeView: UIView {
     return label
   }()
   
-  let modalButton1 = {
+  let modalButton1: UIButton = {
     let button = UIButton()
     button.setTitle("대여하기", for: .normal)
     button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
@@ -66,7 +66,7 @@ class HomeView: UIView {
     return button
   }()
   
-  let modalButton2 = {
+  let modalButton2: UIButton = {
     let button = UIButton()
     button.setTitle("닫기", for: .normal)
     button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
@@ -75,7 +75,7 @@ class HomeView: UIView {
     return button
   }()
   
-  private let modalButtonTemp = {
+  private let modalButtonTemp: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .horizontal
     stackview.backgroundColor = .clear
@@ -84,7 +84,7 @@ class HomeView: UIView {
     return stackview
   }()
   
-  private let modalKickboardDataTemp = {
+  private let modalKickboardDataTemp: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .vertical
     stackview.backgroundColor = .clear
@@ -93,16 +93,15 @@ class HomeView: UIView {
     return stackview
   }()
   
-  //모달 테스트용 버튼(추후 지도 핑 클릭 시 오픈되도록 변경)
-  let testButton = {
+  // 모달 테스트용 버튼(추후 지도 핑 클릭 시 오픈되도록 변경)
+  let testButton: UIButton = {
     let button = UIButton()
     button.setTitle("모오달", for: .normal)
     button.backgroundColor = .blue
-    button.frame = CGRect(x: 70, y: 200, width: 50, height: 50)
     return button
   }()
   
-  //네비게이션바 검색 기능(+캔슬기능)
+  // 네비게이션바 검색 기능(+캔슬기능)
   let serchBar = UISearchController(searchResultsController: nil)
   let halfModal = UIViewController()
   
@@ -111,13 +110,15 @@ class HomeView: UIView {
     
     self.addSubview(testButton)
     halfModalUI()
+    setupLayout()
+    bringSubviewToFront(testButton)
   }
   
   required init?(coder: NSCoder) {
     fatalError("*T_T*")
   }
   
-  //모달 내부 세팅
+  // 모달 내부 세팅
   func halfModalUI() {
     halfModal.view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
@@ -169,6 +170,14 @@ class HomeView: UIView {
       $0.top.equalTo(modalKickboardImage.snp.bottom).offset(15)
       $0.height.equalTo(40)
       $0.width.equalTo(310)
+    }
+  }
+  
+  func setupLayout() {
+    testButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalToSuperview().offset(200)
+      $0.width.height.equalTo(50)
     }
   }
 }

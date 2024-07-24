@@ -3,6 +3,19 @@
     <entity name="KickBoard" representedClassName="KickBoard" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isRented" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="modelName" optional="YES" attributeType="String"/>
+        <attribute name="registedDate" optional="YES" attributeType="String"/>
+        <attribute name="registedLocation" optional="YES" attributeType="String"/>
+        <attribute name="registrant" optional="YES" attributeType="String"/>
+        <relationship name="userId" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="kickBoardId" inverseEntity="User"/>
+    </entity>
+    <entity name="Ride" representedClassName="Ride" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <relationship name="userId" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="rideId" inverseEntity="User"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
@@ -14,5 +27,7 @@
         <attribute name="password" optional="YES" attributeType="String"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="kickBoardId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="KickBoard" inverseName="userId" inverseEntity="KickBoard"/>
+        <relationship name="rideId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="userId" inverseEntity="Ride"/>
     </entity>
 </model>

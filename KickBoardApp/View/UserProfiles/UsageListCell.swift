@@ -72,7 +72,13 @@ class UsageListCell: UITableViewCell {
     }
     
     cellStackView.snp.makeConstraints {
+      $0.top.equalTo(cellImage.snp.bottom)
       $0.leading.equalTo(cellImage.snp.trailing).offset(10)
+      $0.trailing.equalToSuperview()
     }
+  }
+  
+  func configureCell() {
+    
   }
 }

@@ -19,9 +19,10 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   private var mapView = MapView()
   private var kakaoMapView: KakaoMap?
   private var currentLocationMarker: Poi?
+  
   // 지도 상태를 저장할 변수
-  private var lastCameraPosition: MapPoint?
-  private var lastZoomLevel: Float?
+  private var lastMarkerPosition: MapPoint?
+  private var lastZoomLevel: Int?
   
   override func loadView() {
     mapView = MapView(frame: UIScreen.main.bounds)
@@ -31,13 +32,17 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    mapView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
+    
     mapController = KMController(viewContainer: mapView.mapContainer)
     mapController?.delegate = self
     
-    mapView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
-    
     LocationManager.shared.onLocationUpdate = { [weak self] location in
       self?.updateCurrentLocation(location: location)
+    }
+    
+    LocationManager.shared.onAuthorizationChange = { [weak self] status in
+      self?.handleAuthorizationChange(status)
     }
     
     LocationManager.shared.startUpdatingLocation()
@@ -151,9 +156,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   }
   
   @objc private func goToCurrentLocation() {
-    if let currentLocation = LocationManager.shared.currentLocation {
-      updateCurrentLocation(location: currentLocation)
-    }
+    LocationManager.shared.startUpdatingLocation()
   }
   
   func updateCurrentLocation(location: CLLocation) {
@@ -198,19 +201,32 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     
     currentLocationMarker?.show()
     print("Current location marker shown")
+    
+    // 현재 위치를 저장
+    lastMarkerPosition = currentPosition
   }
   
-  // 지도 상태를 저장하는 메서드
   private func saveMapState() {
     guard let kakaoMapView = kakaoMapView else { return }
-//    lastCameraPosition = kakaoMapView.getCamera().target
-    lastZoomLevel = Float(kakaoMapView.zoomLevel)
+    lastMarkerPosition = currentLocationMarker?.position
+    lastZoomLevel = Int(kakaoMapView.zoomLevel)
   }
   
-  // 저장된 지도 상태를 복원하는 메서드
   private func restoreMapState() {
-    guard let kakaoMapView = kakaoMapView, let position = lastCameraPosition, let zoomLevel = lastZoomLevel else { return }
+    guard let kakaoMapView = kakaoMapView, let position = lastMarkerPosition, let zoomLevel = lastZoomLevel else { return }
     let cameraUpdate = CameraUpdate.make(target: position, zoomLevel: Int(zoomLevel), mapView: kakaoMapView)
     kakaoMapView.moveCamera(cameraUpdate)
+  }
+  
+  private func handleAuthorizationChange(_ status: CLAuthorizationStatus) {
+    switch status {
+    case .authorizedAlways, .authorizedWhenInUse:
+      LocationManager.shared.startUpdatingLocation()
+    case .denied, .restricted:
+      // 위치 권한이 거부된 경우 적절한 처리를 수행 (예: 알림 표시)
+      print("Location access denied. Please enable location services in settings.")
+    default:
+      break
+    }
   }
 }

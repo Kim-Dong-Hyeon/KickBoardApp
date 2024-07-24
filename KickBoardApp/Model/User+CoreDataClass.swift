@@ -2,7 +2,7 @@
 //  User+CoreDataClass.swift
 //  KickBoardApp
 //
-//  Created by 전성진 on 7/22/24.
+//  Created by 전성진 on 7/24/24.
 //
 //
 
@@ -20,5 +20,7 @@ public class User: NSManagedObject {
     static let memberType = "memberType"
     static let name = "name"
     static let gender = "gender"
+    static let rideId = "rideId"
+    static let kickBoardId = "kickBoardId"
   }
 }

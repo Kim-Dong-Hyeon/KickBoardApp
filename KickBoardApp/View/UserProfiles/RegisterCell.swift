@@ -8,6 +8,7 @@
 import UIKit
 
 class RegisterCell: UICollectionViewCell {
+  let dataManager = DataManager()
   static let identifier = "registerCell"
   
   private lazy var kickBoardImage: UIImageView = {
@@ -18,19 +19,20 @@ class RegisterCell: UICollectionViewCell {
   
   private lazy var addressLabel: UILabel = {
     let label = UILabel()
-    label.text = "주소"
+    label.text = "주소: "
     return label
   }()
   
-  private lazy var nameLabel: UILabel = {
+  private lazy var dateLabel: UILabel = {
     let label = UILabel()
-    label.text = "이름"
+    label.text = "위치: "
     return label
   }()
   
   private lazy var modelName: UILabel = {
     let label = UILabel()
-    label.text = "모델명"
+    label.text = "모델명: "
+    label.adjustsFontSizeToFitWidth = true
     return label
   }()
   
@@ -47,7 +49,7 @@ class RegisterCell: UICollectionViewCell {
     configureUI()
     setConstraints()
     setupShadowAndCornerRadius()
-    self.backgroundColor = .yellow
+    self.backgroundColor = UIColor(red: 12/255, green: 97/255, blue: 254/255, alpha: 1.0)
   }
   
   required init?(coder: NSCoder) {
@@ -56,7 +58,7 @@ class RegisterCell: UICollectionViewCell {
   
   func configureUI() {
     [kickBoardImage, labelStackView].forEach { contentView.addSubview($0) }
-    [addressLabel, nameLabel, modelName].forEach { labelStackView.addArrangedSubview($0) }
+    [modelName, addressLabel, dateLabel].forEach { labelStackView.addArrangedSubview($0) }
   }
   
   private func setupShadowAndCornerRadius() {
@@ -70,7 +72,7 @@ class RegisterCell: UICollectionViewCell {
     layer.shadowRadius = 4.0
   }
   
-  func setConstraints() {
+  private func setConstraints() {
     kickBoardImage.snp.makeConstraints {
       $0.top.leading.trailing.equalToSuperview().inset(10)
       $0.height.equalTo(170)
@@ -79,6 +81,17 @@ class RegisterCell: UICollectionViewCell {
     labelStackView.snp.makeConstraints {
       $0.top.equalTo(kickBoardImage.snp.bottom).offset(10)
       $0.leading.trailing.equalTo(kickBoardImage)
+    }
+  }
+  
+  func configureCell(with kickBoard: KickBoard) {
+    modelName.text = "모델명: \(kickBoard.modelName ?? "")"
+    addressLabel.text = "주소: \(kickBoard.registedLocation ?? "")"
+    dateLabel.text = "날짜 : \(kickBoard.expirationDate ?? "")"
+    if let imageData = kickBoard.imageData {
+      kickBoardImage.image = UIImage(data: imageData)
+    } else {
+      kickBoardImage.image = nil
     }
   }
 }

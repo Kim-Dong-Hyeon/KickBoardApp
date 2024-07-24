@@ -2,7 +2,7 @@
 //  KickBoard+CoreDataProperties.swift
 //  KickBoardApp
 //
-//  Created by 김동현 on 7/23/24.
+//  Created by 전성진 on 7/24/24.
 //
 //
 
@@ -16,10 +16,19 @@ extension KickBoard {
         return NSFetchRequest<KickBoard>(entityName: "KickBoard")
     }
 
+    @NSManaged public var currentLatitude: Double
+    @NSManaged public var currentLongitude: Double
+    @NSManaged public var expirationDate: String?
     @NSManaged public var id: String?
+    @NSManaged public var imageData: Data?
+    @NSManaged public var isRented: Bool
+    @NSManaged public var modelName: String?
+    @NSManaged public var registedDate: String?
+    @NSManaged public var registedLocation: String?
+    @NSManaged public var registrant: String?
+    @NSManaged public var userId: User?
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
-    @NSManaged public var isRented: Bool
 
 }
 

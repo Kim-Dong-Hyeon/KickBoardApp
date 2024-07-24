@@ -2,7 +2,7 @@
 //  User+CoreDataClass.swift
 //  KickBoardApp
 //
-//  Created by 전성진 on 7/22/24.
+//  Created by 전성진 on 7/24/24.
 //
 //
 

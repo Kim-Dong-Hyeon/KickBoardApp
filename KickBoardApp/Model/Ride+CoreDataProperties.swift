@@ -21,7 +21,7 @@ extension Ride {
     @NSManaged public var startDate: Date?
     @NSManaged public var time: String?
     @NSManaged public var endDate: Date?
-    @NSManaged public var userId: NSSet?
+    @NSManaged public var userId: User?
 
 }
 

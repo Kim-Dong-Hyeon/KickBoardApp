@@ -11,6 +11,7 @@ import CoreLocation
 import KakaoMapsSDK
 
 class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, CLLocationManagerDelegate {
+  
   private var mapController: KMController?
   private var observerAdded = false
   private var isAuth = false
@@ -21,6 +22,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   // 지도 상태를 저장할 변수
   private var lastCameraPosition: MapPoint?
   private var lastZoomLevel: Float?
+  
   override func loadView() {
     mapView = MapView(frame: UIScreen.main.bounds)
     self.view = mapView
@@ -39,17 +41,12 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     }
     
     LocationManager.shared.startUpdatingLocation()
-    
-
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     addObservers()
     isAppear = true
-
-    prepaerAndActivateEngine()
-
     if mapController?.isEnginePrepared == false {
       mapController?.prepareEngine()
     }
@@ -57,7 +54,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       mapController?.activateEngine()
     }
     restoreMapState()
-
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -71,16 +67,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     super.viewDidDisappear(animated)
     removeObservers()
     mapController?.resetEngine()
-  }
-
-  
-  func prepaerAndActivateEngine() {
-    if mapController?.isEnginePrepared == false {
-      mapController?.prepareEngine()
-    }
-    if mapController?.isEngineActive == false {
-      mapController?.activateEngine()
-    }
   }
   
   func authenticationSucceeded() {
@@ -115,7 +101,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       break
     }
   }
-
+  
   func addViews() {
     let defaultPosition = MapPoint(longitude: 127.108678, latitude: 37.402001)
     let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)

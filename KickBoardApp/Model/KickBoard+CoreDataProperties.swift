@@ -11,24 +11,18 @@ import CoreData
 
 
 extension KickBoard {
-  
-  @nonobjc public class func fetchRequest() -> NSFetchRequest<KickBoard> {
-    return NSFetchRequest<KickBoard>(entityName: "KickBoard")
-  }
-  
-  @NSManaged public var id: String?
-  @NSManaged public var isRented: Bool
-  @NSManaged public var currentLatitude: Double
-  @NSManaged public var currentLongitude: Double
-  @NSManaged public var expirationDate: String?
-  @NSManaged public var imageData: Data?
-  @NSManaged public var modelName: String?
-  @NSManaged public var registedDate: String?
-  @NSManaged public var registedLocation: String?
-  @NSManaged public var registrant: String?
-  
+
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<KickBoard> {
+        return NSFetchRequest<KickBoard>(entityName: "KickBoard")
+    }
+
+    @NSManaged public var id: String?
+    @NSManaged public var latitude: Double
+    @NSManaged public var longitude: Double
+    @NSManaged public var isRented: Bool
+
 }
 
 extension KickBoard : Identifiable {
-  
+
 }

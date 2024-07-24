@@ -20,7 +20,6 @@ class RegisterHistoryController: UIViewController {
   }
   
   override func viewDidLoad() {
-    view.backgroundColor = .white
     registerHistory.historyView.dataSource = self
     registerHistory.historyView.delegate = self
     registerHistory.historyView.register(RegisterCell.self, forCellWithReuseIdentifier: RegisterCell.identifier)

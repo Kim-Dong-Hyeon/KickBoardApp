@@ -11,7 +11,7 @@
         <attribute name="registedDate" optional="YES" attributeType="String"/>
         <attribute name="registedLocation" optional="YES" attributeType="String"/>
         <attribute name="registrant" optional="YES" attributeType="String"/>
-        <relationship name="userId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="kickBoardId" inverseEntity="User"/>
+        <relationship name="userId" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="kickBoardId" inverseEntity="User"/>
     </entity>
     <entity name="Ride" representedClassName="Ride" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -29,7 +29,7 @@
         <attribute name="password" optional="YES" attributeType="String"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="kickBoardId" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="KickBoard" inverseName="userId" inverseEntity="KickBoard"/>
-        <relationship name="rideId" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ride" inverseName="userId" inverseEntity="Ride"/>
+        <relationship name="kickBoardId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="KickBoard" inverseName="userId" inverseEntity="KickBoard"/>
+        <relationship name="rideId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ride" inverseName="userId" inverseEntity="Ride"/>
     </entity>
 </model>

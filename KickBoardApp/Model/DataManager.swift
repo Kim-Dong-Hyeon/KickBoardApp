@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 
 protocol ReadCoreData {
-  func readAllData<T: NSManagedObject>(entityType: T.Type) -> [T]
+  func readCoreData<T: NSManagedObject>(entityType: T.Type) -> [T]
   func readUserDefault(key: String) -> [Any?]
 }
 

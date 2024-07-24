@@ -24,5 +24,6 @@ public class KickBoard: NSManagedObject {
     static let registedLocation = "registedLocation"
     static let registrant = "registrant"
     static let userId = "userId"
+
   }
 }

@@ -14,7 +14,7 @@ class LoginController: UIViewController {
   var loginView: LoginView!
   
   override func viewDidLoad() {
-//    super.viewDidLoad()
+    super.viewDidLoad()
     configureView()
     configureEvent()
   }
@@ -88,8 +88,15 @@ class LoginController: UIViewController {
   }
   
   private func moveToTabBarController() {
-    let homeController = TabBarContorller()
-    homeController.modalPresentationStyle = .fullScreen
-    self.present(homeController, animated: true, completion: nil)
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+       let window = windowScene.windows.first {
+      let tabBarController = TabBarContorller()
+      window.rootViewController = tabBarController
+      window.makeKeyAndVisible()
+    }
+    
+//    let homeController = TabBarContorller()
+//    homeController.modalPresentationStyle = .fullScreen
+//    self.present(homeController, animated: true, completion: nil)
   }
 }

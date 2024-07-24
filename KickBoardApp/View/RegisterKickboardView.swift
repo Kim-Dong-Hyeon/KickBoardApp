@@ -23,7 +23,10 @@ class RegisterKickboardView: UIView {
   let adressValue: UILabel = {
     let label = UILabel()
     label.text = ""
+    label.font = .systemFont(ofSize: 12)
     label.textAlignment = .left
+    label.numberOfLines = 2
+    label.lineBreakMode = .byWordWrapping
     return label
   }()
   let adressStackView: UIStackView = {
@@ -95,7 +98,7 @@ class RegisterKickboardView: UIView {
   let rentalStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 16
+    stackView.spacing = 4
     return stackView
   }()
  
@@ -222,14 +225,12 @@ class RegisterKickboardView: UIView {
   }
   
   func setConstraints() {
+
     mapView.snp.makeConstraints {
       $0.top.equalToSuperview().inset(100)
       $0.leading.equalToSuperview().inset(30)
       $0.trailing.equalToSuperview().inset(30)
       $0.bottom.equalTo(aStackView.snp.top).inset(-30)
-//      $0.top.equalToSuperview().offset(50)
-//      $0.leading.trailing.equalToSuperview().inset(10)
-//      $0.bottom.equalTo(aStackView.snp.top).offset(-10)
     }
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)
@@ -241,19 +242,16 @@ class RegisterKickboardView: UIView {
       $0.height.equalTo(30)
     }
     buttonStackView.snp.makeConstraints {
-      $0.bottom.equalToSuperview().inset(120)
+      $0.bottom.equalToSuperview().inset(90)
       $0.centerX.equalToSuperview()
       $0.width.equalTo(300)
       $0.height.equalTo(50)
     }
-    
     aStackView.snp.makeConstraints {
       $0.height.equalTo(200)
-      $0.bottom.equalTo(buttonStackView.snp.top).offset(-30)
+      $0.bottom.equalTo(buttonStackView.snp.top).offset(-10)
       $0.centerX.equalToSuperview()
       $0.width.equalToSuperview().multipliedBy(0.8)
     }
-    
-
   }
 }

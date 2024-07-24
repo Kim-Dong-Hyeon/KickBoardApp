@@ -89,8 +89,8 @@ class RegisterKickboardController: UIViewController {
     let alertMessage = UIAlertController(title: message, message: "", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "확인", style: .default) { _ in
       if no {
-        self.clear()
         self.registerKickBoardData()
+        self.clear()
       }
     }
     alertMessage.addAction(okAction)

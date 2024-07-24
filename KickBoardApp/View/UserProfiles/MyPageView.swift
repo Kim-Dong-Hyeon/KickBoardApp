@@ -11,7 +11,7 @@ import SnapKit
 
 class MyPageView: UIView {
   
-  let coreDataManager = CoreDataManager()
+  private let coreDataManager = DataManager()
   
   private lazy var nameLabel: UILabel = {
     let label = UILabel()
@@ -65,7 +65,7 @@ class MyPageView: UIView {
     return stackView
   }()
   
-  private lazy var logOut: UIButton = {
+  lazy var logOut: UIButton = {
     let button = UIButton()
     button.setTitle("로그아웃", for: .normal)
     button.setTitleColor(.blue, for: .normal)

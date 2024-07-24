@@ -19,7 +19,7 @@ class HomeController: UIViewController {
     self.tabBarController?.viewControllers?[2].tabBarItem.title = "마이페이지"
     self.tabBarController?.viewControllers?[2].tabBarItem.image = UIImage(systemName: "person.fill")
     self.title = "자전거 찾기"
-    self.add(mapController)
+//    self.add(mapController)
     self.tabBarController?.tabBarItem.image = UIImage(systemName: "house")
     
     homeView = HomeView()

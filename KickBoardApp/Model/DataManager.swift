@@ -14,7 +14,7 @@ protocol ReadCoreData {
   func deleteUserDefault(key: String)
 }
 
-class DataManager: ReadCoreData {
+class CoreDataManager: ReadCoreData {
   
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   
@@ -30,13 +30,26 @@ class DataManager: ReadCoreData {
     }
   }
   
+  func deleteUserDefault(key: String) -> String? {
+    return UserDefaults.standard.removeObject(forKey: key)
+  }
+  
   func readUserDefault(key: String) -> String? {
     return UserDefaults.standard.object(forKey: key) as? String
   }
   
-  func deleteUserDefault(key: String) {
-    UserDefaults.standard.removeObject(forKey: key)
-  }
+  
+  
+  //  저장은 필요없나..?
+  //  func saveData(key: String, value: Any) {
+  //    if context.hasChanges {
+  //      do {
+  //        try context.save()
+  //      } catch {
+  //        print(#function)
+  //      }
+  //    }
+  //  }
 }
 
 

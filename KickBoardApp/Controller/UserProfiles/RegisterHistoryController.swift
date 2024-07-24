@@ -43,6 +43,9 @@ class RegisterHistoryController: UIViewController {
     historyView.snp.makeConstraints {
       $0.edges.equalTo(view.safeAreaLayoutGuide).inset(15)
     }
+    registerHistory.historyView.dataSource = self
+    registerHistory.historyView.delegate = self
+    registerHistory.historyView.register(RegisterCell.self, forCellWithReuseIdentifier: RegisterCell.identifier)
   }
 }
 

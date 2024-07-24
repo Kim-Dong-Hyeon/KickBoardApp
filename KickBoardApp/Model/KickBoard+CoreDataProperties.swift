@@ -27,6 +27,8 @@ extension KickBoard {
     @NSManaged public var registedLocation: String?
     @NSManaged public var registrant: String?
     @NSManaged public var userId: User?
+    @NSManaged public var latitude: Double
+    @NSManaged public var longitude: Double
 
 }
 

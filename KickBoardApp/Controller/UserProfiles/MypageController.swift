@@ -10,7 +10,6 @@ import UIKit
 class MypageController: UIViewController {
   
   var myPageView: MyPageView!
-  let dataManager = DataManager()
   
   override func loadView() {
     myPageView = MyPageView(frame: UIScreen.main.bounds)
@@ -23,8 +22,8 @@ class MypageController: UIViewController {
     self.navigationController?.navigationBar.prefersLargeTitles = true
     self.navigationItem.largeTitleDisplayMode = .always
     self.myPageView.backgroundColor = .white
+    self.navigationItem.title = "마이페이지"
     self.navigationItem.largeTitleDisplayMode = .automatic
-    myPageView.logOut.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
     setUpTableView()
   }
   
@@ -32,14 +31,6 @@ class MypageController: UIViewController {
     myPageView.myPageList.dataSource = self
     myPageView.myPageList.delegate = self
     myPageView.myPageList.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-  }
-  
-  @objc func logOutTapped() {
-    dataManager.deleteUserDefault(key: "userName")
-    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-       let window = scene.windows.first {
-      window.rootViewController = LoginController()
-    }
   }
 }
 

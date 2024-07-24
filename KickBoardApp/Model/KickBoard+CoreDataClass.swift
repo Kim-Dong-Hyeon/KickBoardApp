@@ -14,6 +14,8 @@ public class KickBoard: NSManagedObject {
   public static let className = "KickBoard"
   public enum Key {
     static let id = "id"
+    static let latitude = "latitude"
+    static let longitude = "longitude"
     static let isRented = "isRented"
     static let currentLatitude = "currentLatitude"
     static let currentLongitude = "currentLongitude"
@@ -26,4 +28,5 @@ public class KickBoard: NSManagedObject {
     static let userId = "userId"
 
   }
+
 }

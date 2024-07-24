@@ -7,14 +7,9 @@
 
 import UIKit
 import PhotosUI
-import CoreData
-
 
 class RegisterKickboardController: UIViewController {
   private var registerKickboardView: RegisterKickboardView!
-  private var mapController: MapController!
-  let coreDataManager = DataManager()
-  let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
   
   override func loadView() {
     registerKickboardView = RegisterKickboardView(frame: UIScreen.main.bounds)
@@ -24,44 +19,21 @@ class RegisterKickboardController: UIViewController {
     super.viewDidLoad()
     self.registerKickboardView.backgroundColor = .systemBackground
     self.title = "킥보드 등록"
-    setButtonAction()
-    setMapview()
-    readRegistrant()
-    readCurrentAddress()
-  }
-
-  private func readCurrentAddress() {
-    let location = CLLocation(latitude: 37.50236, longitude: 127.04444)
-    let geocoder = CLGeocoder()
-    let locale = Locale(identifier: "ko-KR")
-    geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] placemarks, error in
-      guard let self = self else { return }
-      guard let placemark = placemarks?.first else {
-        print("Geocoding error: \(error?.localizedDescription ?? "Unknown error")")
-        return
-      }
-      let administrativeArea = placemark.administrativeArea ?? ""
-      let subLocality = placemark.subLocality ?? ""
-      let name = placemark.name ?? ""
-      let address = [administrativeArea, subLocality, name].joined(separator: " ")
-      self.registerKickboardView.adressValue.text = address
-    }
-  }
-  private func setButtonAction() {
+    
     registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
     registerKickboardView.mapView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
-    registerKickboardView.registerButton.addTarget(self, action: #selector(reigsterButtonTapped), for: .touchUpInside)
-    registerKickboardView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-  }
-  private func setMapview() {
+    
+    // 지도 초기화
     let mapController = MapController()
     addChild(mapController)
     registerKickboardView.mapView.addSubview(mapController.view)
     mapController.didMove(toParent: self)
+    
     mapController.view.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
   }
+
   private func registerKickBoardData() {
     guard let entity = NSEntityDescription.entity(forEntityName: KickBoard.className, in: container.viewContext) else { return }
     let newKickboard = NSManagedObject(entity: entity, insertInto: container.viewContext)
@@ -110,25 +82,10 @@ class RegisterKickboardController: UIViewController {
     registerKickboardView.rentalPeriodDatePicker.date = Date()
   }
   
-  @objc private func cancelButtonTapped() {
-    clear()
-  }
-  @objc private func reigsterButtonTapped() {
-    switch (registerKickboardView.modelNameTextField.text!.isEmpty,
-            registerKickboardView.PhotoView.image == .none) {
-    case (true, false):
-      alertMessage(message: "모델명을 입력해주세요.", no: false)
-    case (false, true):
-      alertMessage(message: "사진을 업로드해주세요.", no: false)
-    case (true, true):
-      alertMessage(message: "등록 화면을 확인해주세요.", no: false)
-    default:
-      alertMessage(message: "등록하시겠습니까?", no: true)
-    }
-  }
   @objc private func selectPhotoButtonTapped() {
     presentPhotoPicker()
   }
+  
   @objc private func goToCurrentLocation() {
     if let currentLocation = LocationManager.shared.currentLocation {
       (children.first as? MapController)?.updateCurrentLocation(location: currentLocation)
@@ -158,4 +115,5 @@ extension RegisterKickboardController: PHPickerViewControllerDelegate {
       }
     }
   }
+  
 }

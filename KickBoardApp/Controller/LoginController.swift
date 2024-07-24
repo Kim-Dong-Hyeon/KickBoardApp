@@ -19,6 +19,16 @@ class LoginController: UIViewController {
     configureEvent()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    let defaults = UserDefaults.standard
+    if defaults.string(forKey: "userName") == nil {
+      return
+    } else {
+      moveToTabBarController()
+    }
+  }
+  
   private func configureView() {
     loginView = LoginView(frame: UIScreen.main.bounds)
     self.view = loginView
@@ -60,9 +70,7 @@ class LoginController: UIViewController {
         } else {
           let defaults = UserDefaults.standard
           defaults.set(id, forKey: "userName")
-          let homeController = TabBarContorller()
-          homeController.modalPresentationStyle = .fullScreen
-          self.present(homeController, animated: true, completion: nil)
+          moveToTabBarController()
         }
       }
       print("조건 불러오기 성공")
@@ -77,5 +85,11 @@ class LoginController: UIViewController {
       return
     })
     self.present(alert, animated: true, completion: nil)
+  }
+  
+  private func moveToTabBarController() {
+    let homeController = TabBarContorller()
+    homeController.modalPresentationStyle = .fullScreen
+    self.present(homeController, animated: true, completion: nil)
   }
 }

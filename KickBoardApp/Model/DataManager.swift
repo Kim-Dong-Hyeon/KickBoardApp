@@ -10,7 +10,7 @@ import CoreData
 
 protocol ReadCoreData {
   func readCoreData<T: NSManagedObject>(entityType: T.Type) -> [T]
-  func readUserDefault(key: String) -> [Any?]
+  func readUserDefault(key: String) -> String?
   func deleteUserDefault(key: String)
 }
 
@@ -30,8 +30,8 @@ class DataManager: ReadCoreData {
     }
   }
   
-  func readUserDefault(key: String) -> [Any?] {
-    return UserDefaults.standard.object(forKey: key) as! [Any?]
+  func readUserDefault(key: String) -> String? {
+    return UserDefaults.standard.object(forKey: key) as? String
   }
   
   func deleteUserDefault(key: String) {

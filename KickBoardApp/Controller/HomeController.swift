@@ -19,6 +19,7 @@ class HomeController: UIViewController {
     self.tabBarController?.viewControllers?[2].tabBarItem.title = "마이페이지"
     self.tabBarController?.viewControllers?[2].tabBarItem.image = UIImage(systemName: "person.fill")
     self.title = "자전거 찾기"
+    self.add(mapController)
     self.tabBarController?.tabBarItem.image = UIImage(systemName: "house")
 //    self.tabBarItem.image = UIImage(systemName: "house")
     
@@ -33,6 +34,13 @@ class HomeController: UIViewController {
       guard let self else { return }
       self.setupHalfModal()
     }, for: .touchDown)
+  }
+  
+  private func add(_ child: UIViewController) {
+    addChild(child)
+    view.addSubview(child.view)
+    child.view.frame = view.bounds
+    child.didMove(toParent: self)
   }
   
   //네비게이션바 검색 기능(+캔슬기능)

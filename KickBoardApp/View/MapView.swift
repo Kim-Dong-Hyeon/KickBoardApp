@@ -11,6 +11,7 @@ import KakaoMapsSDK
 import SnapKit
 
 class MapView: UIView {
+  
   var mapContainer: KMViewContainer = {
     let container = KMViewContainer()
     container.backgroundColor = .white
@@ -18,10 +19,9 @@ class MapView: UIView {
   }()
   let currentLocationButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setTitle("현재 위치로 이동", for: .normal)
-    button.backgroundColor = .systemBlue
-    button.setTitleColor(.white, for: .normal)
-    button.layer.cornerRadius = 5
+    button.setImage(UIImage(named: "track_location_btn.png"), for: .normal)
+    button.backgroundColor = .clear
+    button.layer.cornerRadius = 25 // 반지름을 절반으로 설정하여 버튼을 원형으로 만듭니다.
     button.clipsToBounds = true
     return button
   }()

@@ -10,187 +10,71 @@ import SnapKit
 
 class HomeController: UIViewController {
   
-  private let modalAddressLabel = {
-    let mAL = UILabel()
-    mAL.text = "관악구 신림로 330 (신림동)"
-    mAL.textColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
-    mAL.font = UIFont.systemFont(ofSize: 20, weight: .black)
-    mAL.textAlignment = .left
-    mAL.backgroundColor = .clear
-    return mAL
-  }()
-  
-  private let modalKickboardLabel = {
-    let mKL = UILabel()
-    mKL.text = "킥보드 정보"
-    mKL.textColor = .darkGray
-    mKL.font = UIFont.boldSystemFont(ofSize: 20)
-    mKL.textAlignment = .left
-    mKL.backgroundColor = .clear
-    return mKL
-  }()
-  
-  private let modalKickboardImage = {
-    let mKI = UIImageView()
-    mKI.contentMode = .scaleAspectFit
-    mKI.image = UIImage(named: "testImage(Kickboard)")
-    return mKI
-  }()
-  
-  private let modalKickboardData1 = {
-    let mKD = UILabel()
-    mKD.text = "시리얼넘버  @@@@@@@@@@@@"
-    mKD.textColor = .darkGray
-    mKD.font = UIFont.systemFont(ofSize: 13)
-    mKD.textAlignment = .left
-    mKD.backgroundColor = .clear
-    return mKD
-  }()
-  
-  private let modalKickboardData2 = {
-    let mKD = UILabel()
-    mKD.text = "등록자명  김솔비"
-    mKD.textColor = .darkGray
-    mKD.font = UIFont.systemFont(ofSize: 13)
-    mKD.textAlignment = .left
-    mKD.backgroundColor = .clear
-    return mKD
-  }()
-  
-  private let modalButton1 = {
-    let mB1 = UIButton()
-    mB1.setTitle("대여하기", for: .normal)
-    mB1.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-    mB1.backgroundColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
-    mB1.layer.cornerRadius = 10
-    return mB1
-  }()
-  
-  private let modalButton2 = {
-    let mB2 = UIButton()
-    mB2.setTitle("닫기", for: .normal)
-    mB2.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-    mB2.backgroundColor = #colorLiteral(red: 0, green: 0.4823529412, blue: 1, alpha: 1)
-    mB2.layer.cornerRadius = 10
-    return mB2
-  }()
-  
-  private let modalButtonTemp = {
-    let mBT = UIStackView()
-    mBT.axis = .horizontal
-    mBT.backgroundColor = .clear
-    mBT.spacing = 40
-    mBT.distribution = .fillEqually
-    return mBT
-  }()
-  
-  private let modalKickboardDataTemp = {
-    let mKDT = UIStackView()
-    mKDT.axis = .vertical
-    mKDT.backgroundColor = .clear
-    mKDT.spacing = 8
-    mKDT.distribution = .fillEqually
-    return mKDT
-  }()
+  var homeView: HomeView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.tabBarController?.viewControllers?[1].tabBarItem.title = "킥보드등록"
+    self.tabBarController?.viewControllers?[1].tabBarItem.image = UIImage(systemName: "person.fill")
+    self.tabBarController?.viewControllers?[2].tabBarItem.title = "마이페이지"
+    self.tabBarController?.viewControllers?[2].tabBarItem.image = UIImage(systemName: "person.fill")
     self.title = "자전거 찾기"
-    view.backgroundColor = .white
+//    self.add(mapController)
+    self.tabBarController?.tabBarItem.image = UIImage(systemName: "house")
+//    self.tabBarItem.image = UIImage(systemName: "house")
+    
+    homeView = HomeView()
+    self.view = homeView
+    homeView.backgroundColor = .white
     
     setupNavigationBar()
-    testButton()
-  }
-
-  //네비게이션바 검색 기능(+캔슬기능)
-  func setupNavigationBar() {
-    let serchBar = UISearchController(searchResultsController: nil)
-    self.navigationItem.searchController = serchBar
+    
+    //테스트버튼(추후 삭제 예정)
+    homeView.testButton.addAction(UIAction { [weak self] _ in
+      guard let self else { return }
+      self.setupHalfModal()
+    }, for: .touchDown)
   }
   
-  //모달 테스트용 버튼(추후 지도 핑 클릭 시 오픈되도록 변경)
-  func testButton() {
-    let testButton = UIButton(type: .system)
-    testButton.setTitle("모오달", for: .normal)
-    testButton.addTarget(self, action: #selector(setupHalfModal), for: .touchUpInside)
-    testButton.frame = CGRect(x: 70, y: 200, width: 50, height: 50)
-    
-    view.addSubview(testButton)
+  private func add(_ child: UIViewController) {
+    addChild(child)
+    view.addSubview(child.view)
+    child.view.frame = view.bounds
+    child.didMove(toParent: self)
+  }
+  
+  //네비게이션바 검색 기능(+캔슬기능)
+  func setupNavigationBar() {
+    self.navigationItem.searchController = homeView.serchBar
   }
   
   //모달 내부 세팅
-  @objc func setupHalfModal() {
-    let halfModal = UIViewController()
-    halfModal.view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    
-    modalButtonTemp.addArrangedSubview(modalButton1)
-    modalButtonTemp.addArrangedSubview(modalButton2)
-    modalKickboardDataTemp.addArrangedSubview(modalKickboardData1)
-    modalKickboardDataTemp.addArrangedSubview(modalKickboardData2)
-    
-    let subviews = [
-      modalButtonTemp,
-      modalAddressLabel,
-      modalKickboardLabel,
-      modalKickboardImage,
-      modalKickboardDataTemp
-    ]
-    
-    subviews.forEach { halfModal.view.addSubview($0) }
-    
-    modalButtonTemp.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.bottom.equalToSuperview().offset(-50)
-      $0.height.equalTo(46)
-      $0.width.equalTo(320)
-    }
-    
-    modalAddressLabel.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.top.equalToSuperview().inset(40)
-      $0.height.equalTo(20)
-      $0.width.equalTo(310)
-    }
-    
-    modalKickboardLabel.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.top.equalTo(modalAddressLabel.snp.bottom).offset(20)
-      $0.height.equalTo(20)
-      $0.width.equalTo(310)
-    }
-    
-    modalKickboardImage.snp.makeConstraints {
-      $0.top.equalTo(modalKickboardLabel.snp.bottom).offset(15)
-      $0.leading.equalToSuperview().inset(40)
-      $0.height.equalTo(150)
-      $0.width.equalTo(150)
-    }
-    
-    modalKickboardDataTemp.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.top.equalTo(modalKickboardImage.snp.bottom).offset(15)
-      $0.height.equalTo(40)
-      $0.width.equalTo(310)
-    }
-    
+  func setupHalfModal() {
     //모달 버튼 입력값(대여하기, 닫기)
-    modalButton1.addTarget(self, action: #selector(modalButton1Tapped), for: .touchUpInside)
-    modalButton2.addTarget(self, action: #selector(closeHalfModal), for: .touchUpInside)
+    homeView.modalButton1.addAction(UIAction { [weak self] _ in
+      guard let self else { return }
+      self.setupAlert()
+    }, for: .touchDown)
+    
+    homeView.modalButton2.addAction(UIAction { [weak self] _ in
+      guard let self else { return }
+      self.closeHalfModal()
+    }, for: .touchDown)
+    
+//    homeView.testButton.addAction(UIAction { [weak self] _ in
+//      guard let self else { return }
+//      self.setupHalfModal()
+//    }, for: .touchDown)
     
     //모달 상세 정보 사이즈 설정
-    if let sheet = halfModal.sheetPresentationController {
+    if let sheet = homeView.halfModal.sheetPresentationController {
       sheet.detents = [.medium()]
     }
-    present(halfModal, animated: true, completion: nil)
-  }
-  
-  @objc func modalButton1Tapped() {
-    print("대여완료")
-    setupAlert()
+    present(homeView.halfModal, animated: true, completion: nil)
   }
   
   //모달 닫는 버튼에 들어갈 메서드 설정
-  @objc func closeHalfModal() {
+  func closeHalfModal() {
     dismiss(animated: true, completion: nil)
   }
   

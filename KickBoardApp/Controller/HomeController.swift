@@ -23,11 +23,13 @@ class HomeController: UIViewController {
     self.tabBarController?.viewControllers?[1].tabBarItem.image = UIImage(systemName: "person.fill")
     self.tabBarController?.viewControllers?[2].tabBarItem.title = "마이페이지"
     self.tabBarController?.viewControllers?[2].tabBarItem.image = UIImage(systemName: "person.fill")
-    self.title = "자전거 찾기"
+    self.title = "킥보드 찾기"
     self.tabBarController?.tabBarItem.image = UIImage(systemName: "house")
     //    self.tabBarItem.image = UIImage(systemName: "house")
     
     homeView.backgroundColor = .white
+    homeView.currentLocationButton.setBackgroundImage(UIImage(named: "track_location_btn.png"), for: .normal)
+    homeView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
     
     setupMapController()
     setupNavigationBar()
@@ -120,6 +122,13 @@ class HomeController: UIViewController {
       topController.present(alert, animated: true, completion: nil)
     } else {
       self.present(alert, animated: true, completion: nil)
+    }
+  }
+  @objc private func goToCurrentLocation() {
+    if let currentLocation = LocationManager.shared.currentLocation {
+      mapController.updateCurrentLocation(location: currentLocation)
+    } else {
+      LocationManager.shared.startUpdatingLocation()
     }
   }
 }

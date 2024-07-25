@@ -31,8 +31,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    mapView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
-    
     mapController = KMController(viewContainer: mapView.mapContainer)
     mapController?.delegate = self
     

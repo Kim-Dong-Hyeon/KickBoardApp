@@ -17,14 +17,6 @@ class MapView: UIView {
     container.backgroundColor = .white
     return container
   }()
-  let currentLocationButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(UIImage(named: "track_location_btn.png"), for: .normal)
-    button.backgroundColor = .clear
-    button.layer.cornerRadius = 25 // 반지름을 절반으로 설정하여 버튼을 원형으로 만듭니다.
-    button.clipsToBounds = true
-    return button
-  }()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -37,19 +29,10 @@ class MapView: UIView {
   }
   
   private func setupViews() {
-    [
-      mapContainer,
-      currentLocationButton
-    ].forEach { self.addSubview($0) }
+    [mapContainer].forEach { self.addSubview($0) }
     
     mapContainer.snp.makeConstraints {
       $0.edges.equalToSuperview()
-    }
-    
-    currentLocationButton.snp.makeConstraints {
-      $0.trailing.equalToSuperview().inset(20)
-      $0.bottom.equalToSuperview().inset(100)
-      $0.width.height.equalTo(50)
     }
   }
   

@@ -15,6 +15,11 @@ class HomeView: UIView {
     return view
   }()
   
+  let currentLocationButton: UIButton = {
+    let button = UIButton(type: .system)
+    return button
+  }()
+  
   private let modalAddressLabel = {
     let label = UILabel()
     label.text = "관악구 신림로 330 (신림동)"
@@ -125,17 +130,25 @@ class HomeView: UIView {
   }
   
   private func setupViews() {
-    // MapView 추가
-    self.addSubview(mapView)
+    [
+      mapView,
+      testButton,
+      currentLocationButton
+    ].forEach { self.addSubview($0) }
+    
     mapView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
     
-    // 다른 UI 요소 추가
-    self.addSubview(testButton)
     testButton.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview().offset(200)
+      $0.width.height.equalTo(50)
+    }
+    
+    currentLocationButton.snp.makeConstraints {
+      $0.trailing.equalToSuperview().inset(20)
+      $0.bottom.equalToSuperview().inset(100)
       $0.width.height.equalTo(50)
     }
   }

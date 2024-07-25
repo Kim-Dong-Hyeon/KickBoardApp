@@ -32,7 +32,7 @@ class HomeController: UIViewController {
     homeView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
     
     setupMapController()
-    setupNavigationBar()
+//    setupNavigationBar()
     
     //테스트버튼(추후 삭제 예정)
     homeView.testButton.addAction(UIAction { [weak self] _ in
@@ -60,12 +60,14 @@ class HomeController: UIViewController {
     mapController.view.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
+    
+    mapController.homePlaceNameLabel = homeView.homePlaceNameLabel
   }
   
   //네비게이션바 검색 기능(+캔슬기능)
-  func setupNavigationBar() {
-    self.navigationItem.searchController = homeView.serchBar
-  }
+//  func setupNavigationBar() {
+//    self.navigationItem.searchController = homeView.serchBar
+//  }
   
   //모달 내부 세팅
   func setupHalfModal() {

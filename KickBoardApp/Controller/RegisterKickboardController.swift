@@ -43,13 +43,13 @@ class RegisterKickboardController: UIViewController {
       let administrativeArea = placemark.administrativeArea ?? ""
       let subLocality = placemark.subLocality ?? ""
       let name = placemark.name ?? ""
-      let address = [administrativeArea, subLocality, name].joined(separator: " ")
+      let address = [subLocality, name].joined(separator: " ")
       self.registerKickboardView.adressValue.text = address
     }
   }
   private func setButtonAction() {
     registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
-    registerKickboardView.mapView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
+    registerKickboardView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
     registerKickboardView.registerButton.addTarget(self, action: #selector(reigsterButtonTapped), for: .touchUpInside)
     registerKickboardView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
   }

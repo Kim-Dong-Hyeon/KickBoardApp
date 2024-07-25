@@ -10,6 +10,13 @@ import UIKit
 
 class ExpandableCell: UITableViewCell {
   static let identifier = "ExpandableCell"
+  let mapController = MapController()
+  
+  lazy var uiView: UIView = {
+    let uiView = UIView()
+    uiView.backgroundColor = .gray
+    return uiView
+  }()
   
   private lazy var fee: UILabel = {
     let label = UILabel()
@@ -28,11 +35,23 @@ class ExpandableCell: UITableViewCell {
   }
   
   private func configureUI() {
-    [fee].forEach { contentView.addSubview($0) }
+    [uiView, fee].forEach { contentView.addSubview($0) }
   }
   
   private func setConstraints() {
     fee.snp.makeConstraints {
+      $0.bottom.equalToSuperview()
+    }
+    
+    uiView.snp.makeConstraints {
+      $0.leading.trailing.top.equalToSuperview().inset(10)
+      $0.bottom.equalTo(fee.snp.top)
+    }
+  }
+  
+  func configureCell(with mapController: MapController) {
+    uiView.addSubview(mapController.view)
+    mapController.view.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
   }

@@ -6,12 +6,15 @@
 //
 
 import UIKit
+
 import SnapKit
+import KakaoMapsSDK
 
 class UsageHistoryController: UIViewController {
   
   var openSections: [Bool] = Array(repeating: false, count: 5)
-  let value = 5
+  let mapController = MapController()
+  let expandableCell = ExpandableCell()
   lazy var usageList = UITableView(frame: .zero, style: .insetGrouped)
   let dataManager = DataManager()
   var models: [Ride] = [] {
@@ -21,9 +24,20 @@ class UsageHistoryController: UIViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     models = dataManager.readCoreData(entityType: Ride.self).filter { $0.name == dataManager.readUserDefault(key: "userName")}
     usageList.reloadData()
+    mapController.prepareEngine()
+    mapController.activateEngine()
+    print(#function)
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    mapController.pauseEngine()
+    print(#function)
+  }
+  
   override func viewDidLoad() {
     self.title = "나의 이용 내역"
     view.backgroundColor = .white
@@ -67,6 +81,8 @@ extension UsageHistoryController: UITableViewDelegate, UITableViewDataSource {
       guard let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableCell.identifier, for: indexPath) as? ExpandableCell else {
         return UITableViewCell()
       }
+      cell.configureCell(with: mapController)
+      mapController.reloadInputViews()
       return cell
     }
   }
@@ -76,8 +92,6 @@ extension UsageHistoryController: UITableViewDelegate, UITableViewDataSource {
     if indexPath.row == 0 {
       openSections[indexPath.section].toggle()
       tableView.reloadSections([indexPath.section], with: .none)
-    } else {
-      print("Expandable cell 선택됨")
     }
   }
   

@@ -18,7 +18,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   private var mapView = MapView()
   private var kakaoMapView: KakaoMap?
   private var currentLocationMarker: Poi?
-  private var homePlaceNameLabel: UILabel?
+  var homePlaceNameLabel: UILabel?
   
   // 지도 상태를 저장할 변수
   private var lastMarkerPosition: MapPoint?

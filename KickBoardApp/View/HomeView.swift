@@ -10,8 +10,8 @@ import SnapKit
 
 class HomeView: UIView {
   
-  let mapView: MapView = {
-    let view = MapView()
+  let mapView: UIView = {
+    let view = UIView()
     return view
   }()
   

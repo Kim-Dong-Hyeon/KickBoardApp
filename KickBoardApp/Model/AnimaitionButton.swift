@@ -53,12 +53,12 @@ private enum Animation {
     case .touchDown:
       return Element(
         duration: 0.05,
-        scale: .init(scaleX: 0.99, y: 0.99),
+        scale: .init(scaleX: 0.98, y: 0.98),
         alpha: 0.5
       )
     case .touchUp:
       return Element(
-        duration: 0.05,
+        duration: 1.00,
         scale: .identity,
         alpha: 1
       )

@@ -24,6 +24,11 @@ class JoinController: UIViewController {
     configureEvent()
   }
   
+  // 키보드 닫기
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
+  
   private func configureView() {
     joinView = JoinView(frame: UIScreen.main.bounds)
     self.view = joinView
@@ -136,4 +141,5 @@ class JoinController: UIViewController {
       return true
     }
   }
+  
 }

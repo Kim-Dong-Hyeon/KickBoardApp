@@ -10,21 +10,27 @@ import SnapKit
 
 class RegisterKickboardView: UIView {
 
-  let mapView: MapView = {
-    let view = MapView()
+  let mapView: UIView = {
+    let view = UIView()
     return view
   }()
-  
+  let currentLocationButton: AnimationButton = {
+    let button = AnimationButton()
+    button.setImage(UIImage(named: "track_location_btn"), for: .normal)
+    button.backgroundColor = .clear
+    return button
+  }()
   let adressLabel: UILabel = {
     let label = UILabel()
-    label.text = "위치:"
+    label.attributedText = NSAttributedString(string: "위 치:", attributes: [.kern: 4.9])
+    label.textAlignment = .right
     return label
   }()
   let adressValue: UILabel = {
     let label = UILabel()
     label.text = ""
     label.font = .systemFont(ofSize: 12)
-    label.textAlignment = .left
+    label.textAlignment = .right
     label.numberOfLines = 2
     label.lineBreakMode = .byWordWrapping
     return label
@@ -38,13 +44,13 @@ class RegisterKickboardView: UIView {
   
   let registrantLabel: UILabel = {
     let label = UILabel()
-    label.text = "등록자:"
+    label.text = "등록자 :"
     return label
   }()
   let registrantValue: UILabel = {
     let label = UILabel()
     label.text = ""
-    label.textAlignment = .left
+    label.textAlignment = .right
     return label
   }()
   let registrantStackView: UIStackView = {
@@ -56,13 +62,14 @@ class RegisterKickboardView: UIView {
   
   let modelNameLabel: UILabel = {
     let label = UILabel()
-    label.text = "모델명:"
+    label.text = "모델명 :"
     return label
   }()
   let modelNameTextField: UITextField = {
     let textField = UITextField()
     textField.text = ""
     textField.borderStyle = .roundedRect
+    textField.textAlignment = .right
     return textField
   }()
   let modelNameStackView: UIStackView = {
@@ -167,57 +174,17 @@ class RegisterKickboardView: UIView {
   }
   
   func configureUI() {
-    [
-      mapView,
-      aStackView,
-      buttonStackView
-    ].forEach { self.addSubview($0) }
-    [ adressLabel,
-      adressValue
-    ].forEach { adressStackView.addArrangedSubview($0)
-    }
-    [
-      registrantLabel,
-      registrantValue
-    ].forEach { registrantStackView.addArrangedSubview($0)
-    }
-    [
-      modelNameLabel,
-      modelNameTextField
-    ].forEach {
-      modelNameStackView.addArrangedSubview($0)
-    }
-    [
-    currentDateLabel,
-    rentalPeriodDatePicker
-    ].forEach {
-      rentalStackView.addArrangedSubview($0)
-    }
-    [
-      PhotoView,
-      selectPhotoButton
-    ].forEach {
-      addPhotoStackView.addArrangedSubview($0)
-    }
-    [
-      registrantStackView,
-      modelNameStackView,
-      adressStackView,
-      rentalPeriodLabel,
-      rentalStackView,
-    ].forEach {
+    [mapView, aStackView, buttonStackView,currentLocationButton].forEach { self.addSubview($0)}
+    [adressLabel, adressValue].forEach { adressStackView.addArrangedSubview($0) }
+    [registrantLabel, registrantValue].forEach { registrantStackView.addArrangedSubview($0) }
+    [modelNameLabel, modelNameTextField].forEach { modelNameStackView.addArrangedSubview($0) }
+    [currentDateLabel, rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }
+    [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
+    [adressStackView, registrantStackView, modelNameStackView, rentalPeriodLabel, rentalStackView].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
-    [
-    addPhotoStackView,
-    registerInformationStackView
-    ].forEach {
-      aStackView.addArrangedSubview($0)
-    }
-    [
-      registerButton,
-      cancelButton
-    ].forEach {
+    [addPhotoStackView, registerInformationStackView].forEach { aStackView.addArrangedSubview($0) }
+    [registerButton, cancelButton].forEach {
       $0.layer.cornerRadius = 5
       $0.backgroundColor = .blue
       buttonStackView.addArrangedSubview($0)
@@ -225,12 +192,19 @@ class RegisterKickboardView: UIView {
   }
   
   func setConstraints() {
-
+    currentLocationButton.snp.makeConstraints {
+      $0.bottom.equalTo(mapView.snp.bottom).inset(25)
+      $0.trailing.equalTo(mapView.snp.trailing).inset(25)
+      $0.width.height.equalTo(30)
+    }
     mapView.snp.makeConstraints {
       $0.top.equalToSuperview().inset(100)
       $0.leading.equalToSuperview().inset(30)
       $0.trailing.equalToSuperview().inset(30)
       $0.bottom.equalTo(aStackView.snp.top).inset(-30)
+    }
+    adressLabel.snp.makeConstraints {
+      $0.trailing.equalTo(registrantLabel.snp.trailing)
     }
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)

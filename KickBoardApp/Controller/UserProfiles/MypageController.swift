@@ -35,11 +35,11 @@ class MypageController: UIViewController {
   }
   
   @objc func logOutTapped() {
-    dataManager.deleteUserDefault(key: "userName")
-    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-       let window = scene.windows.first {
-      window.rootViewController = LoginController()
-    }
+      dataManager.deleteUserDefault(key: "userName")
+      if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+         let window = scene.windows.first {
+        window.rootViewController = UINavigationController(rootViewController: LoginController())
+      }
   }
 }
 

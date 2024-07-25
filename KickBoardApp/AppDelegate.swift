@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     } else {
       print("Kakao API Key is missing")
     }
+    sleep(2)
     return true
   }
 

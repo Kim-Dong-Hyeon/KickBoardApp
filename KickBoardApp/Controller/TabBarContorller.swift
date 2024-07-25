@@ -9,10 +9,11 @@ import UIKit
 
 class TabBarContorller: UITabBarController {
   
-  private var mapControllerInstance: MapController?
+  private var mapControllerInstance = MapController()
   
   lazy var homeController: UINavigationController = {
     let controller = HomeController()
+    controller.mapController = mapControllerInstance
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.tabBarItem.image = UIImage(systemName: "house")
     navigationController.tabBarItem.title = "Home"
@@ -20,10 +21,12 @@ class TabBarContorller: UITabBarController {
   }()
   
   lazy var registerKickboardController: UINavigationController = {
-    let controller = UINavigationController(rootViewController: RegisterKickboardController())
+    let controller = RegisterKickboardController()
+    controller.mapController = mapControllerInstance
+    let navigationController = UINavigationController(rootViewController: (controller))
     controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
     controller.view.backgroundColor = .white
-    return controller
+    return navigationController
   }()
   
   lazy var myPageController: UINavigationController = {
@@ -37,37 +40,14 @@ class TabBarContorller: UITabBarController {
     super.viewDidLoad()
     viewControllers = [homeController, registerKickboardController, myPageController]
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    mapControllerInstance.restoreMapState()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    mapControllerInstance.saveMapState()
+  }
 }
-
-//import UIKit
-//
-//class TabBarContorller: UITabBarController {
-//  lazy var mapController = {
-//    let controller = MapController()
-//    controller.tabBarItem.image = UIImage(systemName: "house")
-//    controller.tabBarItem.title = "Home"
-//    controller.view.backgroundColor = .white
-//    return controller
-//  }()
-//
-//  lazy var registerKickboardController = {
-//    let controller = UINavigationController(rootViewController: RegisterKickboardController())
-//    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
-//    controller.view.backgroundColor = .white
-//    return controller
-//  }()
-//
-//  lazy var myPageController = {
-//    let controller = MypageController()
-//    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
-//    return controller
-//  }()
-//
-//  override func viewDidLoad() {
-//    super.viewDidLoad()
-//    let navigationController = UINavigationController(rootViewController: MypageController())
-//    let naviCon = UINavigationController(rootViewController: HomeController())
-//    navigationController.navigationBar.prefersLargeTitles = true
-//    viewControllers = [naviCon, registerKickboardController, navigationController]
-//  }
-//}

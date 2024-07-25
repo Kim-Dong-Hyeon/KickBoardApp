@@ -20,6 +20,7 @@ class RegisterCell: UICollectionViewCell {
   private lazy var addressLabel: UILabel = {
     let label = UILabel()
     label.text = "주소: "
+    label.adjustsFontSizeToFitWidth = true
     return label
   }()
   

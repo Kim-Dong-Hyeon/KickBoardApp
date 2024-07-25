@@ -40,6 +40,7 @@
 		7674BD132C4F9BDD000F5C53 /* RegisterHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */; };
 		7674BD152C4FD0D7000F5C53 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD142C4FD0D7000F5C53 /* HomeController.swift */; };
 		7674BD172C4FD1C5000F5C53 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD162C4FD1C5000F5C53 /* HomeView.swift */; };
+		DD07C8662C5220E600FB095F /* ExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07C8652C5220E600FB095F /* ExpandableCell.swift */; };
 		DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680232C4E4F570018F531 /* MyPageView.swift */; };
 		DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680252C4E64D20018F531 /* UsageHistoryController.swift */; };
 		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
@@ -81,6 +82,7 @@
 		7674BD112C4F77D9000F5C53 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7674BD142C4FD0D7000F5C53 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7674BD162C4FD1C5000F5C53 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DD07C8652C5220E600FB095F /* ExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCell.swift; sourceTree = "<group>"; };
 		DDB680232C4E4F570018F531 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		DDB680252C4E64D20018F531 /* UsageHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryController.swift; sourceTree = "<group>"; };
 		DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryController.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				DDB680232C4E4F570018F531 /* MyPageView.swift */,
 				DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */,
 				DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */,
+				DD07C8652C5220E600FB095F /* ExpandableCell.swift */,
 				DDB6806C2C4F86600018F531 /* UsageListCell.swift */,
 				DDB6806E2C4FA1660018F531 /* RegisterCell.swift */,
 			);
@@ -315,6 +318,7 @@
 				748EDF412C4EA248000B74DB /* JoinView.swift in Sources */,
 				7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */,
 				7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */,
+				DD07C8662C5220E600FB095F /* ExpandableCell.swift in Sources */,
 				DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */,
 				7458E0582C4E461C003BDAF3 /* MapController.swift in Sources */,
 				4F07CA252C4E840F00A19E5C /* RegisterKickboardController.swift in Sources */,
@@ -465,9 +469,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = P9KD2K67FZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KickBoardApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "모두의 킥보드";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱을 사용하는 동안 위치를 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -494,9 +499,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = P9KD2K67FZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KickBoardApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "모두의 킥보드";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱을 사용하는 동안 위치를 사용합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

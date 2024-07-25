@@ -28,6 +28,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
   
   func startUpdatingLocation() {
     checkAuthorizationStatus()
+    locationManager.startUpdatingLocation()
   }
   
   func stopUpdatingLocation() {
@@ -60,26 +61,3 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     checkAuthorizationStatus()
   }
 }
-
-//  private override init() {
-//    super.init()
-//    locationManager.delegate = self
-//    locationManager.requestWhenInUseAuthorization()
-//    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//    locationManager.startUpdatingLocation()
-//  }
-//
-//  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//    guard let location = locations.last else { return }
-//    currentLocation = location
-//    onLocationUpdate?(location)
-//  }
-//
-//  func startUpdatingLocation() {
-//    locationManager.startUpdatingLocation()
-//  }
-//
-//  func stopUpdatingLocation() {
-//    locationManager.stopUpdatingLocation()
-//  }
-//}

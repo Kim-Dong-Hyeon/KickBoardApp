@@ -60,7 +60,7 @@ class UsageListCell: UITableViewCell {
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    self.backgroundColor = UIColor(red: 12/255, green: 97/255, blue: 254/255, alpha: 1.0)
+    contentView.backgroundColor = UIColor(red: 12/255, green: 97/255, blue: 254/255, alpha: 1.0)
     configureUI()
     setConstraints()
   }
@@ -87,9 +87,9 @@ class UsageListCell: UITableViewCell {
     }
     
     cellStackView.snp.makeConstraints {
-      $0.top.equalTo(cellImage.snp.bottom)
+      $0.top.equalTo(cellImage.snp.bottom).offset(10)
       $0.leading.equalTo(cellImage.snp.trailing).offset(10)
-      $0.trailing.equalToSuperview()
+      $0.trailing.bottom.equalToSuperview().inset(10)
     }
   }
   

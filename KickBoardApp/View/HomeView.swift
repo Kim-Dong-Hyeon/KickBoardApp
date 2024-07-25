@@ -15,6 +15,16 @@ class HomeView: UIView {
     return view
   }()
   
+  let homePlaceNameLabel = {
+    let label = UILabel()
+    label.text = "서울특별시 관악구 신림동"
+    label.textColor = .black
+    label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+    label.textAlignment = .center
+    label.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+    return label
+  }()
+  
   private let modalAddressLabel = {
     let label = UILabel()
     label.text = "관악구 신림로 330 (신림동)"
@@ -111,7 +121,7 @@ class HomeView: UIView {
   }()
   
   //네비게이션바 검색 기능(+캔슬기능)
-  let serchBar = UISearchController(searchResultsController: nil)
+//  let serchBar = UISearchController(searchResultsController: nil)
   let halfModal = UIViewController()
   
   override init(frame: CGRect) {
@@ -137,6 +147,15 @@ class HomeView: UIView {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview().offset(200)
       $0.width.height.equalTo(50)
+    }
+    
+    self.addSubview(homePlaceNameLabel)
+    homePlaceNameLabel.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalTo(self.safeAreaLayoutGuide)
+      $0.leading.equalToSuperview().inset(40)
+      $0.trailing.equalToSuperview().inset(40)
+      $0.height.equalTo(40)
     }
   }
   

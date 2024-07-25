@@ -18,6 +18,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   private var mapView = MapView()
   private var kakaoMapView: KakaoMap?
   private var currentLocationMarker: Poi?
+  var homePlaceNameLabel: UILabel?
   
   // 지도 상태를 저장할 변수
   private var lastMarkerPosition: MapPoint?
@@ -36,6 +37,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     
     LocationManager.shared.onLocationUpdate = { [weak self] location in
       self?.updateCurrentLocation(location: location)
+      self?.updatePlaceNameLabel(location: location)
     }
     
     LocationManager.shared.onAuthorizationChange = { [weak self] status in
@@ -43,6 +45,29 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     }
     
     LocationManager.shared.startUpdatingLocation()
+    
+  }
+  
+  
+  //홈탭 위치정보 텍스트 업데이트
+  func updatePlaceNameLabel(location: CLLocation) {
+    CLGeocoder().reverseGeocodeLocation(location) { [weak self] placemarks, error in
+      guard let self = self else { return }
+      if let placemark = placemarks?.first {
+        DispatchQueue.main.async {
+          // 올바른 주소 추출
+          let administrativeArea = placemark.administrativeArea ?? ""  // 서울특별시
+          let subAdministrativeArea = placemark.subAdministrativeArea ?? ""  // 강남구 등
+          let subLocality = placemark.subLocality ?? ""  // 역삼동 등
+          
+          // 주소 문자열 생성
+          let address = "\(administrativeArea) \(subAdministrativeArea) \(subLocality)".trimmingCharacters(in: .whitespacesAndNewlines)
+          
+          // 주소 텍스트 업데이트
+          self.homePlaceNameLabel?.text = address
+        }
+      }
+    }
   }
   
   override func viewWillAppear(_ animated: Bool) {

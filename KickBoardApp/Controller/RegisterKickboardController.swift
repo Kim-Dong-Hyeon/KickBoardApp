@@ -71,6 +71,7 @@ class RegisterKickboardController: UIViewController {
     mapController.view.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
+    addChild(mapController)
   }
   private func registerKickBoardData() {
     guard let entity = NSEntityDescription.entity(forEntityName: KickBoard.className, in: container.viewContext) else { return }

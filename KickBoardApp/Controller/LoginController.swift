@@ -29,6 +29,16 @@ class LoginController: UIViewController {
     }
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+  
   // 키보드 닫기
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     self.view.endEditing(true)
@@ -100,8 +110,26 @@ class LoginController: UIViewController {
       window.makeKeyAndVisible()
     }
     
-//    let homeController = TabBarContorller()
-//    homeController.modalPresentationStyle = .fullScreen
-//    self.present(homeController, animated: true, completion: nil)
+    //    let homeController = TabBarContorller()
+    //    homeController.modalPresentationStyle = .fullScreen
+    //    self.present(homeController, animated: true, completion: nil)
+  }
+  
+  // 키보드 올라오면 View 올려주기 구현
+  @objc func keyboardUp(notification:NSNotification) {
+    if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+      let keyboardRectangle = keyboardFrame.cgRectValue
+      
+      UIView.animate(
+        withDuration: 0.3
+        , animations: {
+          self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height/3)
+        }
+      )
+    }
+  }
+  
+  @objc func keyboardDown() {
+    self.view.transform = .identity
   }
 }

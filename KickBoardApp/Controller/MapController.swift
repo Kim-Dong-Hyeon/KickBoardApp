@@ -45,8 +45,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     }
     
     LocationManager.shared.startUpdatingLocation()
-    
-
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -65,16 +63,32 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     isAppear = false
-    mapController?.pauseEngine()
+    pauseEngine()
     saveMapState()
   }
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     removeObservers()
+    // 지도 엔진을 재설정하지 않도록 주석 처리
+    //    resetEngine()
+  }
+  
+  func prepareEngine() {
+    mapController?.prepareEngine()
+  }
+  
+  func activateEngine() {
+    mapController?.activateEngine()
+  }
+  
+  func pauseEngine() {
+    mapController?.pauseEngine()
+  }
+  
+  func resetEngine() {
     mapController?.resetEngine()
   }
-
   
   func authenticationSucceeded() {
     if !isAuth {
@@ -108,7 +122,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       break
     }
   }
-
+  
   func addViews() {
     let defaultPosition = MapPoint(longitude: 127.108678, latitude: 37.402001)
     let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)
@@ -206,18 +220,41 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     
     // 현재 위치를 저장
     lastMarkerPosition = currentPosition
+    print("현재 마커 위치:\(String(describing: lastMarkerPosition))")
   }
   
-  private func saveMapState() {
+  func saveMapState() {
     guard let kakaoMapView = kakaoMapView else { return }
     lastMarkerPosition = currentLocationMarker?.position
     lastZoomLevel = Int(kakaoMapView.zoomLevel)
   }
   
-  private func restoreMapState() {
+  func restoreMapState() {
     guard let kakaoMapView = kakaoMapView, let position = lastMarkerPosition, let zoomLevel = lastZoomLevel else { return }
     let cameraUpdate = CameraUpdate.make(target: position, zoomLevel: Int(zoomLevel), mapView: kakaoMapView)
     kakaoMapView.moveCamera(cameraUpdate)
+    if let currentLocationMarker = currentLocationMarker {
+      currentLocationMarker.position = position
+      currentLocationMarker.show()
+    } else {
+      let manager = kakaoMapView.getLabelManager()
+      let iconStyle = PoiIconStyle(symbol: UIImage(named: "current_location_marker.png"))
+      let poiStyle = PoiStyle(styleID: "currentLocationStyle", styles: [
+        PerLevelPoiStyle(iconStyle: iconStyle, level: 0)
+      ])
+      manager.addPoiStyle(poiStyle)
+      let layerOptions = LabelLayerOptions(
+        layerID: "default",
+        competitionType: .none,
+        competitionUnit: .symbolFirst,
+        orderType: .rank,
+        zOrder: 1000
+      )
+      let layer = manager.getLabelLayer(layerID: "default") ?? manager.addLabelLayer(option: layerOptions)
+      let poiOption = PoiOptions(styleID: "currentLocationStyle")
+      currentLocationMarker = layer?.addPoi(option: poiOption, at: position)
+      currentLocationMarker?.show()
+    }
   }
   
   private func handleAuthorizationChange(_ status: CLAuthorizationStatus) {

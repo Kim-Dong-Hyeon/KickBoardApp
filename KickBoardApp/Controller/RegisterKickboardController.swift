@@ -12,7 +12,7 @@ import CoreData
 
 class RegisterKickboardController: UIViewController {
   private var registerKickboardView: RegisterKickboardView!
-  private var mapController: MapController!
+  var mapController: MapController!
   let coreDataManager = DataManager()
   let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
   
@@ -20,6 +20,7 @@ class RegisterKickboardController: UIViewController {
     registerKickboardView = RegisterKickboardView(frame: UIScreen.main.bounds)
     self.view = registerKickboardView
   }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.registerKickboardView.backgroundColor = .systemBackground
@@ -29,7 +30,18 @@ class RegisterKickboardController: UIViewController {
     readRegistrant()
     readCurrentAddress()
   }
-
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    mapController.prepareEngine() // prepareEngine 호출
+    mapController.activateEngine() // activateEngine 호출
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    mapController.pauseEngine() // pauseEngine 호출
+  }
+  
   private func readCurrentAddress() {
     let location = CLLocation(latitude: 37.50236, longitude: 127.04444)
     let geocoder = CLGeocoder()
@@ -40,10 +52,10 @@ class RegisterKickboardController: UIViewController {
         print("Geocoding error: \(error?.localizedDescription ?? "Unknown error")")
         return
       }
-      let administrativeArea = placemark.administrativeArea ?? ""
+//      let administrativeArea = placemark.administrativeArea ?? ""
       let subLocality = placemark.subLocality ?? ""
       let name = placemark.name ?? ""
-      let address = [administrativeArea, subLocality, name].joined(separator: " ")
+      let address = [/*administrativeArea,*/ subLocality, name].joined(separator: " ")
       self.registerKickboardView.adressValue.text = address
     }
   }
@@ -54,8 +66,8 @@ class RegisterKickboardController: UIViewController {
     registerKickboardView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
   }
   private func setMapview() {
-    let mapController = MapController()
-    addChild(mapController)
+    guard let mapController = mapController else { return }
+//    addChild(mapController)
     registerKickboardView.mapView.addSubview(mapController.view)
     mapController.didMove(toParent: self)
     mapController.view.snp.makeConstraints {

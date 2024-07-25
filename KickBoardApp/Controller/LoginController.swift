@@ -29,6 +29,11 @@ class LoginController: UIViewController {
     }
   }
   
+  // 키보드 닫기
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
+  
   private func configureView() {
     loginView = LoginView(frame: UIScreen.main.bounds)
     self.view = loginView

@@ -83,6 +83,9 @@ class RegisterKickboardController: UIViewController {
     let newKickboard = NSManagedObject(entity: entity, insertInto: container.viewContext)
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
+    
+    newKickboard.setValue(LocationManager.shared.currentLatitude, forKey: KickBoard.Key.currentLatitude)
+    newKickboard.setValue(LocationManager.shared.currentLongitude, forKey: KickBoard.Key.currentLongitude)
     newKickboard.setValue(registerKickboardView.registrantValue.text, forKey: KickBoard.Key.registrant)
     newKickboard.setValue(registerKickboardView.modelNameTextField.text, forKey: KickBoard.Key.modelName)
     newKickboard.setValue(registerKickboardView.adressValue.text, forKey: KickBoard.Key.registedLocation)

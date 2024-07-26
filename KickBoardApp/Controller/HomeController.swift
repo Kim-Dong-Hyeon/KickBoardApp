@@ -80,7 +80,7 @@ class HomeController: UIViewController {
     homeView.modalButton2.addAction(UIAction { [weak self] _ in
       guard let self = self else { return }
       self.closeHalfModal()
-    }, for: .touchDown)
+    }, for: .touchUpInside)
     
     //    homeView.testButton.addAction(UIAction { [weak self] _ in
     //      guard let self else { return }

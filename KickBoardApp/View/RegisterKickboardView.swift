@@ -12,6 +12,10 @@ class RegisterKickboardView: UIView {
 
   let mapView: UIView = {
     let view = UIView()
+    view.layer.borderWidth = 1.0
+    view.layer.borderColor = UIColor.lightGray.cgColor
+    view.layer.cornerRadius = 5.0
+    view.clipsToBounds = true
     return view
   }()
   let currentLocationButton: AnimationButton = {
@@ -22,29 +26,32 @@ class RegisterKickboardView: UIView {
   }()
   let adressLabel: UILabel = {
     let label = UILabel()
-    label.attributedText = NSAttributedString(string: "위 치:", attributes: [.kern: 4.9])
-    label.textAlignment = .right
+    label.attributedText = NSAttributedString(string: "위 치", attributes: [.kern: 4.9])
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
   let adressValue: UILabel = {
     let label = UILabel()
     label.text = ""
-    label.font = .systemFont(ofSize: 12)
+    label.font = .systemFont(ofSize: 15)
     label.textAlignment = .right
-    label.numberOfLines = 2
+    label.numberOfLines = 1
     label.lineBreakMode = .byWordWrapping
     return label
   }()
   let adressStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
-    stackView.spacing = 4
+    stackView.spacing = 2
     return stackView
   }()
   
   let registrantLabel: UILabel = {
     let label = UILabel()
-    label.text = "등록자 :"
+    label.text = "등록자"
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
   let registrantValue: UILabel = {
@@ -62,7 +69,9 @@ class RegisterKickboardView: UIView {
   
   let modelNameLabel: UILabel = {
     let label = UILabel()
-    label.text = "모델명 :"
+    label.text = "모델명"
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
   let modelNameTextField: UITextField = {
@@ -82,16 +91,32 @@ class RegisterKickboardView: UIView {
   let rentalPeriodLabel: UILabel = {
     let label = UILabel()
     label.text = "대여 기간"
-    label.textAlignment = .center
+    label.textAlignment = .left
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
   let currentDateLabel: UILabel = {
     let label = UILabel()
     let currentDate = Date()
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
+    dateFormatter.dateFormat = "yyyy. MM. dd"
     label.text = dateFormatter.string(from: currentDate)
-    label.font = UIFont.systemFont(ofSize: 18)
+    label.font = UIFont.systemFont(ofSize: 15)
+    label.textAlignment = .right
+    return label
+  }()
+  let rentalStackView1: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.spacing = 2
+    return stackView
+  }()
+  let waveLabel: UILabel = {
+    let label = UILabel()
+    label.text = "~    "
+    label.textAlignment = .right
+    label.font = UIFont.systemFont(ofSize: 15)
     return label
   }()
   let rentalPeriodDatePicker: UIDatePicker = {
@@ -100,12 +125,13 @@ class RegisterKickboardView: UIView {
     datePicker.datePickerMode = .date
     datePicker.locale = Locale(identifier: "ko-KR")
     datePicker.timeZone = .autoupdatingCurrent
+    datePicker.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     return datePicker
   }()
-  let rentalStackView: UIStackView = {
+  let rentalStackView2: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 4
+    stackView.spacing = 2
     return stackView
   }()
  
@@ -123,14 +149,14 @@ class RegisterKickboardView: UIView {
     let stackView = UIStackView()
     stackView.axis = .horizontal
     stackView.distribution = .fillEqually
-    stackView.spacing = 16
+    stackView.spacing = 40
     return stackView
   }()
  
   let registerInformationStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 8
+    stackView.spacing = 17
     return stackView
   }()
   
@@ -145,14 +171,19 @@ class RegisterKickboardView: UIView {
   let selectPhotoButton: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("사진 선택", for: .normal)
-    button.backgroundColor = .blue
+    button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+    button.backgroundColor = .white
+    button.setTitleColor(.gray, for: .normal)
+    button.setTitleColor(.blue, for: .highlighted)
+    button.layer.borderWidth = 1.0
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     button.layer.cornerRadius = 5
     return button
   }()
   let addPhotoStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 16
+    stackView.spacing = 5
     return stackView
   }()
   
@@ -175,18 +206,21 @@ class RegisterKickboardView: UIView {
   
   func configureUI() {
     [mapView, aStackView, buttonStackView,currentLocationButton].forEach { self.addSubview($0)}
-    [adressLabel, adressValue].forEach { adressStackView.addArrangedSubview($0) }
+    [adressLabel, adressValue].forEach { 
+        adressStackView.addArrangedSubview($0) }
     [registrantLabel, registrantValue].forEach { registrantStackView.addArrangedSubview($0) }
     [modelNameLabel, modelNameTextField].forEach { modelNameStackView.addArrangedSubview($0) }
-    [currentDateLabel, rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }
+    [rentalPeriodLabel ,currentDateLabel].forEach { rentalStackView1.addArrangedSubview($0) }
+    [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach { rentalStackView2.addArrangedSubview($0) }
     [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
-    [adressStackView, registrantStackView, modelNameStackView, rentalPeriodLabel, rentalStackView].forEach {
+    [adressStackView, registrantStackView, modelNameStackView, rentalStackView2].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
     [addPhotoStackView, registerInformationStackView].forEach { aStackView.addArrangedSubview($0) }
     [registerButton, cancelButton].forEach {
-      $0.layer.cornerRadius = 5
-      $0.backgroundColor = .blue
+      $0.layer.cornerRadius = 10
+      $0.backgroundColor = UIColor(named: "KickColor")
+      $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
       buttonStackView.addArrangedSubview($0)
     }
   }
@@ -213,19 +247,31 @@ class RegisterKickboardView: UIView {
       $0.width.equalTo(120)
     }
     selectPhotoButton.snp.makeConstraints {
-      $0.height.equalTo(30)
+      $0.height.equalTo(20)
+    }
+    rentalPeriodDatePicker.snp.makeConstraints {
+      $0.trailing.equalToSuperview()
+    }
+    modelNameTextField.snp.makeConstraints {
+      $0.height.equalTo(25)
     }
     buttonStackView.snp.makeConstraints {
-      $0.bottom.equalToSuperview().inset(90)
       $0.centerX.equalToSuperview()
-      $0.width.equalTo(300)
-      $0.height.equalTo(50)
+      $0.bottom.equalToSuperview().inset(90)
+      $0.height.equalTo(46)
+      $0.width.equalTo(320)
+//      $0.bottom.equalToSuperview().inset(90)
+//      $0.centerX.equalToSuperview()
+//      $0.width.equalTo(300)
+//      $0.height.equalTo(50)
     }
     aStackView.snp.makeConstraints {
       $0.height.equalTo(200)
-      $0.bottom.equalTo(buttonStackView.snp.top).offset(-10)
+      $0.bottom.equalTo(buttonStackView.snp.top).offset(-20)
       $0.centerX.equalToSuperview()
-      $0.width.equalToSuperview().multipliedBy(0.8)
+      $0.leading.equalToSuperview().inset(30)
+      $0.trailing.equalToSuperview().inset(30)
+//      $0.width.equalToSuperview().multipliedBy(0.8)
     }
   }
 }

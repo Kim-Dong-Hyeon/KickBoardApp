@@ -25,7 +25,6 @@ struct Address: Decodable {
 }
 
 class AddressFetcher {
-  
   func fetchAddress(completion: @escaping (String?, Error?) -> Void) {
     guard let longitude = LocationManager.shared.currentLongitude,
           let latitude = LocationManager.shared.currentLatitude else {

@@ -37,8 +37,10 @@ class HomeController: UIViewController {
     //테스트버튼(추후 삭제 예정)
     homeView.testButton.addAction(UIAction { [weak self] _ in
       guard let self = self else { return }
-      self.setupHalfModal()
+      self.setupHalfModal(id: "")
     }, for: .touchDown)
+    
+    mapController.homeDelegate = self
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +72,7 @@ class HomeController: UIViewController {
 //  }
   
   //모달 내부 세팅
-  func setupHalfModal() {
+  func setupHalfModal(id: String) {
     //모달 버튼 입력값(대여하기, 닫기)
     homeView.modalButton1.addAction(UIAction { [weak self] _ in
       guard let self = self else { return }
@@ -82,10 +84,20 @@ class HomeController: UIViewController {
       self.closeHalfModal()
     }, for: .touchDown)
     
-    //    homeView.testButton.addAction(UIAction { [weak self] _ in
-    //      guard let self else { return }
-    //      self.setupHalfModal()
-    //    }, for: .touchDown)
+    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    do {
+      let request = KickBoard.fetchRequest()
+      request.predicate = NSPredicate(format: "id == %@", id)
+      // 속성으로 데이터 정렬해서 가져오기
+      let kickBoards = try container.viewContext.fetch(request)
+      for kickBoard in kickBoards {
+        homeView.modalKickboardData1.text = "시리얼 넘버: \(String(describing: kickBoard.id!))"
+        homeView.modalKickboardData2.text = "등록자: \(String(describing: kickBoard.registrant!))"
+      }
+      print("조건 불러오기 성공")
+    } catch {
+      print("조건 불러오기 실패")
+    }
     
     //모달 상세 정보 사이즈 설정
     if let sheet = homeView.halfModal.sheetPresentationController {
@@ -133,4 +145,13 @@ class HomeController: UIViewController {
       LocationManager.shared.startUpdatingLocation()
     }
   }
+}
+
+protocol HomeControllerDelegate {
+  func setupHalfModal(id: String)
+  func closeHalfModal()
+}
+
+extension HomeController: HomeControllerDelegate {
+  
 }

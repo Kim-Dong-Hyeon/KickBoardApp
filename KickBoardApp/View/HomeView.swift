@@ -58,7 +58,7 @@ class HomeView: UIView {
     return image
   }()
   
-  private let modalKickboardData1 = {
+  let modalKickboardData1 = {
     let label = UILabel()
     label.text = "시리얼넘버  @@@@@@@@@@@@"
     label.textColor = .darkGray
@@ -68,7 +68,7 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalKickboardData2 = {
+  let modalKickboardData2 = {
     let label = UILabel()
     label.text = "등록자명  김솔비"
     label.textColor = .darkGray

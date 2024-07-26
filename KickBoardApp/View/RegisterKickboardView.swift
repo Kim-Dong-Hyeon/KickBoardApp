@@ -12,6 +12,10 @@ class RegisterKickboardView: UIView {
 
   let mapView: UIView = {
     let view = UIView()
+    view.layer.borderWidth = 1.0
+    view.layer.borderColor = UIColor.lightGray.cgColor
+    view.layer.cornerRadius = 5.0
+    view.clipsToBounds = true
     return view
   }()
   let currentLocationButton: AnimationButton = {
@@ -22,7 +26,7 @@ class RegisterKickboardView: UIView {
   }()
   let adressLabel: UILabel = {
     let label = UILabel()
-    label.attributedText = NSAttributedString(string: "위 치:", attributes: [.kern: 4.9])
+    label.attributedText = NSAttributedString(string: "위 치", attributes: [.kern: 4.9])
     label.font = .systemFont(ofSize: 15)
     label.textColor = UIColor(named: "KickColor")
     return label
@@ -45,7 +49,7 @@ class RegisterKickboardView: UIView {
   
   let registrantLabel: UILabel = {
     let label = UILabel()
-    label.text = "등록자 :"
+    label.text = "등록자"
     label.font = .systemFont(ofSize: 15)
     label.textColor = UIColor(named: "KickColor")
     return label
@@ -65,7 +69,7 @@ class RegisterKickboardView: UIView {
   
   let modelNameLabel: UILabel = {
     let label = UILabel()
-    label.text = "모델명 :"
+    label.text = "모델명"
     label.font = .systemFont(ofSize: 15)
     label.textColor = UIColor(named: "KickColor")
     return label
@@ -86,9 +90,9 @@ class RegisterKickboardView: UIView {
   
   let rentalPeriodLabel: UILabel = {
     let label = UILabel()
-    label.text = "대여 기간 :"
+    label.text = "대여 기간"
     label.textAlignment = .left
-    label.font = .boldSystemFont(ofSize: 15)
+    label.font = .systemFont(ofSize: 15)
     label.textColor = UIColor(named: "KickColor")
     return label
   }()
@@ -99,6 +103,7 @@ class RegisterKickboardView: UIView {
     dateFormatter.dateFormat = "yyyy. MM. dd"
     label.text = dateFormatter.string(from: currentDate)
     label.font = UIFont.systemFont(ofSize: 15)
+    label.textAlignment = .right
     return label
   }()
   let rentalStackView1: UIStackView = {
@@ -109,8 +114,8 @@ class RegisterKickboardView: UIView {
   }()
   let waveLabel: UILabel = {
     let label = UILabel()
-    label.text = "~"
-    label.textAlignment = .center
+    label.text = "~    "
+    label.textAlignment = .right
     label.font = UIFont.systemFont(ofSize: 15)
     return label
   }()
@@ -151,7 +156,7 @@ class RegisterKickboardView: UIView {
   let registerInformationStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 8
+    stackView.spacing = 17
     return stackView
   }()
   
@@ -208,7 +213,7 @@ class RegisterKickboardView: UIView {
     [rentalPeriodLabel ,currentDateLabel].forEach { rentalStackView1.addArrangedSubview($0) }
     [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach { rentalStackView2.addArrangedSubview($0) }
     [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
-    [adressStackView, registrantStackView, modelNameStackView, rentalPeriodLabel, rentalStackView1, rentalStackView2].forEach {
+    [adressStackView, registrantStackView, modelNameStackView, rentalStackView2].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
     [addPhotoStackView, registerInformationStackView].forEach { aStackView.addArrangedSubview($0) }
@@ -244,8 +249,11 @@ class RegisterKickboardView: UIView {
     selectPhotoButton.snp.makeConstraints {
       $0.height.equalTo(20)
     }
-    currentDateLabel.snp.makeConstraints {
-        $0.trailing.equalTo(rentalPeriodDatePicker.snp.trailing)
+    rentalPeriodDatePicker.snp.makeConstraints {
+      $0.trailing.equalToSuperview()
+    }
+    modelNameTextField.snp.makeConstraints {
+      $0.height.equalTo(25)
     }
     buttonStackView.snp.makeConstraints {
       $0.centerX.equalToSuperview()

@@ -21,7 +21,7 @@ class HomeView: UIView {
     label.textColor = .black
     label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
     label.textAlignment = .center
-    label.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+    label.backgroundColor = UIColor.white.withAlphaComponent(0.8)
     label.layer.cornerRadius = 10
     label.layer.borderWidth = 1.0
     label.layer.borderColor = UIColor.gray.cgColor
@@ -32,6 +32,14 @@ class HomeView: UIView {
   let currentLocationButton: UIButton = {
     let button = UIButton(type: .system)
     return button
+  }()
+  
+  private let tapBarBackgroundLabel = {
+    let label = UILabel()
+    label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+    label.layer.cornerRadius = 5
+    label.clipsToBounds = true
+    return label
   }()
   
   private let modalAddressLabel = {
@@ -46,9 +54,9 @@ class HomeView: UIView {
   
   private let modalKickboardLabel = {
     let label = UILabel()
-    label.text = "킥보드 정보"
+    label.text = "대여 킥보드 정보"
     label.textColor = .black
-    label.font = UIFont.boldSystemFont(ofSize: 20)
+    label.font = UIFont.boldSystemFont(ofSize: 17)
     label.textAlignment = .left
     label.backgroundColor = .clear
     return label
@@ -56,8 +64,12 @@ class HomeView: UIView {
   
   private let modalKickboardImage = {
     let image = UIImageView()
-    image.contentMode = .scaleAspectFit
+    image.contentMode = .scaleAspectFill
     image.image = UIImage(named: "testImage(Kickboard)")
+    image.layer.borderWidth = 1.0
+    image.layer.borderColor = UIColor.lightGray.cgColor
+    image.layer.cornerRadius = 5.0
+    image.clipsToBounds = true
     return image
   }()
   
@@ -166,7 +178,8 @@ class HomeView: UIView {
       mapView,
       homePlaceNameLabel,
       testButton,
-      currentLocationButton
+      currentLocationButton,
+      tapBarBackgroundLabel
     ].forEach { self.addSubview($0) }
     
     mapView.snp.makeConstraints {
@@ -191,6 +204,13 @@ class HomeView: UIView {
       $0.trailing.equalToSuperview().inset(20)
       $0.bottom.equalToSuperview().inset(100)
       $0.width.height.equalTo(50)
+    }
+    
+    tapBarBackgroundLabel.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalToSuperview().offset(-30)
+      $0.width.equalTo(350)
+      $0.height.equalTo(55)
     }
   }
   

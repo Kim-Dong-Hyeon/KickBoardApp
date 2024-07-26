@@ -24,8 +24,8 @@ struct Address: Decodable {
   }
 }
 
-
 class AddressFetcher {
+  
   func fetchAddress(completion: @escaping (String?, Error?) -> Void) {
     guard let longitude = LocationManager.shared.currentLongitude,
           let latitude = LocationManager.shared.currentLatitude else {
@@ -33,13 +33,15 @@ class AddressFetcher {
       return
     }
     
+    guard let kakaoDevApiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_DEV_API_KEY") as? String else { return }
+    
     let url = "https://dapi.kakao.com/v2/local/geo/coord2address"
     let parameters: [String: Any] = [
       "x": "\(longitude)",
       "y": "\(latitude)"
     ]
     let headers: HTTPHeaders = [
-      "Authorization": "KakaoAK "
+      "Authorization": "KakaoAK \(kakaoDevApiKey)"
     ]
     
     AF.request(url, method: .get, parameters: parameters, headers: headers)

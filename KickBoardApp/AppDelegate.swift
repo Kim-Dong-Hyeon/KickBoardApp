@@ -15,9 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    if let kakaoApiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_API_KEY") as? String {
-      print("Kakao API Key: \(kakaoApiKey)")
-      SDKInitializer.InitSDK(appKey: kakaoApiKey)
+    if let kakaoMapApiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_MAP_API_KEY") as? String {
+      print("Kakao API Key: \(kakaoMapApiKey)")
+      SDKInitializer.InitSDK(appKey: kakaoMapApiKey)
     } else {
       print("Kakao API Key is missing")
     }

@@ -9,7 +9,7 @@ import UIKit
 import PhotosUI
 import CoreData
 
-
+import KakaoMapsSDK
 class RegisterKickboardController: UIViewController {
   private var registerKickboardView: RegisterKickboardView!
   var mapController: MapController!
@@ -28,11 +28,16 @@ class RegisterKickboardController: UIViewController {
     setButtonAction()
     setMapview()
     readRegistrant()
-    readCurrentAddress()
+    
+    LocationManager.shared.startUpdatingLocation()
+    
+    
   }
+  
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    readCurrentAddress()
     mapController.prepareEngine() // prepareEngine 호출
     mapController.activateEngine() // activateEngine 호출
   }
@@ -41,23 +46,23 @@ class RegisterKickboardController: UIViewController {
     super.viewWillDisappear(animated)
     mapController.pauseEngine() // pauseEngine 호출
   }
+
+ 
   
   private func readCurrentAddress() {
-    let location = CLLocation(latitude: 37.50236, longitude: 127.04444)
-    let geocoder = CLGeocoder()
-    let locale = Locale(identifier: "ko-KR")
-    geocoder.reverseGeocodeLocation(location, preferredLocale: locale) { [weak self] placemarks, error in
-      guard let self = self else { return }
-      guard let placemark = placemarks?.first else {
-        print("Geocoding error: \(error?.localizedDescription ?? "Unknown error")")
-        return
+    let addressFetcher = AddressFetcher()
+    addressFetcher.fetchAddress() { [weak self] addressName, error in
+      if let addressName = addressName {
+        DispatchQueue.main.async {
+          self?.registerKickboardView.adressValue.text = addressName
+          print(addressName)
+        }
+      } else if let error = error {
+        print("Error: \(error.localizedDescription)")
       }
-      let subLocality = placemark.subLocality ?? ""
-      let name = placemark.name ?? ""
-      let address = [subLocality, name].joined(separator: " ")
-      self.registerKickboardView.adressValue.text = address
     }
   }
+  
   private func setButtonAction() {
     registerKickboardView.selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
     registerKickboardView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
@@ -91,7 +96,6 @@ class RegisterKickboardController: UIViewController {
     }
     do {
       try container.viewContext.save()
-      print("생성 성공")
     } catch {
       print("생성 실패")
     }

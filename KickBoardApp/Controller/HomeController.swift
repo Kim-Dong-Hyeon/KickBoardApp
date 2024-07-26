@@ -91,8 +91,8 @@ class HomeController: UIViewController {
       // 속성으로 데이터 정렬해서 가져오기
       let kickBoards = try container.viewContext.fetch(request)
       for kickBoard in kickBoards {
-        homeView.modalKickboardData1.text = "시리얼 넘버: \(String(describing: kickBoard.id!))"
-        homeView.modalKickboardData2.text = "등록자: \(String(describing: kickBoard.registrant!))"
+        homeView.modalKickboardData2.text = "\(String(describing: kickBoard.modelName!))"
+        homeView.modalKickboardData4.text = "\(String(describing: kickBoard.registrant!))"
       }
       print("조건 불러오기 성공")
     } catch {

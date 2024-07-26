@@ -38,20 +38,18 @@ class PoiDataSample {
       print("리스트 불러오기 실패")
     }
     
-    let center = CLLocationCoordinate2D(latitude: 37.533, longitude: 126.996)
+//    let center = CLLocationCoordinate2D(latitude: 37.533, longitude: 126.996)
     
-    let styleIds = [
-      "orange",
-      "red",
-      "green",
-      "blue"
-    ]
+//    let styleIds = [
+//      "orange",
+//      "red",
+//      "green",
+//      "blue"
+//    ]
     
     for kickBoard in list {
-//      let position = CLLocationCoordinate2D(latitude: center.latitude + drand48(),
-//                                            longitude: center.longitude + drand48())
-      let position = CLLocationCoordinate2D(latitude: 37.553,
-                                            longitude: 126.996)
+      let position = CLLocationCoordinate2D(latitude: kickBoard.currentLatitude,
+                                            longitude: kickBoard.currentLongitude)
       let data = PoiData(id: kickBoard.id ?? "",
                          position: position,
                          styleID: "label_default_style",

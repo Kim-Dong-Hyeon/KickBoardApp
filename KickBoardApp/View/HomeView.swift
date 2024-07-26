@@ -73,7 +73,7 @@ class HomeView: UIView {
     return image
   }()
   
-  let modalKickboardData1 = {
+  private let modalKickboardData1 = {
     let label = UILabel()
     label.font = UIFont.boldSystemFont(ofSize: 13)
     label.text = "모델명"
@@ -94,7 +94,7 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalKickboardData4 = {
+  let modalKickboardData4 = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13)
     label.text = "전1성진"

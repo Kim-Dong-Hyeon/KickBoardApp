@@ -1,5 +1,5 @@
 //
-//  EditController.swift
+//  JoinController.swift
 //  KickBoardApp
 //
 //  Created by 김동현 on 7/22/24.
@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class JoinController: UIViewController {
+class JoinController: UIViewController, UITextFieldDelegate {
   
   let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
   
@@ -19,9 +19,21 @@ class JoinController: UIViewController {
   }
   
   override func viewDidLoad() {
-    //    super.viewDidLoad()
+    super.viewDidLoad()
     configureView()
     configureEvent()
+    // 전화번호 패턴 표시 적용을 위한 delegate 설정
+    joinView.phoneNumberField.delegate = self
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
   }
   
   // 키보드 닫기
@@ -48,7 +60,6 @@ class JoinController: UIViewController {
       self.joinUser()
     }, for: .touchDown)
   }
-
   
   private func userDataCreate() {
     guard let entity = NSEntityDescription.entity(forEntityName: User.className, in: container.viewContext) else { return }
@@ -93,16 +104,16 @@ class JoinController: UIViewController {
   }
   
   private func userSelectDataRead(id: String) -> Bool {
-      do {
-        let request = User.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id)
-        // 속성으로 데이터 정렬해서 가져오기
-        let user = try container.viewContext.fetch(request)
-        print("조건 불러오기 성공")
-        return user.count == 0 ? true : false
-      } catch {
-        print("조건 불러오기 실패")
-      }
+    do {
+      let request = User.fetchRequest()
+      request.predicate = NSPredicate(format: "id == %@", id)
+      // 속성으로 데이터 정렬해서 가져오기
+      let user = try container.viewContext.fetch(request)
+      print("조건 불러오기 성공")
+      return user.count == 0 ? true : false
+    } catch {
+      print("조건 불러오기 실패")
+    }
     return false
   }
   
@@ -140,5 +151,40 @@ class JoinController: UIViewController {
     } else {
       return true
     }
+  }
+  
+  // UITextFieldDelegate 메서드
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    if textField == joinView.phoneNumberField {
+      let currentText = textField.text ?? ""
+      let newString = (currentText as NSString).replacingCharacters(in: range, with: string)
+      let newStringWithoutDashes = newString.replacingOccurrences(of: "-", with: "")
+      
+      // 입력된 숫자가 11글자를 넘으면 입력을 막음
+      if newStringWithoutDashes.count > 11 {
+        return false
+      }
+      
+      textField.text = newString.applyPatternOnNumbers(pattern: "###-####-####", replacementCharacter: "#")
+      return false
+    }
+    return true
+  }
+  
+  @objc func keyboardUp(notification:NSNotification) {
+    if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+      let keyboardRectangle = keyboardFrame.cgRectValue
+      
+      UIView.animate(
+        withDuration: 0.3
+        , animations: {
+          self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height/3)
+        }
+      )
+    }
+  }
+  
+  @objc func keyboardDown() {
+    self.view.transform = .identity
   }
 }

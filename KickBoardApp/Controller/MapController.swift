@@ -10,7 +10,7 @@ import CoreLocation
 
 import KakaoMapsSDK
 
-class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, CLLocationManagerDelegate {
+class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, CLLocationManagerDelegate, KakaoMapEventDelegate {
   private var mapController: KMController?
   private var observerAdded = false
   private var isAuth = false
@@ -29,6 +29,13 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     self.view = mapView
   }
   
+  deinit {
+    mapController?.pauseEngine()
+    mapController?.resetEngine()
+
+    print("deinit")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -45,9 +52,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     }
     
     LocationManager.shared.startUpdatingLocation()
-    
   }
-  
   
   //홈탭 위치정보 텍스트 업데이트
   func updatePlaceNameLabel(location: CLLocation) {
@@ -94,7 +99,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     super.viewDidDisappear(animated)
     removeObservers()
     // 지도 엔진을 재설정하지 않도록 주석 처리
-    //    resetEngine()
+//    resetEngine()
   }
   
   func prepareEngine() {
@@ -147,7 +152,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   }
   
   func addViews() {
-    let defaultPosition = MapPoint(longitude: 127.108678, latitude: 37.402001)
+    let defaultPosition = MapPoint(longitude: 127.04444, latitude: 37.50236)
     let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)
     mapController?.addView(mapviewInfo)
   }
@@ -159,6 +164,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   func addViewSucceeded(_ viewName: String, viewInfoName: String) {
     if let view = mapController?.getView("mapview") as? KakaoMap {
       view.viewRect = mapView.mapContainer.bounds
+      view.eventDelegate = self // KakaoMapEventDelegate 설정
       kakaoMapView = view
       viewInit(viewName: viewName)
     }
@@ -196,6 +202,9 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   
   @objc private func goToCurrentLocation() {
     LocationManager.shared.startUpdatingLocation()
+    if let currentLocation = LocationManager.shared.currentLocation {
+      updatePlaceNameLabel(location: currentLocation)
+    }
   }
   
   func updateCurrentLocation(location: CLLocation) {
@@ -285,7 +294,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     case .authorizedAlways, .authorizedWhenInUse:
       LocationManager.shared.startUpdatingLocation()
     case .denied, .restricted:
-      // 위치 권한이 거부된 경우 적절한 처리를 수행 (예: 알림 표시)
       print("Location access denied. Please enable location services in settings.")
     default:
       break

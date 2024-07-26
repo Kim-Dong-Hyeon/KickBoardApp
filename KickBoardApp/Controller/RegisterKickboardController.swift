@@ -46,8 +46,11 @@ class RegisterKickboardController: UIViewController {
     super.viewWillDisappear(animated)
     mapController.pauseEngine() // pauseEngine 호출
   }
-
- 
+  
+  // 키보드 닫기
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
   
   private func readCurrentAddress() {
     let addressFetcher = AddressFetcher()

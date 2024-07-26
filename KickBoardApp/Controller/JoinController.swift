@@ -141,5 +141,4 @@ class JoinController: UIViewController {
       return true
     }
   }
-  
 }

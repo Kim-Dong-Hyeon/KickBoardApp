@@ -40,11 +40,8 @@
 		7674BD132C4F9BDD000F5C53 /* RegisterHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */; };
 		7674BD152C4FD0D7000F5C53 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD142C4FD0D7000F5C53 /* HomeController.swift */; };
 		7674BD172C4FD1C5000F5C53 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BD162C4FD1C5000F5C53 /* HomeView.swift */; };
-		DD07C8662C5220E600FB095F /* ExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07C8652C5220E600FB095F /* ExpandableCell.swift */; };
 		DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680232C4E4F570018F531 /* MyPageView.swift */; };
 		DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680252C4E64D20018F531 /* UsageHistoryController.swift */; };
-		DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */; };
-		DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */; };
 		DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6806C2C4F86600018F531 /* UsageListCell.swift */; };
 		DDB6806F2C4FA1660018F531 /* RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB6806E2C4FA1660018F531 /* RegisterCell.swift */; };
 		DDB680712C5000FA0018F531 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB680702C5000FA0018F531 /* DataManager.swift */; };
@@ -82,12 +79,9 @@
 		7674BD112C4F77D9000F5C53 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7674BD142C4FD0D7000F5C53 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7674BD162C4FD1C5000F5C53 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		DD07C8652C5220E600FB095F /* ExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCell.swift; sourceTree = "<group>"; };
 		DDB680232C4E4F570018F531 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		DDB680252C4E64D20018F531 /* UsageHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryController.swift; sourceTree = "<group>"; };
 		DDB680272C4E64E00018F531 /* RegisterHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryController.swift; sourceTree = "<group>"; };
-		DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageHistoryView.swift; sourceTree = "<group>"; };
-		DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterHistoryView.swift; sourceTree = "<group>"; };
 		DDB6806C2C4F86600018F531 /* UsageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageListCell.swift; sourceTree = "<group>"; };
 		DDB6806E2C4FA1660018F531 /* RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCell.swift; sourceTree = "<group>"; };
 		DDB680702C5000FA0018F531 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -200,9 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				DDB680232C4E4F570018F531 /* MyPageView.swift */,
-				DDB6802A2C4E66B50018F531 /* UsageHistoryView.swift */,
-				DDB6802C2C4E66D80018F531 /* RegisterHistoryView.swift */,
-				DD07C8652C5220E600FB095F /* ExpandableCell.swift */,
 				DDB6806C2C4F86600018F531 /* UsageListCell.swift */,
 				DDB6806E2C4FA1660018F531 /* RegisterCell.swift */,
 			);
@@ -295,7 +286,6 @@
 				7674BD012C4E47E8000F5C53 /* MapView.swift in Sources */,
 				DDB680712C5000FA0018F531 /* DataManager.swift in Sources */,
 				7674BD122C4F77D9000F5C53 /* LocationManager.swift in Sources */,
-				DDB6802D2C4E66D80018F531 /* RegisterHistoryView.swift in Sources */,
 				7674BD132C4F9BDD000F5C53 /* RegisterHistoryController.swift in Sources */,
 				748EDF422C4EA257000B74DB /* JoinController.swift in Sources */,
 				7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */,
@@ -304,7 +294,6 @@
 				DDB6806D2C4F86600018F531 /* UsageListCell.swift in Sources */,
 				7458E05A2C4E461C003BDAF3 /* MypageController.swift in Sources */,
 				7674BD172C4FD1C5000F5C53 /* HomeView.swift in Sources */,
-				DDB6802B2C4E66B50018F531 /* UsageHistoryView.swift in Sources */,
 				DDB680262C4E64D20018F531 /* UsageHistoryController.swift in Sources */,
 				7674BD152C4FD0D7000F5C53 /* HomeController.swift in Sources */,
 				748EDF3F2C4EA16F000B74DB /* LoginController.swift in Sources */,
@@ -318,7 +307,6 @@
 				748EDF412C4EA248000B74DB /* JoinView.swift in Sources */,
 				7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */,
 				7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */,
-				DD07C8662C5220E600FB095F /* ExpandableCell.swift in Sources */,
 				DDB680242C4E4F570018F531 /* MyPageView.swift in Sources */,
 				7458E0582C4E461C003BDAF3 /* MapController.swift in Sources */,
 				4F07CA252C4E840F00A19E5C /* RegisterKickboardController.swift in Sources */,

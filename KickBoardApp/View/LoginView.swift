@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  LoginView.swift
 //  KickBoardApp
 //
 //  Created by 김동현 on 7/22/24.
@@ -65,7 +65,7 @@ class LoginView: UIView {
   let loginButton: UIButton = {
     let button = UIButton()
     button.setTitle("Login", for: .normal)
-    button.backgroundColor = .systemBlue
+    button.backgroundColor = UIColor(named: "KickColor")
     button.layer.cornerRadius = 10
     return button
   }()
@@ -73,6 +73,7 @@ class LoginView: UIView {
   let joinButton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle("회원가입하기", for: .normal)
+    button.tintColor = UIColor(named: "KickColor")
     return button
   }()
   

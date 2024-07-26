@@ -13,6 +13,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
   
   private let locationManager = CLLocationManager()
   var currentLocation: CLLocation?
+  var currentLongitude: Double?
+  var currentLatitude: Double?
   var onLocationUpdate: ((CLLocation) -> Void)?
   var onAuthorizationChange: ((CLAuthorizationStatus) -> Void)?
   
@@ -52,12 +54,16 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let location = locations.last else { return }
+    currentLatitude = location.coordinate.latitude
+    currentLongitude = location.coordinate.longitude
     currentLocation = location
     onLocationUpdate?(location)
+    
   }
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
     onAuthorizationChange?(status)
     checkAuthorizationStatus()
   }
+  
 }

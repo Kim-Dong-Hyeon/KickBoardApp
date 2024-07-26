@@ -54,7 +54,6 @@ class MyPageView: UIView {
     stackView.axis = .vertical
     stackView.spacing = 10
     stackView.distribution = .fillEqually
-    stackView.backgroundColor = .green
     return stackView
   }()
   
@@ -63,13 +62,13 @@ class MyPageView: UIView {
     stackView.axis = .vertical
     stackView.spacing = 10
     stackView.distribution = .fillEqually
-    stackView.backgroundColor = .blue
+    stackView.backgroundColor = UIColor(named: "KickColor")
+    stackView.layer.cornerRadius = 10
     return stackView
   }()
   
   private lazy var userImageView: UIView = {
     let stackView = UIView()
-    stackView.backgroundColor = .yellow
     return stackView
   }()
   
@@ -77,13 +76,29 @@ class MyPageView: UIView {
     let button = UIButton()
     button.setTitle("로그아웃", for: .normal)
     button.setTitleColor(.blue, for: .normal)
+    button.layer.cornerRadius = 10
     return button
   }()
   
-  lazy var myPageList: UITableView = {
-    let tableView = UITableView()
-    tableView.backgroundColor = .gray
-    return tableView
+  let uiView = UIView()
+  
+  lazy var moveUsageList: UIButton = {
+    let button = UIButton()
+    button.setTitle("나의 이용 내역", for: .normal)
+    button.setTitleColor(.black, for: .normal)
+    button.backgroundColor = UIColor(named: "KickColor")
+    button.layer.cornerRadius = 10
+    return button
+  }()
+
+  
+  lazy var moveHistoryList: UIButton = {
+    let button = UIButton()
+    button.setTitle("나의 등록 내역", for: .normal)
+    button.setTitleColor(.black, for: .normal)
+    button.backgroundColor = UIColor(named: "KickColor")
+    button.layer.cornerRadius = 10
+    return button
   }()
   
   override init(frame: CGRect) {
@@ -100,7 +115,8 @@ class MyPageView: UIView {
   private func configureUI() {
     self.addSubview(myPageStackView)
     self.addSubview(logOut)
-    [userImageView, myPageList].forEach{ myPageStackView.addArrangedSubview($0) }
+    [userImageView, uiView].forEach{ myPageStackView.addArrangedSubview($0) }
+    [moveUsageList, moveHistoryList].forEach { uiView.addSubview($0)}
     [userImage, infoStackView].forEach { userImageView.addSubview($0) }
     [nameLabel, isUsing, phoneNumber, gender].forEach { infoStackView.addArrangedSubview($0) }
   }
@@ -126,6 +142,18 @@ class MyPageView: UIView {
       $0.top.equalTo(userImage.snp.bottom).offset(10)
       $0.leading.trailing.bottom.equalToSuperview()
     }
+    
+    moveUsageList.snp.makeConstraints {
+      $0.top.equalToSuperview().inset(10)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(50)
+    }
+    
+    moveHistoryList.snp.makeConstraints {
+      $0.top.equalTo(moveUsageList.snp.bottom).offset(10)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(50)
+    }
   }
   
   private func getData() {
@@ -135,9 +163,19 @@ class MyPageView: UIView {
         nameLabel.text! += result.name ?? ""
         phoneNumber.text! += result.phoneNumber ?? ""
         gender.text! += result.gender ?? ""
-      } else {
-        print("값이없음")
-        print("타입캐스팅 실패")
+        if result.state {
+          isUsing.text = "사용중"
+          isUsing.textColor = .green
+        } else {
+          isUsing.text = "미사용중"
+          isUsing.textColor = .red
+        }
+        switch result.gender {
+        case "남자":
+          userImage.image = UIImage(named: "man")
+        default:
+          userImage.image = UIImage(named: "woman")
+        }
       }
     }
   }

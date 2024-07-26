@@ -13,7 +13,6 @@ import KakaoMapsSDK
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  var window: UIWindow?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     if let kakaoApiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_API_KEY") as? String {
@@ -22,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     } else {
       print("Kakao API Key is missing")
     }
+    sleep(2)
     return true
   }
 

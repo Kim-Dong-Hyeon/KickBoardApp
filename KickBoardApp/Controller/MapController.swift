@@ -24,6 +24,15 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   private var lastMarkerPosition: MapPoint?
   private var lastZoomLevel: Int?
   
+  // 마커 관련 변수
+  private var positions = [MapPoint]()
+  private var options = [PoiOptions]()
+  private var pois = [String: Poi]()
+  private var _clickedPoiID: String = ""
+  
+  // homeContorllerDelegate 설정
+  var homeDelegate: HomeControllerDelegate!
+  
   override func loadView() {
     mapView = MapView(frame: UIScreen.main.bounds)
     self.view = mapView
@@ -52,6 +61,8 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     }
     
     LocationManager.shared.startUpdatingLocation()
+    
+    poisConfigure()
   }
   
   //홈탭 위치정보 텍스트 업데이트
@@ -159,6 +170,13 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   
   func viewInit(viewName: String) {
     print("OK")
+    // Style 생성
+    createPoiStyles()
+    // LabelLayer 생성.
+    createLabelLayer()
+    // LabelLayer 생성.
+    createPois()
+
   }
   
   func addViewSucceeded(_ viewName: String, viewInfoName: String) {
@@ -297,6 +315,89 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       print("Location access denied. Please enable location services in settings.")
     default:
       break
+    }
+  }
+}
+
+extension MapController {
+  // Poi가 어떻게 표시될지를 지정하는 Style 생성.
+  func createPoiStyles() {
+    let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
+    let manager = mapView.getLabelManager()
+    let iconStyle = PoiIconStyle(symbol: UIImage(named: "search_ico_pin_map.png"), anchorPoint: CGPoint(x: 0.5, y: 0.999), transition: PoiTransition(entrance: .scale, exit: .scale))
+    let perLevelStyle = PerLevelPoiStyle(iconStyle: iconStyle, level: 0)
+    manager.addPoiStyle(PoiStyle(styleID: "label_clicked_style", styles: [perLevelStyle]))
+    
+    let smallIconStyle = PoiIconStyle(symbol: UIImage(named: "search_ico_pin_small_map.png"), anchorPoint: CGPoint(x: 0.5, y: 0.999), transition: PoiTransition(entrance: .scale, exit: .scale))
+    let perLevelStyle2 = PerLevelPoiStyle(iconStyle: smallIconStyle, level: 0)
+    manager.addPoiStyle(PoiStyle(styleID: "label_default_style", styles: [perLevelStyle2]))
+  }
+  
+  // LabelLayer 생성. 하나의 LabelLayer는 여러개의 Poi를 포함할 수 있다.
+  func createLabelLayer() {
+    let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
+    let labelManager = mapView.getLabelManager()
+    
+    let layer = LabelLayerOptions(layerID: "poiLayer", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 10001)
+    let _ = labelManager.addLabelLayer(option: layer)
+  }
+  
+  // PoiOptions을 이용하여 Poi를 화면에 표시한다.
+  func createPois() {
+    let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
+    let labelManager = mapView.getLabelManager()
+    
+    let layer = labelManager.getLabelLayer(layerID: "poiLayer")
+    if let items = layer?.addPois(options: options, at: positions) {
+      // POI들 가져와서 이벤트 적용
+      for item in items {
+        item.clickable = true
+        item.addPoiTappedEventHandler(target: self, handler: MapController.poiTapped)
+        pois[item.itemID] = item
+      }
+    }
+    
+    mapView.moveCamera(CameraUpdate.make(area: AreaRect(points: positions)))
+    layer?.showAllPois()
+  }
+  
+  func poisConfigure() {
+    let datas = PoiDataSample.createPoiData()
+    for data in datas {
+      let option = PoiOptions(styleID: data.styleID, poiID: data.id)
+      option.clickable = true
+      options.append(option)
+    }
+    
+    // Poi 표시 위치를 지정하기위해, dummy data에서 위치정보만 빼내서 따로 저장해둠.
+    positions = PoiDataSample.datas.map {
+      MapPoint(longitude: $0.position.longitude, latitude: $0.position.latitude)
+    }
+  }
+  
+  func poiTapped(_ param: PoiInteractionEventParam) {
+    print("하이")
+    print(param.poiItem.itemID)
+    let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
+    let manager = mapView.getLabelManager()
+    let layer = manager.getLabelLayer(layerID: param.poiItem.layerID)
+    let trackingManager = mapView.getTrackingManager()
+    
+    if let poi = layer?.getPoi(poiID: param.poiItem.itemID) {
+      if let clickedPoi = layer?.getPoi(poiID: _clickedPoiID), clickedPoi.itemID == poi.itemID {
+        print("이미 선택됨")
+        clickedPoi.changeStyle(styleID: "label_default_style")
+        trackingManager.stopTracking()
+        homeDelegate.closeHalfModal()
+      } else {
+        poi.hide()
+        poi.changeStyle(styleID: "label_clicked_style")
+        poi.show()
+        trackingManager.startTrackingPoi(poi)
+        homeDelegate.setupHalfModal(id: poi.itemID)
+      }
+      
+      _clickedPoiID = poi.itemID
     }
   }
 }

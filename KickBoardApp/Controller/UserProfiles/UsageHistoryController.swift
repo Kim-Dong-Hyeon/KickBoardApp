@@ -6,12 +6,12 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class UsageHistoryController: UIViewController {
   
-  var openSections: [Bool] = Array(repeating: false, count: 5)
-  let value = 5
+  let mapController = MapController()
   lazy var usageList = UITableView(frame: .zero, style: .insetGrouped)
   let dataManager = DataManager()
   var models: [Ride] = [] {
@@ -21,9 +21,11 @@ class UsageHistoryController: UIViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     models = dataManager.readCoreData(entityType: Ride.self).filter { $0.name == dataManager.readUserDefault(key: "userName")}
     usageList.reloadData()
   }
+  
   override func viewDidLoad() {
     self.title = "나의 이용 내역"
     view.backgroundColor = .white
@@ -37,7 +39,6 @@ class UsageHistoryController: UIViewController {
     usageList.delegate = self
     usageList.dataSource = self
     usageList.register(UsageListCell.self, forCellReuseIdentifier: UsageListCell.identifier)
-    usageList.register(ExpandableCell.self, forCellReuseIdentifier: ExpandableCell.identifier)
     usageList.rowHeight = 180
     usageList.separatorStyle = .none
     usageList.backgroundColor = .white
@@ -49,36 +50,17 @@ class UsageHistoryController: UIViewController {
 }
 
 extension UsageHistoryController: UITableViewDelegate, UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return openSections[section] ? 2 : 1
-  }
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 5 // 고정된 섹션 수
+    models.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if indexPath.row == 0 {
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: UsageListCell.identifier, for: indexPath) as? UsageListCell else {
-        return UITableViewCell()
-      }
-      return cell
-    } else {
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableCell.identifier, for: indexPath) as? ExpandableCell else {
-        return UITableViewCell()
-      }
-      return cell
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: UsageListCell.identifier, for: indexPath) as? UsageListCell else {
+      return UITableViewCell()
     }
-  }
-  
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
-    if indexPath.row == 0 {
-      openSections[indexPath.section].toggle()
-      tableView.reloadSections([indexPath.section], with: .none)
-    } else {
-      print("Expandable cell 선택됨")
-    }
+    return cell
   }
   
   func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -87,7 +69,5 @@ extension UsageHistoryController: UITableViewDelegate, UITableViewDataSource {
     return footerView
   }
   
-  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return 10
-  }
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 10 }
 }

@@ -342,7 +342,7 @@ extension MapController {
     let _ = labelManager.addLabelLayer(option: layer)
   }
   
-  // PoiOptions을 이용하여 Poi를 화면에 표시한다.
+  // Poi를 지도에 표시: PoiOptions을 이용하여 Poi를 화면에 표시한다.
   func createPois() {
     let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
     let labelManager = mapView.getLabelManager()
@@ -361,6 +361,7 @@ extension MapController {
     layer?.showAllPois()
   }
   
+  // Poi 구성
   func poisConfigure() {
     let datas = PoiDataSample.createPoiData()
     for data in datas {
@@ -375,6 +376,7 @@ extension MapController {
     }
   }
   
+  // Poi 탭 이벤트 핸들러
   func poiTapped(_ param: PoiInteractionEventParam) {
     print("하이")
     print(param.poiItem.itemID)

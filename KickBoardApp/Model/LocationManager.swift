@@ -24,19 +24,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
   }
   
+  // 위치 권한 요청
   func requestAuthorization() {
     locationManager.requestWhenInUseAuthorization()
   }
   
+  // 위치 업데이트 시작
   func startUpdatingLocation() {
     checkAuthorizationStatus()
     locationManager.startUpdatingLocation()
   }
   
+  // 위치 업데이트 중지
   func stopUpdatingLocation() {
     locationManager.stopUpdatingLocation()
   }
   
+  // 위치 권한 상태 확인
   private func checkAuthorizationStatus() {
     let status = locationManager.authorizationStatus
     switch status {

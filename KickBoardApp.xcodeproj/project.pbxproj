@@ -24,6 +24,7 @@
 		748EDF522C50EC12000B74DB /* KickBoard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748EDF4C2C50EC12000B74DB /* KickBoard+CoreDataProperties.swift */; };
 		748EDF532C50EC12000B74DB /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748EDF4D2C50EC12000B74DB /* User+CoreDataClass.swift */; };
 		748EDF542C50EC12000B74DB /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748EDF4E2C50EC12000B74DB /* User+CoreDataProperties.swift */; };
+		764533612C5513E000DF7DA8 /* RegionFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764533602C5513E000DF7DA8 /* RegionFetcher.swift */; };
 		7674BCC22C4E0114000F5C53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCC12C4E0114000F5C53 /* AppDelegate.swift */; };
 		7674BCC42C4E0114000F5C53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCC32C4E0114000F5C53 /* SceneDelegate.swift */; };
 		7674BCCC2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7674BCCA2C4E0114000F5C53 /* KickBoardApp.xcdatamodeld */; };
@@ -66,6 +67,7 @@
 		748EDF4C2C50EC12000B74DB /* KickBoard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KickBoard+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		748EDF4D2C50EC12000B74DB /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		748EDF4E2C50EC12000B74DB /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		764533602C5513E000DF7DA8 /* RegionFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionFetcher.swift; sourceTree = "<group>"; };
 		7674BCBE2C4E0114000F5C53 /* KickBoardApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KickBoardApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7674BCC12C4E0114000F5C53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7674BCC32C4E0114000F5C53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				4F07CA262C4E8A2200A19E5C /* AnimaitionButton.swift */,
 				DDB680702C5000FA0018F531 /* DataManager.swift */,
 				4FDD782D2C5379A500BF041A /* AddressFetcher.swift */,
+				764533602C5513E000DF7DA8 /* RegionFetcher.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				748EDF512C50EC12000B74DB /* KickBoard+CoreDataClass.swift in Sources */,
 				748EDF522C50EC12000B74DB /* KickBoard+CoreDataProperties.swift in Sources */,
 				748EDF532C50EC12000B74DB /* User+CoreDataClass.swift in Sources */,
+				764533612C5513E000DF7DA8 /* RegionFetcher.swift in Sources */,
 				748EDF542C50EC12000B74DB /* User+CoreDataProperties.swift in Sources */,
 				748EDF402C4EA248000B74DB /* LoginView.swift in Sources */,
 				748EDF412C4EA248000B74DB /* JoinView.swift in Sources */,
@@ -470,6 +474,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -500,6 +505,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

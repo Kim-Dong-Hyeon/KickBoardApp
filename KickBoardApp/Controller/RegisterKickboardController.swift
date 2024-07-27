@@ -72,6 +72,7 @@ class RegisterKickboardController: UIViewController {
     registerKickboardView.registerButton.addTarget(self, action: #selector(reigsterButtonTapped), for: .touchUpInside)
     registerKickboardView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
   }
+  
   private func setMapview() {
     guard let mapController = mapController else { return }
     registerKickboardView.mapView.addSubview(mapController.view)
@@ -81,6 +82,7 @@ class RegisterKickboardController: UIViewController {
     }
     addChild(mapController)
   }
+  
   private func registerKickBoardData() {
     guard let entity = NSEntityDescription.entity(forEntityName: KickBoard.className, in: container.viewContext) else { return }
     let newKickboard = NSManagedObject(entity: entity, insertInto: container.viewContext)

@@ -1,13 +1,15 @@
 //
-//  Address.swift
+//  AddressFetcher.swift
 //  KickBoardApp
 //
 //  Created by pc on 7/26/24.
 //
 
 import Foundation
-import Alamofire
 import CoreLocation
+
+import Alamofire
+
 // Kakao API의 응답 JSON 구조에 맞게 모델 정의
 struct AddressResponse: Decodable {
   let documents: [Document]
@@ -25,6 +27,7 @@ struct Address: Decodable {
 }
 
 class AddressFetcher {
+  // 현재 위치를 기반으로 주소를 가져오는 메서드
   func fetchAddress(completion: @escaping (String?, Error?) -> Void) {
     guard let longitude = LocationManager.shared.currentLongitude,
           let latitude = LocationManager.shared.currentLatitude else {

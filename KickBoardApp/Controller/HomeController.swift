@@ -20,34 +20,34 @@ class HomeController: UIViewController {
   }
   
   override func viewDidLoad() {
-      super.viewDidLoad()
-      self.title = "킥보드 찾기"
-      
-      homeView.backgroundColor = .systemBackground
-      homeView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
-      
-      setupMapController()
-      
-      // 테스트버튼(추후 삭제 예정)
-      homeView.testButton.addAction(UIAction { [weak self] _ in
-          guard let self = self else { return }
-          self.setupHalfModal(id: "")
-      }, for: .touchDown)
-      
-      mapController.homeDelegate = self
-      
-      // 위치 업데이트 콜백 설정
-      LocationManager.shared.onLocationUpdate = { [weak self] latitude, longitude in
-          self?.updatePlaceNameLabel(latitude: latitude, longitude: longitude)
-          self?.goToCurrentLocation()
-      }
+    super.viewDidLoad()
+    self.title = "킥보드 찾기"
+    
+    homeView.backgroundColor = .systemBackground
+    homeView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
+    
+    setupMapController()
+    
+    // 테스트버튼(추후 삭제 예정)
+    homeView.testButton.addAction(UIAction { [weak self] _ in
+      guard let self = self else { return }
+      self.setupHalfModal(id: "")
+    }, for: .touchDown)
+    
+    mapController.homeDelegate = self
+    
+    // 위치 업데이트 콜백 설정
+    LocationManager.shared.onLocationUpdate = { [weak self] latitude, longitude in
+      self?.updatePlaceNameLabel(latitude: latitude, longitude: longitude)
+      self?.goToCurrentLocation()
+    }
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     mapController.prepareEngine() // prepareEngine 호출
     mapController.activateEngine() // activateEngine 호출
-
+    
     // 위치 업데이트 시작
     LocationManager.shared.startUpdatingLocation()
   }
@@ -67,6 +67,22 @@ class HomeController: UIViewController {
     }
   }
   
+//  func readCurrentAddress(latitude: Double, longitude: Double) {
+//    let addressFetcher = AddressFetcher()
+//    addressFetcher.fetchAddress(latitude: latitude, longitude: longitude) { [weak self] addressName, error in
+//      if let addressName = addressName {
+//        DispatchQueue.main.async {
+//          self?.homeView.modalAddressLabel.text = addressName
+//          print("주소 갱신됨: \(addressName)")
+//        }
+//      } else if let error = error {
+//        DispatchQueue.main.async {
+//          self?.homeView.modalAddressLabel.text = "주소를 가져오지 못했습니다."
+//        }
+//        print("Error: \(error.localizedDescription)")
+//      }
+//    }
+//  }
   
   // 홈탭 위치정보 텍스트 업데이트
   func updatePlaceNameLabel(latitude: Double, longitude: Double) {
@@ -166,11 +182,27 @@ class HomeController: UIViewController {
   }
 }
 
-protocol HomeControllerDelegate {
+protocol HomeControllerDelegate: AnyObject {
   func setupHalfModal(id: String)
   func closeHalfModal()
+  func readCurrentAddress(latitude: Double, longitude: Double)
 }
 
 extension HomeController: HomeControllerDelegate {
-  
+  func readCurrentAddress(latitude: Double, longitude: Double) {
+    let addressFetcher = AddressFetcher()
+    addressFetcher.fetchAddress(latitude: latitude, longitude: longitude) { [weak self] addressName, error in
+      if let addressName = addressName {
+        DispatchQueue.main.async {
+          self?.homeView.modalAddressLabel.text = addressName
+          print("주소 갱신됨: \(addressName)")
+        }
+      } else if let error = error {
+        DispatchQueue.main.async {
+          self?.homeView.modalAddressLabel.text = "주소를 가져오지 못했습니다."
+        }
+        print("Error: \(error.localizedDescription)")
+      }
+    }
+  }
 }

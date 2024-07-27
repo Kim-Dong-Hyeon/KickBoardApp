@@ -43,7 +43,7 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalAddressLabel = {
+  let modalAddressLabel = {
     let label = UILabel()
     label.text = "관악구 신림로 330 (신림동)"
     label.textColor = UIColor(named: "KickColor")

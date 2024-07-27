@@ -41,6 +41,7 @@ class RegisterKickboardController: UIViewController {
       self?.mapController.updateCurrentLocation(latitude: latitude, longitude: longitude)
       self?.moveCameraToCurrentLocation(latitude: latitude, longitude: longitude, zoomLevel: 10) // 여기에 줌 레벨 설정 추가
       self?.readCurrentAddress(latitude: latitude, longitude: longitude)
+      print("현재 위도: \(latitude), 경도: \(longitude)") // 위치 업데이트 확인
     }
   }
   
@@ -100,9 +101,12 @@ class RegisterKickboardController: UIViewController {
       if let addressName = addressName {
         DispatchQueue.main.async {
           self?.registerKickboardView.addressValue.text = addressName
-          print(addressName)
+          print("주소 갱신됨: \(addressName)")
         }
       } else if let error = error {
+        DispatchQueue.main.async {
+          self?.registerKickboardView.addressValue.text = "주소를 가져오지 못했습니다."
+        }
         print("Error: \(error.localizedDescription)")
       }
     }
@@ -131,6 +135,15 @@ class RegisterKickboardController: UIViewController {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     
+    // 현재 위치를 LocationManager에서 직접 가져오기
+    if let currentLocation = LocationManager.shared.currentLocation {
+      currentLatitude = currentLocation.coordinate.latitude
+      currentLongitude = currentLocation.coordinate.longitude
+    } else {
+      print("현재 위치를 가져오지 못했습니다.")
+      return
+    }
+    
     newKickboard.setValue(currentLatitude, forKey: KickBoard.Key.currentLatitude)
     newKickboard.setValue(currentLongitude, forKey: KickBoard.Key.currentLongitude)
     newKickboard.setValue(registerKickboardView.registrantValue.text, forKey: KickBoard.Key.registrant)
@@ -146,6 +159,7 @@ class RegisterKickboardController: UIViewController {
     }
     do {
       try container.viewContext.save()
+      print("등록 성공/현재 위도: \(currentLatitude ?? 0), 경도: \(currentLongitude ?? 0)") // 위도 경도 확인
     } catch {
       print("생성 실패")
     }

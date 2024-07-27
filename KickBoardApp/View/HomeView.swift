@@ -31,6 +31,7 @@ class HomeView: UIView {
 
   let currentLocationButton: UIButton = {
     let button = UIButton(type: .system)
+    button.setBackgroundImage(UIImage(named: "track_location_btn"), for: .normal)
     return button
   }()
   

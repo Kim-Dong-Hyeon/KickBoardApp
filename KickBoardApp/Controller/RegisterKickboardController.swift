@@ -10,11 +10,14 @@ import PhotosUI
 import CoreData
 
 import KakaoMapsSDK
+
 class RegisterKickboardController: UIViewController {
   private var registerKickboardView: RegisterKickboardView!
   var mapController: MapController!
   let coreDataManager = DataManager()
   let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+  private var currentLatitude: Double?
+  private var currentLongitude: Double?
   
   override func loadView() {
     registerKickboardView = RegisterKickboardView(frame: UIScreen.main.bounds)
@@ -25,26 +28,63 @@ class RegisterKickboardController: UIViewController {
     super.viewDidLoad()
     self.registerKickboardView.backgroundColor = .systemBackground
     self.title = "킥보드 등록"
+    
     setButtonAction()
-    setMapview()
+    setupMapController()
     readRegistrant()
     
-    LocationManager.shared.startUpdatingLocation()
+//    LocationManager.shared.startUpdatingLocation()
     
-    
+    LocationManager.shared.onLocationUpdate = { [weak self] latitude, longitude in
+      self?.currentLatitude = latitude
+      self?.currentLongitude = longitude
+      self?.readCurrentAddress(latitude: latitude, longitude: longitude)
+      self?.goToCurrentLocation()
+    }
   }
-  
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    readCurrentAddress()
-    mapController.prepareEngine() // prepareEngine 호출
-    mapController.activateEngine() // activateEngine 호출
+    mapController.prepareEngine()
+    mapController.activateEngine()
+    
+    // 위치 업데이트 시작
+    LocationManager.shared.startUpdatingLocation()
+    
+    // 초기 위치 설정 (기본 줌 레벨 적용)
+    if let currentLocation = LocationManager.shared.currentLocation {
+      let latitude = currentLocation.coordinate.latitude
+      let longitude = currentLocation.coordinate.longitude
+      mapController.updateCurrentLocation(latitude: latitude, longitude: longitude)
+      moveCameraToCurrentLocation(latitude: latitude, longitude: longitude, zoomLevel: 9) // 여기서 줌 레벨을 설정합니다.
+    } else {
+      LocationManager.shared.startUpdatingLocation()
+    }
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    mapController.pauseEngine() // pauseEngine 호출
+    mapController.pauseEngine()
+  }
+  
+  func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 10) {
+    let currentPosition = MapPoint(longitude: longitude, latitude: latitude)
+    guard let kakaoMapView = mapController.kakaoMapView else { return } // mapController의 kakaoMapView 사용
+    
+    // 현재 위치로 카메라 이동
+    let cameraUpdate = CameraUpdate.make(target: currentPosition, zoomLevel: zoomLevel, mapView: kakaoMapView)
+    kakaoMapView.moveCamera(cameraUpdate)
+    print("Camera moved to current position")
+  }
+  
+  @objc private func goToCurrentLocation() {
+    if let currentLatitude = LocationManager.shared.currentLocation?.coordinate.latitude,
+       let currentLongitude = LocationManager.shared.currentLocation?.coordinate.longitude {
+      mapController.updateCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
+      mapController.moveCameraToCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
+    } else {
+      LocationManager.shared.startUpdatingLocation()
+    }
   }
   
   // 키보드 닫기
@@ -52,12 +92,12 @@ class RegisterKickboardController: UIViewController {
     self.view.endEditing(true)
   }
   
-  private func readCurrentAddress() {
+  private func readCurrentAddress(latitude: Double, longitude: Double) {
     let addressFetcher = AddressFetcher()
-    addressFetcher.fetchAddress() { [weak self] addressName, error in
+    addressFetcher.fetchAddress(latitude: latitude, longitude: longitude) { [weak self] addressName, error in
       if let addressName = addressName {
         DispatchQueue.main.async {
-          self?.registerKickboardView.adressValue.text = addressName
+          self?.registerKickboardView.addressValue.text = addressName
           print(addressName)
         }
       } else if let error = error {
@@ -73,14 +113,14 @@ class RegisterKickboardController: UIViewController {
     registerKickboardView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
   }
   
-  private func setMapview() {
-    guard let mapController = mapController else { return }
+  private func setupMapController() {
+    mapController = MapController()
+    addChild(mapController)
     registerKickboardView.mapView.addSubview(mapController.view)
     mapController.didMove(toParent: self)
     mapController.view.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
-    addChild(mapController)
   }
   
   private func registerKickBoardData() {
@@ -89,11 +129,11 @@ class RegisterKickboardController: UIViewController {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     
-    newKickboard.setValue(LocationManager.shared.currentLatitude, forKey: KickBoard.Key.currentLatitude)
-    newKickboard.setValue(LocationManager.shared.currentLongitude, forKey: KickBoard.Key.currentLongitude)
+    newKickboard.setValue(currentLatitude, forKey: KickBoard.Key.currentLatitude)
+    newKickboard.setValue(currentLongitude, forKey: KickBoard.Key.currentLongitude)
     newKickboard.setValue(registerKickboardView.registrantValue.text, forKey: KickBoard.Key.registrant)
     newKickboard.setValue(registerKickboardView.modelNameTextField.text, forKey: KickBoard.Key.modelName)
-    newKickboard.setValue(registerKickboardView.adressValue.text, forKey: KickBoard.Key.registedLocation)
+    newKickboard.setValue(registerKickboardView.addressValue.text, forKey: KickBoard.Key.registedLocation)
     newKickboard.setValue(UUID().uuidString, forKey: KickBoard.Key.id)
     newKickboard.setValue(registerKickboardView.currentDateLabel.text, forKey: KickBoard.Key.registedDate)
     newKickboard.setValue(dateFormatter.string(from: registerKickboardView.rentalPeriodDatePicker.date), forKey: KickBoard.Key.expirationDate)
@@ -108,6 +148,7 @@ class RegisterKickboardController: UIViewController {
       print("생성 실패")
     }
   }
+  
   private func alertMessage(message: String, no: Bool) {
     let alertMessage = UIAlertController(title: message, message: "", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "확인", style: .default) { _ in
@@ -123,10 +164,12 @@ class RegisterKickboardController: UIViewController {
     }
     present(alertMessage, animated: true, completion: nil)
   }
+  
   private func readRegistrant() {
     guard let registrantName = UserDefaults.standard.string(forKey: "userName") else { return }
     registerKickboardView.registrantValue.text! = registrantName
   }
+  
   private func clear() {
     registerKickboardView.modelNameTextField.text = ""
     registerKickboardView.PhotoView.image = .none
@@ -136,6 +179,7 @@ class RegisterKickboardController: UIViewController {
   @objc private func cancelButtonTapped() {
     clear()
   }
+  
   @objc private func reigsterButtonTapped() {
     switch (registerKickboardView.modelNameTextField.text!.isEmpty,
             registerKickboardView.PhotoView.image == .none) {
@@ -149,13 +193,9 @@ class RegisterKickboardController: UIViewController {
       alertMessage(message: "등록하시겠습니까?", no: true)
     }
   }
+  
   @objc private func selectPhotoButtonTapped() {
     presentPhotoPicker()
-  }
-  @objc private func goToCurrentLocation() {
-    if let currentLocation = LocationManager.shared.currentLocation {
-      (children.first as? MapController)?.updateCurrentLocation(location: currentLocation)
-    }
   }
 }
 
@@ -169,6 +209,7 @@ extension RegisterKickboardController: PHPickerViewControllerDelegate {
     picker.delegate = self
     present(picker, animated: true)
   }
+  
   func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
     picker.dismiss(animated: true)
     

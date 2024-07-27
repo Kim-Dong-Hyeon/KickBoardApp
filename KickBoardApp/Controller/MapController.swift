@@ -16,9 +16,8 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   private var isAuth = false
   private var isAppear = false
   private var mapView = MapView()
-  private var kakaoMapView: KakaoMap?
+  var kakaoMapView: KakaoMap?
   private var currentLocationMarker: Poi?
-  var homePlaceNameLabel: UILabel?
   
   // 지도 상태를 저장할 변수
   private var lastMarkerPosition: MapPoint?
@@ -41,7 +40,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   deinit {
     mapController?.pauseEngine()
     mapController?.resetEngine()
-
     print("deinit")
   }
   
@@ -51,39 +49,20 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     mapController = KMController(viewContainer: mapView.mapContainer)
     mapController?.delegate = self
     
-    LocationManager.shared.onLocationUpdate = { [weak self] location in
-      self?.updateCurrentLocation(location: location)
-      self?.updatePlaceNameLabel(location: location)
+    LocationManager.shared.onLocationUpdate = { [weak self] latitude, longitude in
+      self?.updateCurrentLocation(latitude: latitude, longitude: longitude)
+      self?.moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
     }
     
     LocationManager.shared.onAuthorizationChange = { [weak self] status in
       self?.handleAuthorizationChange(status)
     }
     
-    LocationManager.shared.startUpdatingLocation()
-    
     poisConfigure()
-  }
-  
-  //홈탭 위치정보 텍스트 업데이트
-  func updatePlaceNameLabel(location: CLLocation) {
-    CLGeocoder().reverseGeocodeLocation(location) { [weak self] placemarks, error in
-      guard let self = self else { return }
-      if let placemark = placemarks?.first {
-        DispatchQueue.main.async {
-          // 올바른 주소 추출
-          let administrativeArea = placemark.administrativeArea ?? ""  // 서울특별시
-          let subAdministrativeArea = placemark.subAdministrativeArea ?? ""  // 강남구 등
-          let subLocality = placemark.subLocality ?? ""  // 역삼동 등
-          
-          // 주소 문자열 생성
-          let address = "\(administrativeArea) \(subAdministrativeArea) \(subLocality)".trimmingCharacters(in: .whitespacesAndNewlines)
-          
-          // 주소 텍스트 업데이트
-          self.homePlaceNameLabel?.text = address
-        }
-      }
-    }
+    
+    // 초기 위치 설정 (지도가 준비된 후)
+    mapController?.prepareEngine()
+    mapController?.activateEngine()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -109,8 +88,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     removeObservers()
-    // 지도 엔진을 재설정하지 않도록 주석 처리
-//    resetEngine()
   }
   
   func prepareEngine() {
@@ -163,8 +140,12 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   }
   
   func addViews() {
-    let defaultPosition = MapPoint(longitude: 127.04444, latitude: 37.50236)
-    let mapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)
+    // 여기에서 그릴 View(KakaoMap, Roadview)들을 추가한다.
+    let defaultPosition: MapPoint = MapPoint(longitude: 127.04444, latitude: 37.50236)
+    // 지도(KakaoMap)를 그리기 위한 viewInfo를 생성
+    let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)
+    
+    // KakaoMap 추가
     mapController?.addView(mapviewInfo)
   }
   
@@ -176,7 +157,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     createLabelLayer()
     // LabelLayer 생성.
     createPois()
-
   }
   
   func addViewSucceeded(_ viewName: String, viewInfoName: String) {
@@ -185,6 +165,16 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       view.eventDelegate = self // KakaoMapEventDelegate 설정
       kakaoMapView = view
       viewInit(viewName: viewName)
+      
+      // 지도 준비 후 현재 위치로 이동
+      if let currentLocation = LocationManager.shared.currentLocation {
+        let latitude = currentLocation.coordinate.latitude
+        let longitude = currentLocation.coordinate.longitude
+        updateCurrentLocation(latitude: latitude, longitude: longitude)
+        moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
+      } else {
+        LocationManager.shared.startUpdatingLocation()
+      }
     }
   }
   
@@ -219,25 +209,31 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   }
   
   @objc private func goToCurrentLocation() {
-    LocationManager.shared.startUpdatingLocation()
-    if let currentLocation = LocationManager.shared.currentLocation {
-      updatePlaceNameLabel(location: currentLocation)
+    if let currentLatitude = LocationManager.shared.currentLocation?.coordinate.latitude,
+       let currentLongitude = LocationManager.shared.currentLocation?.coordinate.longitude {
+      updateCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
+    } else {
+      LocationManager.shared.startUpdatingLocation()
     }
   }
   
-  func updateCurrentLocation(location: CLLocation) {
-    let currentPosition = MapPoint(longitude: location.coordinate.longitude, latitude: location.coordinate.latitude)
+  func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 17) {
+    let currentPosition = MapPoint(longitude: longitude, latitude: latitude)
     guard let kakaoMapView = kakaoMapView else { return }
     
     // 현재 위치로 카메라 이동
-    let cameraUpdate = CameraUpdate.make(target: currentPosition, zoomLevel: 17, mapView: kakaoMapView)
+    let cameraUpdate = CameraUpdate.make(target: currentPosition, zoomLevel: zoomLevel, mapView: kakaoMapView)
     kakaoMapView.moveCamera(cameraUpdate)
     print("Camera moved to current position")
+  }
+  
+  func updateCurrentLocation(latitude: Double, longitude: Double) {
+    let currentPosition = MapPoint(longitude: longitude, latitude: latitude)
+    guard let kakaoMapView = kakaoMapView else { return }
     
     // 현재 위치 마커 추가
     if currentLocationMarker == nil {
       print("Creating new current location marker")
-      // PoiStyle 생성
       let manager = kakaoMapView.getLabelManager()
       let iconStyle = PoiIconStyle(symbol: UIImage(named: "current_location_marker.png"))
       let poiStyle = PoiStyle(styleID: "currentLocationStyle", styles: [
@@ -246,7 +242,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       manager.addPoiStyle(poiStyle)
       print("POI style added")
       
-      // 레이어 옵션 생성
       let layerOptions = LabelLayerOptions(
         layerID: "default",
         competitionType: .none,
@@ -254,13 +249,11 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
         orderType: .rank,
         zOrder: 1000
       )
-      // 레이어 추가 또는 기존 레이어 가져오기
       let layer = manager.getLabelLayer(layerID: "default") ?? manager.addLabelLayer(option: layerOptions)
       let poiOption = PoiOptions(styleID: "currentLocationStyle")
       currentLocationMarker = layer?.addPoi(option: poiOption, at: currentPosition)
       print("POI added")
     } else {
-      // Poi 위치 업데이트
       print("Updating current location marker position")
       currentLocationMarker?.position = currentPosition
     }
@@ -271,12 +264,14 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     // 현재 위치를 저장
     lastMarkerPosition = currentPosition
     print("현재 마커 위치:\(String(describing: lastMarkerPosition))")
+    moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
   }
   
   func saveMapState() {
     guard let kakaoMapView = kakaoMapView else { return }
     lastMarkerPosition = currentLocationMarker?.position
     lastZoomLevel = Int(kakaoMapView.zoomLevel)
+    print("[saveMapState] 현재 마커 위치:\(String(describing: lastMarkerPosition)), 줌 레벨:\(String(describing: lastZoomLevel))")
   }
   
   func restoreMapState() {

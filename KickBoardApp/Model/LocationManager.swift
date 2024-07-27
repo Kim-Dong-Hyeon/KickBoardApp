@@ -13,9 +13,9 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
   
   private let locationManager = CLLocationManager()
   var currentLocation: CLLocation?
-  var currentLongitude: Double?
-  var currentLatitude: Double?
-  var onLocationUpdate: ((CLLocation) -> Void)?
+//  var currentLongitude: Double?
+//  var currentLatitude: Double?
+  var onLocationUpdate: ((Double, Double) -> Void)?
   var onAuthorizationChange: ((CLAuthorizationStatus) -> Void)?
   
   private override init() {
@@ -58,11 +58,11 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let location = locations.last else { return }
-    currentLatitude = location.coordinate.latitude
-    currentLongitude = location.coordinate.longitude
+    let latitude = location.coordinate.latitude
+    let longitude = location.coordinate.longitude
     currentLocation = location
-    onLocationUpdate?(location)
-    
+    print("현재 위치 업데이트: \(latitude), \(longitude)")
+    onLocationUpdate?(latitude, longitude)
   }
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

@@ -33,13 +33,14 @@ class RegisterKickboardController: UIViewController {
     setupMapController()
     readRegistrant()
     
-//    LocationManager.shared.startUpdatingLocation()
+    LocationManager.shared.startUpdatingLocation()
     
     LocationManager.shared.onLocationUpdate = { [weak self] latitude, longitude in
       self?.currentLatitude = latitude
       self?.currentLongitude = longitude
+      self?.mapController.updateCurrentLocation(latitude: latitude, longitude: longitude)
+      self?.moveCameraToCurrentLocation(latitude: latitude, longitude: longitude, zoomLevel: 10) // 여기에 줌 레벨 설정 추가
       self?.readCurrentAddress(latitude: latitude, longitude: longitude)
-      self?.goToCurrentLocation()
     }
   }
   
@@ -55,6 +56,7 @@ class RegisterKickboardController: UIViewController {
     if let currentLocation = LocationManager.shared.currentLocation {
       let latitude = currentLocation.coordinate.latitude
       let longitude = currentLocation.coordinate.longitude
+      self.readCurrentAddress(latitude: latitude, longitude: longitude)
       mapController.updateCurrentLocation(latitude: latitude, longitude: longitude)
       moveCameraToCurrentLocation(latitude: latitude, longitude: longitude, zoomLevel: 9) // 여기서 줌 레벨을 설정합니다.
     } else {
@@ -67,9 +69,9 @@ class RegisterKickboardController: UIViewController {
     mapController.pauseEngine()
   }
   
-  func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 10) {
+  func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 10) { // 여기에 줌 레벨 기본값 추가
     let currentPosition = MapPoint(longitude: longitude, latitude: latitude)
-    guard let kakaoMapView = mapController.kakaoMapView else { return } // mapController의 kakaoMapView 사용
+    guard let kakaoMapView = mapController.kakaoMapView else { return }
     
     // 현재 위치로 카메라 이동
     let cameraUpdate = CameraUpdate.make(target: currentPosition, zoomLevel: zoomLevel, mapView: kakaoMapView)
@@ -81,7 +83,7 @@ class RegisterKickboardController: UIViewController {
     if let currentLatitude = LocationManager.shared.currentLocation?.coordinate.latitude,
        let currentLongitude = LocationManager.shared.currentLocation?.coordinate.longitude {
       mapController.updateCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
-      mapController.moveCameraToCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
+      moveCameraToCurrentLocation(latitude: currentLatitude, longitude: currentLongitude, zoomLevel: 10) // 여기에 줌 레벨 설정 추가
     } else {
       LocationManager.shared.startUpdatingLocation()
     }

@@ -45,6 +45,7 @@ class AddressFetcher {
       .responseDecodable(of: AddressResponse.self) { response in
         switch response.result {
         case .success(let addressResponse):
+          print("-----\(addressResponse)")
           if let firstDocument = addressResponse.documents.first {
             completion(firstDocument.address.addressName, nil)
           }

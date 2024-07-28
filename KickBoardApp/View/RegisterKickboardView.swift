@@ -46,7 +46,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 2
     return stackView
   }()
-  
   let registrantLabel: UILabel = {
     let label = UILabel()
     label.text = "등록자"
@@ -66,7 +65,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 4
     return stackView
   }()
-  
   let modelNameLabel: UILabel = {
     let label = UILabel()
     label.text = "모델명"
@@ -87,7 +85,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 4
     return stackView
   }()
-  
   let rentalPeriodLabel: UILabel = {
     let label = UILabel()
     label.text = "대여 기간"
@@ -134,7 +131,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 2
     return stackView
   }()
- 
   let registerButton: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("등록", for: .normal)
@@ -152,14 +148,12 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 40
     return stackView
   }()
- 
   let registerInformationStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.spacing = 17
     return stackView
   }()
-  
   let PhotoView: UIImageView = {
     let imageView = UIImageView()
     imageView.backgroundColor = .gray
@@ -211,7 +205,10 @@ class RegisterKickboardView: UIView {
     [registrantLabel, registrantValue].forEach { registrantStackView.addArrangedSubview($0) }
     [modelNameLabel, modelNameTextField].forEach { modelNameStackView.addArrangedSubview($0) }
     [rentalPeriodLabel ,currentDateLabel].forEach { rentalStackView1.addArrangedSubview($0) }
-    [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach { rentalStackView2.addArrangedSubview($0) }
+    [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach 
+    {
+      rentalStackView2.addArrangedSubview($0)
+    }
     [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
     [addressStackView, registrantStackView, modelNameStackView, rentalStackView2].forEach {
       registerInformationStackView.addArrangedSubview($0)

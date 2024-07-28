@@ -65,7 +65,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     onLocationUpdate?(latitude, longitude)
   }
   
-  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+  func locationManager(
+    _ manager: CLLocationManager,
+    didChangeAuthorization status: CLAuthorizationStatus
+  ) {
     onAuthorizationChange?(status)
     checkAuthorizationStatus()
   }

@@ -14,7 +14,6 @@ class HomeView: UIView {
     let view = UIView()
     return view
   }()
-
   let homePlaceNameLabel: UILabel = {
     let label = UILabel()
     label.text = "서울특별시 관악구 신림동"
@@ -28,13 +27,11 @@ class HomeView: UIView {
     label.clipsToBounds = true
     return label
   }()
-
   let currentLocationButton: UIButton = {
     let button = UIButton(type: .system)
     button.setBackgroundImage(UIImage(named: "track_location_btn"), for: .normal)
     return button
   }()
-  
   private let tapBarBackgroundLabel: UILabel = {
     let label = UILabel()
     label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
@@ -42,7 +39,6 @@ class HomeView: UIView {
     label.clipsToBounds = true
     return label
   }()
-  
   let modalAddressLabel: UILabel = {
     let label = UILabel()
     label.text = "관악구 신림로 330 (신림동)"
@@ -52,7 +48,6 @@ class HomeView: UIView {
     label.backgroundColor = .clear
     return label
   }()
-  
   private let modalKickboardLabel: UILabel = {
     let label = UILabel()
     label.text = "대여 킥보드 정보"
@@ -62,7 +57,6 @@ class HomeView: UIView {
     label.backgroundColor = .clear
     return label
   }()
-  
   private let modalKickboardImage: UIImageView = {
     let image = UIImageView()
     image.contentMode = .scaleAspectFill
@@ -73,48 +67,40 @@ class HomeView: UIView {
     image.clipsToBounds = true
     return image
   }()
-  
   private let modalKickboardData1: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFont(ofSize: 13)
     label.text = "모델명"
     return label
   }()
-  
   let modalKickboardData2: UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13)
     label.text = "Sparta1234"
     return label
   }()
-  
   private let modalKickboardData3: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFont(ofSize: 13)
     label.text = "등록자"
     return label
   }()
-  
   let modalKickboardData4: UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13)
     label.text = "전1성진"
     return label
   }()
-  
-  
   let modalButton1: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("대여하기", for: .normal)
     return button
   }()
-  
   let modalButton2: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("닫기", for: .normal)
     return button
   }()
-  
   private let modalButtonTemp: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .horizontal
@@ -123,7 +109,6 @@ class HomeView: UIView {
     stackview.distribution = .fillEqually
     return stackview
   }()
-  
   private let modalKickboardDataTemp1: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .vertical
@@ -132,7 +117,6 @@ class HomeView: UIView {
     stackview.distribution = .fillEqually
     return stackview
   }()
-  
   private let modalKickboardDataTemp2: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .vertical
@@ -141,7 +125,6 @@ class HomeView: UIView {
     stackview.distribution = .fillEqually
     return stackview
   }()
-  
   private let modalKickboardDataTemp3: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .vertical
@@ -150,7 +133,6 @@ class HomeView: UIView {
     stackview.distribution = .fillEqually
     return stackview
   }()
-  
   let halfModal = UIViewController()
   
   override init(frame: CGRect) {
@@ -201,8 +183,7 @@ class HomeView: UIView {
   func halfModalUI() {
     halfModal.view.backgroundColor = .white
     
-    [modalButton1, modalButton2].forEach {
-      modalButtonTemp.addArrangedSubview($0)
+    [modalButton1, modalButton2].forEach { modalButtonTemp.addArrangedSubview($0)
       $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
       $0.backgroundColor = UIColor(named: "KickColor")
       $0.layer.cornerRadius = 10

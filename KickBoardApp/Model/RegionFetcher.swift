@@ -27,8 +27,13 @@ struct RegionDocument: Decodable {
 
 class RegionFetcher {
   // 좌표를 기반으로 행정구역 정보를 가져오는 메서드
-  func fetchRegion(longitude: Double, latitude: Double, completion: @escaping ([RegionDocument]?, Error?) -> Void) {
-    guard let kakaoDevApiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_DEV_API_KEY") as? String else {
+  func fetchRegion(
+    longitude: Double,
+    latitude: Double,
+    completion: @escaping ([RegionDocument]?, Error?) -> Void) {
+    guard let kakaoDevApiKey = Bundle.main.object(
+      forInfoDictionaryKey: "KAKAO_DEV_API_KEY"
+    ) as? String else {
       print("Kakao API Key가 설정되어 있지 않습니다.")
       return
     }

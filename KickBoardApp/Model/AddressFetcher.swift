@@ -28,8 +28,13 @@ struct Address: Decodable {
 
 class AddressFetcher {
   // 현재 위치를 기반으로 주소를 가져오는 메서드
-  func fetchAddress(latitude: Double, longitude: Double, completion: @escaping (String?, Error?) -> Void) {    
-    guard let kakaoDevApiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_DEV_API_KEY") as? String else { return }
+  func fetchAddress(
+    latitude: Double,
+    longitude: Double,
+    completion: @escaping (String?, Error?) -> Void) {
+    guard let kakaoDevApiKey = Bundle.main.object(
+      forInfoDictionaryKey: "KAKAO_DEV_API_KEY"
+    ) as? String else { return }
     
     let url = "https://dapi.kakao.com/v2/local/geo/coord2address"
     let parameters: [String: Any] = [

@@ -24,7 +24,11 @@ class HomeController: UIViewController {
     self.title = "킥보드 찾기"
     
     homeView.backgroundColor = .systemBackground
-    homeView.currentLocationButton.addTarget(self, action: #selector(goToCurrentLocation), for: .touchUpInside)
+    homeView.currentLocationButton.addTarget(
+      self,
+      action: #selector(goToCurrentLocation),
+      for: .touchUpInside
+    )
     
     setupMapController()
     
@@ -63,8 +67,8 @@ class HomeController: UIViewController {
   
   func updatePlaceNameLabel(latitude: Double, longitude: Double) {
     let regionFetcher = RegionFetcher()
-    regionFetcher.fetchRegion(longitude: longitude, latitude: latitude) { [weak self] documents, error in
-      guard let self = self else { return }
+    regionFetcher.fetchRegion(longitude: longitude, latitude: latitude) {
+      [weak self] documents, error in guard let self = self else { return }
       if let document = documents?.first {
         DispatchQueue.main.async {
           self.homeView.homePlaceNameLabel.text = document.addressName
@@ -150,7 +154,8 @@ class HomeController: UIViewController {
     
     // 알럿이 모달 위로 뜨도록 설정
     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-       let topController = windowScene.windows.first?.rootViewController?.presentedViewController ?? windowScene.windows.first?.rootViewController {
+       let topController = windowScene.windows.first?.rootViewController?.presentedViewController
+        ?? windowScene.windows.first?.rootViewController {
       topController.present(alert, animated: true, completion: nil)
     } else {
       self.present(alert, animated: true, completion: nil)
@@ -167,7 +172,10 @@ protocol HomeControllerDelegate: AnyObject {
 extension HomeController: HomeControllerDelegate {
   func readCurrentAddress(latitude: Double, longitude: Double) {
     let addressFetcher = AddressFetcher()
-    addressFetcher.fetchAddress(latitude: latitude, longitude: longitude) { [weak self] addressName, error in
+    addressFetcher.fetchAddress(
+      latitude: latitude,
+      longitude: longitude
+    ) { [weak self] addressName, error in
       if let addressName = addressName {
         DispatchQueue.main.async {
           self?.homeView.modalAddressLabel.text = addressName

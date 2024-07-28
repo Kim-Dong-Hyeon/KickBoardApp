@@ -10,7 +10,8 @@ import CoreLocation
 
 import KakaoMapsSDK
 
-class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, CLLocationManagerDelegate, KakaoMapEventDelegate {
+class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
+                      CLLocationManagerDelegate, KakaoMapEventDelegate {
   private var mapController: KMController?
   private var observerAdded = false
   private var isAuth = false
@@ -143,7 +144,12 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     // 여기에서 그릴 View(KakaoMap, Roadview)들을 추가한다.
     let defaultPosition: MapPoint = MapPoint(longitude: 127.04444, latitude: 37.50236)
     // 지도(KakaoMap)를 그리기 위한 viewInfo를 생성
-    let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition, defaultLevel: 7)
+    let mapviewInfo: MapviewInfo = MapviewInfo(
+      viewName: "mapview",
+      viewInfoName: "map",
+      defaultPosition: defaultPosition,
+      defaultLevel: 7
+    )
     
     // KakaoMap 추가
     mapController?.addView(mapviewInfo)
@@ -189,14 +195,32 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
   }
   
   private func addObservers() {
-    NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(willResignActive),
+      name: UIApplication.willResignActiveNotification,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(didBecomeActive),
+      name: UIApplication.didBecomeActiveNotification,
+      object: nil
+    )
     observerAdded = true
   }
   
   private func removeObservers() {
-    NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    NotificationCenter.default.removeObserver(
+      self,
+      name: UIApplication.willResignActiveNotification,
+      object: nil
+    )
+    NotificationCenter.default.removeObserver(
+      self,
+      name: UIApplication.didBecomeActiveNotification,
+      object: nil
+    )
     observerAdded = false
   }
   
@@ -208,21 +232,16 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     mapController?.activateEngine()
   }
   
-//  @objc private func goToCurrentLocation() {
-//    if let currentLatitude = LocationManager.shared.currentLocation?.coordinate.latitude,
-//       let currentLongitude = LocationManager.shared.currentLocation?.coordinate.longitude {
-//      updateCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
-//    } else {
-//      LocationManager.shared.startUpdatingLocation()
-//    }
-//  }
-  
   func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 17) {
     let currentPosition = MapPoint(longitude: longitude, latitude: latitude)
     guard let kakaoMapView = kakaoMapView else { return }
     
     // 현재 위치로 카메라 이동
-    let cameraUpdate = CameraUpdate.make(target: currentPosition, zoomLevel: zoomLevel, mapView: kakaoMapView)
+    let cameraUpdate = CameraUpdate.make(
+      target: currentPosition,
+      zoomLevel: zoomLevel,
+      mapView: kakaoMapView
+    )
     kakaoMapView.moveCamera(cameraUpdate)
     print("Camera moved to current position")
   }
@@ -236,9 +255,10 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
       print("Creating new current location marker")
       let manager = kakaoMapView.getLabelManager()
       let iconStyle = PoiIconStyle(symbol: UIImage(named: "current_location_marker.png"))
-      let poiStyle = PoiStyle(styleID: "currentLocationStyle", styles: [
-        PerLevelPoiStyle(iconStyle: iconStyle, level: 0)
-      ])
+      let poiStyle = PoiStyle(
+        styleID: "currentLocationStyle",
+        styles: [PerLevelPoiStyle(iconStyle: iconStyle, level: 0)]
+      )
       manager.addPoiStyle(poiStyle)
       print("POI style added")
       
@@ -249,7 +269,8 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
         orderType: .rank,
         zOrder: 1000
       )
-      let layer = manager.getLabelLayer(layerID: "default") ?? manager.addLabelLayer(option: layerOptions)
+      let layer = manager.getLabelLayer(layerID: "default")
+          ?? manager.addLabelLayer(option: layerOptions)
       let poiOption = PoiOptions(styleID: "currentLocationStyle")
       currentLocationMarker = layer?.addPoi(option: poiOption, at: currentPosition)
       print("POI added")
@@ -271,12 +292,17 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     guard let kakaoMapView = kakaoMapView else { return }
     lastMarkerPosition = currentLocationMarker?.position
     lastZoomLevel = Int(kakaoMapView.zoomLevel)
-    print("[saveMapState] 현재 마커 위치:\(String(describing: lastMarkerPosition)), 줌 레벨:\(String(describing: lastZoomLevel))")
   }
   
   func restoreMapState() {
-    guard let kakaoMapView = kakaoMapView, let position = lastMarkerPosition, let zoomLevel = lastZoomLevel else { return }
-    let cameraUpdate = CameraUpdate.make(target: position, zoomLevel: Int(zoomLevel), mapView: kakaoMapView)
+    guard let kakaoMapView = kakaoMapView,
+          let position = lastMarkerPosition,
+          let zoomLevel = lastZoomLevel else { return }
+    let cameraUpdate = CameraUpdate.make(
+      target: position,
+      zoomLevel: Int(zoomLevel),
+      mapView: kakaoMapView
+    )
     kakaoMapView.moveCamera(cameraUpdate)
     if let currentLocationMarker = currentLocationMarker {
       currentLocationMarker.position = position
@@ -295,7 +321,8 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
         orderType: .rank,
         zOrder: 1000
       )
-      let layer = manager.getLabelLayer(layerID: "default") ?? manager.addLabelLayer(option: layerOptions)
+      let layer = manager.getLabelLayer(layerID: "default") 
+          ?? manager.addLabelLayer(option: layerOptions)
       let poiOption = PoiOptions(styleID: "currentLocationStyle")
       currentLocationMarker = layer?.addPoi(option: poiOption, at: position)
       currentLocationMarker?.show()
@@ -319,11 +346,19 @@ extension MapController {
   func createPoiStyles() {
     let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
     let manager = mapView.getLabelManager()
-    let iconStyle = PoiIconStyle(symbol: UIImage(named: "search_ico_pin_map.png"), anchorPoint: CGPoint(x: 0.5, y: 0.999), transition: PoiTransition(entrance: .scale, exit: .scale))
+    let iconStyle = PoiIconStyle(
+      symbol: UIImage(named: "search_ico_pin_map.png"),
+      anchorPoint: CGPoint(x: 0.5, y: 0.999),
+      transition: PoiTransition(entrance: .scale, exit: .scale)
+    )
     let perLevelStyle = PerLevelPoiStyle(iconStyle: iconStyle, level: 0)
     manager.addPoiStyle(PoiStyle(styleID: "label_clicked_style", styles: [perLevelStyle]))
     
-    let smallIconStyle = PoiIconStyle(symbol: UIImage(named: "search_ico_pin_small_map.png"), anchorPoint: CGPoint(x: 0.5, y: 0.999), transition: PoiTransition(entrance: .scale, exit: .scale))
+    let smallIconStyle = PoiIconStyle(
+      symbol: UIImage(named: "search_ico_pin_small_map.png"),
+      anchorPoint: CGPoint(x: 0.5, y: 0.999),
+      transition: PoiTransition(entrance: .scale, exit: .scale)
+    )
     let perLevelStyle2 = PerLevelPoiStyle(iconStyle: smallIconStyle, level: 0)
     manager.addPoiStyle(PoiStyle(styleID: "label_default_style", styles: [perLevelStyle2]))
   }
@@ -333,7 +368,13 @@ extension MapController {
     let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
     let labelManager = mapView.getLabelManager()
     
-    let layer = LabelLayerOptions(layerID: "poiLayer", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 10001)
+    let layer = LabelLayerOptions(
+      layerID: "poiLayer",
+      competitionType: .none,
+      competitionUnit: .symbolFirst,
+      orderType: .rank,
+      zOrder: 10001
+    )
     let _ = labelManager.addLabelLayer(option: layer)
   }
   
@@ -396,7 +437,10 @@ extension MapController {
       
       _clickedPoiID = poi.itemID
       
-      homeDelegate.readCurrentAddress(latitude: poi.position.wgsCoord.latitude, longitude: poi.position.wgsCoord.longitude)
+      homeDelegate.readCurrentAddress(
+        latitude: poi.position.wgsCoord.latitude,
+        longitude: poi.position.wgsCoord.longitude
+      )
       
     }
   }

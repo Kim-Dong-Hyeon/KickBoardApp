@@ -397,7 +397,7 @@ extension MapController {
       _clickedPoiID = poi.itemID
       
       homeDelegate.readCurrentAddress(latitude: poi.position.wgsCoord.latitude, longitude: poi.position.wgsCoord.longitude)
-
+      
     }
   }
 }

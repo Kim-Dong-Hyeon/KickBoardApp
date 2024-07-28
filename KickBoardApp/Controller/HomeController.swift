@@ -67,24 +67,6 @@ class HomeController: UIViewController {
     }
   }
   
-//  func readCurrentAddress(latitude: Double, longitude: Double) {
-//    let addressFetcher = AddressFetcher()
-//    addressFetcher.fetchAddress(latitude: latitude, longitude: longitude) { [weak self] addressName, error in
-//      if let addressName = addressName {
-//        DispatchQueue.main.async {
-//          self?.homeView.modalAddressLabel.text = addressName
-//          print("주소 갱신됨: \(addressName)")
-//        }
-//      } else if let error = error {
-//        DispatchQueue.main.async {
-//          self?.homeView.modalAddressLabel.text = "주소를 가져오지 못했습니다."
-//        }
-//        print("Error: \(error.localizedDescription)")
-//      }
-//    }
-//  }
-  
-  // 홈탭 위치정보 텍스트 업데이트
   func updatePlaceNameLabel(latitude: Double, longitude: Double) {
     let regionFetcher = RegionFetcher()
     regionFetcher.fetchRegion(longitude: longitude, latitude: latitude) { [weak self] documents, error in

@@ -84,7 +84,7 @@ class RegisterKickboardController: UIViewController {
     if let currentLatitude = LocationManager.shared.currentLocation?.coordinate.latitude,
        let currentLongitude = LocationManager.shared.currentLocation?.coordinate.longitude {
       mapController.updateCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
-      moveCameraToCurrentLocation(latitude: currentLatitude, longitude: currentLongitude, zoomLevel: 10) // 여기에 줌 레벨 설정 추가
+      moveCameraToCurrentLocation(latitude: currentLatitude, longitude: currentLongitude, zoomLevel: 17) // 여기에 줌 레벨 설정 추가
     } else {
       LocationManager.shared.startUpdatingLocation()
     }

@@ -194,10 +194,6 @@ class RegisterKickboardController: UIViewController {
     )
     newKickboard.setValue(UUID().uuidString, forKey: KickBoard.Key.id)
     newKickboard.setValue(
-      registerKickboardView.currentDateLabel.text,
-      forKey: KickBoard.Key.registedDate
-    )
-    newKickboard.setValue(
       dateFormatter.string(from: registerKickboardView.rentalPeriodDatePicker.date),
       forKey: KickBoard.Key.expirationDate
     )

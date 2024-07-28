@@ -22,8 +22,12 @@ class MyPageView: UIView {
   
   private lazy var userImage: UIImageView = {
     let imageView = UIImageView()
-    imageView.layer.cornerRadius = 50
+    imageView.contentMode = .scaleAspectFill
+    imageView.layer.borderWidth = 1.0
+    imageView.layer.borderColor = UIColor.lightGray.cgColor
+    imageView.layer.cornerRadius = 100
     imageView.backgroundColor = .gray
+    imageView.clipsToBounds = true
     return imageView
   }()
   
@@ -52,8 +56,8 @@ class MyPageView: UIView {
   private lazy var myPageStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 10
-    stackView.distribution = .fillEqually
+    stackView.spacing = 30
+//    stackView.distribution = .fillEqually
     return stackView
   }()
   
@@ -61,9 +65,9 @@ class MyPageView: UIView {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.spacing = 10
-    stackView.distribution = .fillEqually
-    stackView.backgroundColor = UIColor(named: "KickColor")
-    stackView.layer.cornerRadius = 10
+//    stackView.distribution = .fillEqually
+    stackView.backgroundColor = .clear
+//    stackView.layer.cornerRadius = 10
     return stackView
   }()
   
@@ -82,22 +86,22 @@ class MyPageView: UIView {
   
   let uiView = UIView()
   
-  lazy var moveUsageList: UIButton = {
-    let button = UIButton()
+  lazy var moveUsageList: AnimationButton = {
+    let button = AnimationButton()
     button.setTitle("나의 이용 내역", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    button.backgroundColor = UIColor(named: "KickColor")
-    button.layer.cornerRadius = 10
+//    button.setTitleColor(.white, for: .normal)
+//    button.backgroundColor = UIColor(named: "KickColor")
+//    button.layer.cornerRadius = 10
     return button
   }()
 
   
-  lazy var moveHistoryList: UIButton = {
-    let button = UIButton()
+  lazy var moveHistoryList: AnimationButton = {
+    let button = AnimationButton()
     button.setTitle("나의 등록 내역", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    button.backgroundColor = UIColor(named: "KickColor")
-    button.layer.cornerRadius = 10
+//    button.setTitleColor(.white, for: .normal)
+//    button.backgroundColor = UIColor(named: "KickColor")
+//    button.layer.cornerRadius = 10
     return button
   }()
   
@@ -116,9 +120,13 @@ class MyPageView: UIView {
     self.addSubview(myPageStackView)
     self.addSubview(logOut)
     [userImageView, uiView].forEach{ myPageStackView.addArrangedSubview($0) }
-    [moveUsageList, moveHistoryList].forEach { uiView.addSubview($0)}
+    [moveUsageList, moveHistoryList].forEach { 
+      $0.layer.cornerRadius = 10
+      $0.backgroundColor = UIColor(named: "KickColor")
+      $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+      uiView.addSubview($0)}
     [userImage, infoStackView].forEach { userImageView.addSubview($0) }
-    [nameLabel, isUsing, phoneNumber, gender].forEach { infoStackView.addArrangedSubview($0) }
+    [isUsing, nameLabel, gender, phoneNumber].forEach { infoStackView.addArrangedSubview($0) }
   }
   
   private func setConstraints() {
@@ -134,12 +142,12 @@ class MyPageView: UIView {
     
     userImage.snp.makeConstraints {
       $0.top.equalToSuperview()
-      $0.width.height.equalTo(100)
+      $0.width.height.equalTo(200)
       $0.centerX.equalToSuperview()
     }
     
     infoStackView.snp.makeConstraints {
-      $0.top.equalTo(userImage.snp.bottom).offset(10)
+      $0.top.equalTo(userImage.snp.bottom).offset(20)
       $0.leading.trailing.bottom.equalToSuperview()
     }
     

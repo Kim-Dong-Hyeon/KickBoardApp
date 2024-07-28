@@ -36,14 +36,14 @@ class RegisterKickboardView: UIView {
     label.text = ""
     label.font = .systemFont(ofSize: 15)
     label.textAlignment = .right
-    label.numberOfLines = 1
+    label.numberOfLines = 2
     label.lineBreakMode = .byWordWrapping
     return label
   }()
   let adressStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
-    stackView.spacing = 2
+    stackView.spacing = 4
     return stackView
   }()
   
@@ -90,35 +90,35 @@ class RegisterKickboardView: UIView {
   
   let rentalPeriodLabel: UILabel = {
     let label = UILabel()
-    label.text = "대여 기간"
+    label.text = "대여 만료일"
     label.textAlignment = .left
     label.font = .systemFont(ofSize: 15)
     label.textColor = UIColor(named: "KickColor")
     return label
   }()
-  let currentDateLabel: UILabel = {
-    let label = UILabel()
-    let currentDate = Date()
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy. MM. dd"
-    label.text = dateFormatter.string(from: currentDate)
-    label.font = UIFont.systemFont(ofSize: 15)
-    label.textAlignment = .right
-    return label
-  }()
-  let rentalStackView1: UIStackView = {
+//  let currentDateLabel: UILabel = {
+//    let label = UILabel()
+//    let currentDate = Date()
+//    let dateFormatter = DateFormatter()
+//    dateFormatter.dateFormat = "yyyy. MM. dd"
+//    label.text = dateFormatter.string(from: currentDate)
+//    label.font = UIFont.systemFont(ofSize: 15)
+//    label.textAlignment = .right
+//    return label
+//  }()
+  let rentalStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
-    stackView.spacing = 2
+    stackView.spacing = 4
     return stackView
   }()
-  let waveLabel: UILabel = {
-    let label = UILabel()
-    label.text = "~    "
-    label.textAlignment = .right
-    label.font = UIFont.systemFont(ofSize: 15)
-    return label
-  }()
+//  let waveLabel: UILabel = {
+//    let label = UILabel()
+//    label.text = "~    "
+//    label.textAlignment = .right
+//    label.font = UIFont.systemFont(ofSize: 15)
+//    return label
+//  }()
   let rentalPeriodDatePicker: UIDatePicker = {
     let datePicker = UIDatePicker()
     datePicker.preferredDatePickerStyle = .automatic
@@ -128,12 +128,12 @@ class RegisterKickboardView: UIView {
     datePicker.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     return datePicker
   }()
-  let rentalStackView2: UIStackView = {
-    let stackView = UIStackView()
-    stackView.axis = .vertical
-    stackView.spacing = 2
-    return stackView
-  }()
+//  let rentalStackView2: UIStackView = {
+//    let stackView = UIStackView()
+//    stackView.axis = .vertical
+//    stackView.spacing = 2
+//    return stackView
+//  }()
  
   let registerButton: AnimationButton = {
     let button = AnimationButton()
@@ -156,7 +156,8 @@ class RegisterKickboardView: UIView {
   let registerInformationStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 17
+    stackView.distribution = .fillEqually
+    stackView.spacing = 10
     return stackView
   }()
   
@@ -210,10 +211,10 @@ class RegisterKickboardView: UIView {
         adressStackView.addArrangedSubview($0) }
     [registrantLabel, registrantValue].forEach { registrantStackView.addArrangedSubview($0) }
     [modelNameLabel, modelNameTextField].forEach { modelNameStackView.addArrangedSubview($0) }
-    [rentalPeriodLabel ,currentDateLabel].forEach { rentalStackView1.addArrangedSubview($0) }
-    [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach { rentalStackView2.addArrangedSubview($0) }
+    [rentalPeriodLabel ,rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }
+//    [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach { rentalStackView2.addArrangedSubview($0) }
     [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
-    [adressStackView, registrantStackView, modelNameStackView, rentalStackView2].forEach {
+    [adressStackView, registrantStackView, modelNameStackView, rentalStackView].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
     [addPhotoStackView, registerInformationStackView].forEach { aStackView.addArrangedSubview($0) }
@@ -237,8 +238,11 @@ class RegisterKickboardView: UIView {
       $0.trailing.equalToSuperview().inset(30)
       $0.bottom.equalTo(aStackView.snp.top).inset(-30)
     }
-    adressLabel.snp.makeConstraints {
-      $0.trailing.equalTo(registrantLabel.snp.trailing)
+//    adressLabel.snp.makeConstraints {
+//      $0.trailing.equalTo(registrantLabel.snp.trailing)
+//    }
+    adressValue.snp.makeConstraints {
+      $0.top.equalTo(adressLabel.snp.top)
     }
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)
@@ -249,9 +253,9 @@ class RegisterKickboardView: UIView {
     selectPhotoButton.snp.makeConstraints {
       $0.height.equalTo(20)
     }
-    rentalPeriodDatePicker.snp.makeConstraints {
-      $0.trailing.equalToSuperview()
-    }
+//    rentalPeriodDatePicker.snp.makeConstraints {
+//      $0.trailing.equalToSuperview()
+//    }
     modelNameTextField.snp.makeConstraints {
       $0.height.equalTo(25)
     }

@@ -90,7 +90,7 @@ class RegisterKickboardController: UIViewController {
     newKickboard.setValue(registerKickboardView.modelNameTextField.text, forKey: KickBoard.Key.modelName)
     newKickboard.setValue(registerKickboardView.adressValue.text, forKey: KickBoard.Key.registedLocation)
     newKickboard.setValue(UUID().uuidString, forKey: KickBoard.Key.id)
-    newKickboard.setValue(registerKickboardView.currentDateLabel.text, forKey: KickBoard.Key.registedDate)
+//    newKickboard.setValue(registerKickboardView.currentDateLabel.text, forKey: KickBoard.Key.registedDate)
     newKickboard.setValue(dateFormatter.string(from: registerKickboardView.rentalPeriodDatePicker.date), forKey: KickBoard.Key.expirationDate)
     if let image = registerKickboardView.PhotoView.image {
       if let imageData = image.jpegData(compressionQuality: 1.0) {

@@ -6,12 +6,17 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class RegisterKickboardView: UIView {
-
+  
   let mapView: UIView = {
     let view = UIView()
+    view.layer.borderWidth = 1.0
+    view.layer.borderColor = UIColor.lightGray.cgColor
+    view.layer.cornerRadius = 5.0
+    view.clipsToBounds = true
     return view
   }()
   let currentLocationButton: AnimationButton = {
@@ -20,31 +25,33 @@ class RegisterKickboardView: UIView {
     button.backgroundColor = .clear
     return button
   }()
-  let adressLabel: UILabel = {
+  let addressLabel: UILabel = {
     let label = UILabel()
-    label.attributedText = NSAttributedString(string: "위 치:", attributes: [.kern: 4.9])
-    label.textAlignment = .right
+    label.attributedText = NSAttributedString(string: "위 치", attributes: [.kern: 4.9])
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
-  let adressValue: UILabel = {
+  let addressValue: UILabel = {
     let label = UILabel()
     label.text = ""
-    label.font = .systemFont(ofSize: 12)
+    label.font = .systemFont(ofSize: 15)
     label.textAlignment = .right
     label.numberOfLines = 2
     label.lineBreakMode = .byWordWrapping
     return label
   }()
-  let adressStackView: UIStackView = {
+  let addressStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
     stackView.spacing = 4
     return stackView
   }()
-  
   let registrantLabel: UILabel = {
     let label = UILabel()
-    label.text = "등록자 :"
+    label.text = "등록자"
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
   let registrantValue: UILabel = {
@@ -59,10 +66,11 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 4
     return stackView
   }()
-  
   let modelNameLabel: UILabel = {
     let label = UILabel()
-    label.text = "모델명 :"
+    label.text = "모델명"
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
   let modelNameTextField: UITextField = {
@@ -70,6 +78,7 @@ class RegisterKickboardView: UIView {
     textField.text = ""
     textField.borderStyle = .roundedRect
     textField.textAlignment = .right
+    textField.autocapitalizationType = .none
     return textField
   }()
   let modelNameStackView: UIStackView = {
@@ -78,21 +87,19 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 4
     return stackView
   }()
-  
   let rentalPeriodLabel: UILabel = {
     let label = UILabel()
-    label.text = "대여 기간"
-    label.textAlignment = .center
+    label.text = "대여 만료일"
+    label.textAlignment = .left
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = UIColor(named: "KickColor")
     return label
   }()
-  let currentDateLabel: UILabel = {
-    let label = UILabel()
-    let currentDate = Date()
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    label.text = dateFormatter.string(from: currentDate)
-    label.font = UIFont.systemFont(ofSize: 18)
-    return label
+  let rentalStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.spacing = 4
+    return stackView
   }()
   let rentalPeriodDatePicker: UIDatePicker = {
     let datePicker = UIDatePicker()
@@ -100,15 +107,9 @@ class RegisterKickboardView: UIView {
     datePicker.datePickerMode = .date
     datePicker.locale = Locale(identifier: "ko-KR")
     datePicker.timeZone = .autoupdatingCurrent
+    datePicker.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     return datePicker
   }()
-  let rentalStackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.axis = .vertical
-    stackView.spacing = 4
-    return stackView
-  }()
- 
   let registerButton: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("등록", for: .normal)
@@ -123,17 +124,16 @@ class RegisterKickboardView: UIView {
     let stackView = UIStackView()
     stackView.axis = .horizontal
     stackView.distribution = .fillEqually
-    stackView.spacing = 16
+    stackView.spacing = 40
     return stackView
   }()
- 
   let registerInformationStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 8
+    stackView.distribution = .fillEqually
+    stackView.spacing = 5
     return stackView
   }()
-  
   let PhotoView: UIImageView = {
     let imageView = UIImageView()
     imageView.backgroundColor = .gray
@@ -145,14 +145,19 @@ class RegisterKickboardView: UIView {
   let selectPhotoButton: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("사진 선택", for: .normal)
-    button.backgroundColor = .blue
+    button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+    button.backgroundColor = .white
+    button.setTitleColor(.gray, for: .normal)
+    button.setTitleColor(.blue, for: .highlighted)
+    button.layer.borderWidth = 1.0
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     button.layer.cornerRadius = 5
     return button
   }()
   let addPhotoStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
-    stackView.spacing = 16
+    stackView.spacing = 5
     return stackView
   }()
   
@@ -162,7 +167,7 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 16
     return stackView
   }()
-
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     configureUI()
@@ -174,58 +179,68 @@ class RegisterKickboardView: UIView {
   }
   
   func configureUI() {
-    [mapView, aStackView, buttonStackView,currentLocationButton].forEach { self.addSubview($0)}
-    [adressLabel, adressValue].forEach { adressStackView.addArrangedSubview($0) }
+    [mapView, aStackView, buttonStackView,currentLocationButton].forEach { self.addSubview($0) }
+    [addressLabel, addressValue].forEach { addressStackView.addArrangedSubview($0) }
     [registrantLabel, registrantValue].forEach { registrantStackView.addArrangedSubview($0) }
     [modelNameLabel, modelNameTextField].forEach { modelNameStackView.addArrangedSubview($0) }
-    [currentDateLabel, rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }
+    [rentalPeriodLabel ,rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }
     [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
-    [adressStackView, registrantStackView, modelNameStackView, rentalPeriodLabel, rentalStackView].forEach {
+    [addressStackView, registrantStackView, modelNameStackView, rentalStackView].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
     [addPhotoStackView, registerInformationStackView].forEach { aStackView.addArrangedSubview($0) }
     [registerButton, cancelButton].forEach {
-      $0.layer.cornerRadius = 5
-      $0.backgroundColor = .blue
+      $0.layer.cornerRadius = 10
+      $0.backgroundColor = UIColor(named: "KickColor")
+      $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
       buttonStackView.addArrangedSubview($0)
     }
   }
   
   func setConstraints() {
+    
     currentLocationButton.snp.makeConstraints {
       $0.bottom.equalTo(mapView.snp.bottom).inset(25)
       $0.trailing.equalTo(mapView.snp.trailing).inset(25)
       $0.width.height.equalTo(30)
     }
+    
     mapView.snp.makeConstraints {
       $0.top.equalToSuperview().inset(100)
       $0.leading.equalToSuperview().inset(30)
       $0.trailing.equalToSuperview().inset(30)
       $0.bottom.equalTo(aStackView.snp.top).inset(-30)
     }
-    adressLabel.snp.makeConstraints {
-      $0.trailing.equalTo(registrantLabel.snp.trailing)
-    }
+    
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)
     }
+    
     addPhotoStackView.snp.makeConstraints {
       $0.width.equalTo(120)
     }
+    
     selectPhotoButton.snp.makeConstraints {
-      $0.height.equalTo(30)
+      $0.height.equalTo(20)
     }
+    
+    modelNameTextField.snp.makeConstraints {
+      $0.height.equalTo(25)
+    }
+    
     buttonStackView.snp.makeConstraints {
-      $0.bottom.equalToSuperview().inset(90)
       $0.centerX.equalToSuperview()
-      $0.width.equalTo(300)
-      $0.height.equalTo(50)
+      $0.bottom.equalToSuperview().inset(90)
+      $0.height.equalTo(46)
+      $0.width.equalTo(320)
     }
+    
     aStackView.snp.makeConstraints {
       $0.height.equalTo(200)
-      $0.bottom.equalTo(buttonStackView.snp.top).offset(-10)
+      $0.bottom.equalTo(buttonStackView.snp.top).offset(-20)
       $0.centerX.equalToSuperview()
-      $0.width.equalToSuperview().multipliedBy(0.8)
+      $0.leading.equalToSuperview().inset(30)
+      $0.trailing.equalToSuperview().inset(30)
     }
   }
 }

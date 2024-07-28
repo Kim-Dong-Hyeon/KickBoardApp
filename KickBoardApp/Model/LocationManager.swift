@@ -13,7 +13,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
   
   private let locationManager = CLLocationManager()
   var currentLocation: CLLocation?
-  var onLocationUpdate: ((CLLocation) -> Void)?
+  var onLocationUpdate: ((Double, Double) -> Void)?
   var onAuthorizationChange: ((CLAuthorizationStatus) -> Void)?
   
   private override init() {
@@ -22,19 +22,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
   }
   
+  // 위치 권한 요청
   func requestAuthorization() {
     locationManager.requestWhenInUseAuthorization()
   }
   
+  // 위치 업데이트 시작
   func startUpdatingLocation() {
     checkAuthorizationStatus()
     locationManager.startUpdatingLocation()
   }
   
+  // 위치 업데이트 중지
   func stopUpdatingLocation() {
     locationManager.stopUpdatingLocation()
   }
   
+  // 위치 권한 상태 확인
   private func checkAuthorizationStatus() {
     let status = locationManager.authorizationStatus
     switch status {
@@ -50,14 +54,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
   }
   
+  // 위치 업데이트 콜백
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let location = locations.last else { return }
+    let latitude = location.coordinate.latitude
+    let longitude = location.coordinate.longitude
     currentLocation = location
-    onLocationUpdate?(location)
+    print("현재 위치 업데이트: \(latitude), \(longitude)")
+    onLocationUpdate?(latitude, longitude)
   }
   
-  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+  // 위치 권한 변경 콜백
+  func locationManager(
+    _ manager: CLLocationManager,
+    didChangeAuthorization status: CLAuthorizationStatus
+  ) {
     onAuthorizationChange?(status)
     checkAuthorizationStatus()
   }
+  
 }

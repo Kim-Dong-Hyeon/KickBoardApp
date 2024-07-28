@@ -24,41 +24,33 @@ class MypageController: UIViewController {
     self.navigationItem.largeTitleDisplayMode = .always
     self.myPageView.backgroundColor = .white
     self.navigationItem.largeTitleDisplayMode = .automatic
+    myPageView.moveHistoryList.addTarget(
+      self,
+      action: #selector(registerTapped),
+      for: .touchUpInside
+    )
+    myPageView.moveUsageList.addTarget(self, action: #selector(usageTapped), for: .touchUpInside)
     myPageView.logOut.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
-    setUpTableView()
   }
   
-  func setUpTableView() {
-    myPageView.myPageList.dataSource = self
-    myPageView.myPageList.delegate = self
-    myPageView.myPageList.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    myPageView.getData()
   }
   
   @objc func logOutTapped() {
-      dataManager.deleteUserDefault(key: "userName")
-      if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-         let window = scene.windows.first {
-        window.rootViewController = UINavigationController(rootViewController: LoginController())
-      }
-  }
-}
-
-extension MypageController: UITableViewDelegate, UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    2
+    dataManager.deleteUserDefault(key: "userName")
+    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+       let window = scene.windows.first {
+      window.rootViewController = UINavigationController(rootViewController: LoginController())
+    }
   }
   
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-    var content = cell.defaultContentConfiguration()
-    content.text = indexPath.row == 0 ? "나의 이용 내역" : "나의 등록 내역"
-    cell.contentConfiguration = content
-    return cell
+  @objc func registerTapped() {
+    self.navigationController?.pushViewController(RegisterHistoryController(), animated: true)
   }
-  
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let controllerArray = [UsageHistoryController(), RegisterHistoryController()]
-    self.navigationController?.pushViewController(controllerArray[indexPath.row], animated: true)
+  @objc func usageTapped() {
+    self.navigationController?.pushViewController(UsageHistoryController(), animated: true)
   }
 }
 

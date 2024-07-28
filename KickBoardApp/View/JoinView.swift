@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  JoinView.swift
 //  KickBoardApp
 //
 //  Created by 김동현 on 7/22/24.
@@ -18,7 +18,6 @@ class JoinView: UIView {
     stackView.spacing = 5
     return stackView
   }()
-  
   let idField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
@@ -31,12 +30,12 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let pwdField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
     textField.backgroundColor = .white
     textField.isSecureTextEntry = true
+    textField.textContentType = .oneTimeCode
     textField.autocapitalizationType = .none
     textField.borderStyle = .roundedRect
     textField.attributedPlaceholder = NSAttributedString(
@@ -45,12 +44,12 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let pwdChkField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
     textField.backgroundColor = .white
     textField.isSecureTextEntry = true
+    textField.textContentType = .oneTimeCode
     textField.autocapitalizationType = .none
     textField.borderStyle = .roundedRect
     textField.attributedPlaceholder = NSAttributedString(
@@ -59,7 +58,6 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let nameField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
@@ -72,7 +70,6 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let genderView: UIView = {
     let view = UIView()
     view.layer.borderWidth = 1.0
@@ -92,7 +89,6 @@ class JoinView: UIView {
     button.setTitleColor(.systemBlue, for: .normal)
     return button
   }()
-  
   let phoneNumberField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
@@ -100,12 +96,12 @@ class JoinView: UIView {
     textField.borderStyle = .roundedRect
     textField.autocapitalizationType = .none
     textField.attributedPlaceholder = NSAttributedString(
-      string: "010-XXXX-XXXX",
+      string: "전화번호",
       attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
     )
+    textField.keyboardType = .asciiCapableNumberPad
     return textField
   }()
-  
   let joinButton: UIButton = {
     let button = UIButton()
     button.setTitle("Join", for: .normal)
@@ -127,18 +123,26 @@ class JoinView: UIView {
   private func configureUI() {
     self.backgroundColor = .white
     
-    self.addSubview(mainJoinStackView)
-    [idField, pwdField, pwdChkField, nameField, genderView, phoneNumberField, joinButton].forEach {
-      mainJoinStackView.addArrangedSubview($0)
-    }
+    [ mainJoinStackView ].forEach { self.addSubview($0) }
+    
+    [
+      idField,
+      pwdField,
+      pwdChkField,
+      nameField,
+      genderView,
+      phoneNumberField,
+      joinButton
+    ].forEach { mainJoinStackView.addArrangedSubview($0) }
+    
+    [
+      genderLabel,
+      genderChangeButton
+    ].forEach { genderView.addSubview($0) }
     
     mainJoinStackView.snp.makeConstraints {
       $0.size.equalTo(CGSize(width: 300, height: 310))
       $0.center.equalToSuperview()
-    }
-    
-    [genderLabel, genderChangeButton].forEach {
-      genderView.addSubview($0)
     }
     
     genderLabel.snp.makeConstraints {
@@ -156,14 +160,28 @@ class JoinView: UIView {
   private func configureGenderMenu() {
     var actions: [UIAction] = []
     for gender in ["남자", "여자"] {
-        let action = UIAction(title: gender, handler: { [weak self] (action) in
-          guard let self = self else { return }
-          self.genderLabel.text = gender
-        })
-        actions.append(action)
+      let action = UIAction(title: gender, handler: { [weak self] (action) in
+        guard let self = self else { return }
+        self.genderLabel.text = gender
+      })
+      actions.append(action)
     }
     
     genderChangeButton.menu = UIMenu(title: "성별", children: actions)
     genderChangeButton.showsMenuAsPrimaryAction = true
+  }
+}
+
+extension String {
+  func applyPatternOnNumbers(pattern: String, replacementCharacter: Character) -> String {
+    var pureNumber = self.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+    for index in 0 ..< pattern.count {
+      guard index < pureNumber.count else { return pureNumber }
+      let stringIndex = String.Index(utf16Offset: index, in: pattern)
+      let patternCharacter = pattern[stringIndex]
+      guard patternCharacter != replacementCharacter else { continue }
+      pureNumber.insert(patternCharacter, at: stringIndex)
+    }
+    return pureNumber
   }
 }

@@ -29,10 +29,14 @@ class AnimationButton: UIButton {
   }
   
   private func animateHighlight() {
-    let animationElement = self.isHighlighted ? Animation.touchDown.element : Animation.touchUp.element
+    let animationElement = self.isHighlighted
+    ? Animation.touchDown.element
+    : Animation.touchUp.element
     
     UIView.animate(withDuration: animationElement.duration) {
-      self.transform = self.isHighlighted ? self.originalTransform.concatenating(animationElement.scale) : self.originalTransform
+      self.transform = self.isHighlighted 
+      ? self.originalTransform.concatenating(animationElement.scale)
+      : self.originalTransform
       self.alpha = animationElement.alpha
     }
   }

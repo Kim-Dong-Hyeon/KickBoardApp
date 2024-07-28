@@ -20,9 +20,13 @@ struct Document: Decodable {
 }
 
 struct Address: Decodable {
-  let addressName: String
+  let region3DepthName: String
+  let mainAddressNo: String
+  let subAddressNo: String
   enum CodingKeys: String, CodingKey {
-    case addressName = "address_name"
+    case region3DepthName = "region_3depth_name"
+    case mainAddressNo = "main_address_no"
+    case subAddressNo = "sub_address_no"
   }
 }
 
@@ -52,7 +56,14 @@ class AddressFetcher {
         case .success(let addressResponse):
           print("-----\(addressResponse)")
           if let firstDocument = addressResponse.documents.first {
-            completion(firstDocument.address.addressName, nil)
+            let address = [
+              firstDocument.address.region3DepthName,
+              " ",
+              firstDocument.address.mainAddressNo,
+              "-",
+              firstDocument.address.subAddressNo
+            ].joined()
+            completion(address, nil)
           }
         case .failure(let error):
           completion(nil, error)

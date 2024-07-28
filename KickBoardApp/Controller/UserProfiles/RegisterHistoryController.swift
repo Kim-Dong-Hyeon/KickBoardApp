@@ -12,7 +12,10 @@ import SnapKit
 
 class RegisterHistoryController: UIViewController {
   
-  lazy var historyView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+  lazy var historyView = UICollectionView(
+    frame: .zero,
+    collectionViewLayout: UICollectionViewFlowLayout()
+  )
   let dataManager = DataManager()
   var models: [KickBoard] = [] {
     didSet {
@@ -21,10 +24,12 @@ class RegisterHistoryController: UIViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
-    models = dataManager.readCoreData(entityType: KickBoard.self).filter { $0.registrant == dataManager.readUserDefault(key: "userName")}
+    models = dataManager.readCoreData(entityType: KickBoard.self).filter {
+      $0.registrant == dataManager.readUserDefault(key: "userName")
+    }
     historyView.reloadData()
   }
-
+  
   override func viewDidLoad() {
     self.title = "나의 등록 내역"
     view.addSubview(historyView)
@@ -33,7 +38,9 @@ class RegisterHistoryController: UIViewController {
     self.navigationItem.largeTitleDisplayMode = .always
     view.backgroundColor = .white
     historyView.register(RegisterCell.self, forCellWithReuseIdentifier: RegisterCell.identifier)
-    models = dataManager.readCoreData(entityType: KickBoard.self).filter { $0.registrant == dataManager.readUserDefault(key: "userName")}
+    models = dataManager.readCoreData(entityType: KickBoard.self).filter {
+      $0.registrant == dataManager.readUserDefault(key: "userName")
+    }
   }
   
   func setHistoryView() {
@@ -47,12 +54,21 @@ class RegisterHistoryController: UIViewController {
 }
 
 extension RegisterHistoryController: UICollectionViewDelegate, UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return models.count
   }
   
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RegisterCell.identifier, for: indexPath) as? RegisterCell else {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: RegisterCell.identifier, 
+      for: indexPath
+    ) as? RegisterCell else {
       return UICollectionViewCell()
     }
     let kickBoard = models[indexPath.row]
@@ -62,18 +78,30 @@ extension RegisterHistoryController: UICollectionViewDelegate, UICollectionViewD
 }
 
 extension RegisterHistoryController: UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
     let width = collectionView.frame.width
     let spacing = 10
     let cellWidth = Int(width) / 2 - spacing
     return CGSize(width: cellWidth, height: 300)
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumLineSpacingForSectionAt section: Int
+  ) -> CGFloat {
     return 20.0
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumInteritemSpacingForSectionAt section: Int
+  ) -> CGFloat {
     return 0
   }
 }

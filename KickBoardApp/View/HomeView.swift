@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class HomeView: UIView {
@@ -165,7 +166,7 @@ class HomeView: UIView {
       $0.trailing.equalToSuperview().inset(40)
       $0.height.equalTo(40)
     }
-
+    
     currentLocationButton.snp.makeConstraints {
       $0.trailing.equalToSuperview().inset(20)
       $0.bottom.equalToSuperview().inset(100)
@@ -189,7 +190,7 @@ class HomeView: UIView {
       $0.backgroundColor = UIColor(named: "KickColor")
       $0.layer.cornerRadius = 10
     }
-
+    
     [modalKickboardData1, modalKickboardData2].forEach {
       modalKickboardDataTemp1.addArrangedSubview($0)
       $0.textColor = .darkGray

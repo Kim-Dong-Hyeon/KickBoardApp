@@ -17,7 +17,6 @@ class UsageListCell: UITableViewCell {
     imageView.image = UIImage(named: "testImage(Kickboard)")
     return imageView
   }()
-  
   private lazy var cellStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
@@ -26,32 +25,27 @@ class UsageListCell: UITableViewCell {
     stackView.distribution = .fillEqually
     return stackView
   }()
-  
   private lazy var userId: UILabel = {
     let label = UILabel()
     label.text = "user"
     label.font = .boldSystemFont(ofSize: 25)
     return label
   }()
-  
   private lazy var modelName: UILabel = {
     let label = UILabel()
     label.text = "모델명 "
     return label
   }()
-  
   private lazy var depature: UILabel = {
     let label = UILabel()
     label.text = "출발"
     return label
   }()
-  
   private lazy var arrival: UILabel = {
     let label = UILabel()
     label.text = "도착"
     return label
   }()
-  
   private lazy var fee: UILabel = {
     let label = UILabel()
     label.text = "요금"

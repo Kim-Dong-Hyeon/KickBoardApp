@@ -13,9 +13,6 @@ class LoginController: UIViewController {
   
   var loginView: LoginView!
   
-  // 키보드 표시 여부
-  var isKeyboardVisible = false
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     configureView()
@@ -33,13 +30,31 @@ class LoginController: UIViewController {
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardUp),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardDown),
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
   }
   
   override func viewWillDisappear(_ animated: Bool) {
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    NotificationCenter.default.removeObserver(
+      self,
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    NotificationCenter.default.removeObserver(
+      self,
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
   }
   
   // 키보드 닫기
@@ -112,19 +127,13 @@ class LoginController: UIViewController {
       window.rootViewController = tabBarController
       window.makeKeyAndVisible()
     }
-    
-    //    let homeController = TabBarContorller()
-    //    homeController.modalPresentationStyle = .fullScreen
-    //    self.present(homeController, animated: true, completion: nil)
   }
   
   // 키보드 올라오면 View 올려주기 구현
   @objc func keyboardUp(notification:NSNotification) {
-    if isKeyboardVisible { return }
-        
-    isKeyboardVisible = true
-
-    if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+    if let keyboardFrame:NSValue = notification.userInfo?[
+      UIResponder.keyboardFrameEndUserInfoKey
+    ] as? NSValue {
       let keyboardRectangle = keyboardFrame.cgRectValue
       
       UIView.animate(
@@ -137,10 +146,6 @@ class LoginController: UIViewController {
   }
   
   @objc func keyboardDown() {
-    if !isKeyboardVisible { return }
-        
-    isKeyboardVisible = false
-    
     self.view.transform = .identity
   }
 }

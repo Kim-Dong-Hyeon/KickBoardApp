@@ -13,13 +13,13 @@ class MyPageView: UIView {
   
   private let coreDataManager = DataManager()
   
+  let uiView = UIView()
   private lazy var nameLabel: UILabel = {
     let label = UILabel()
     label.text = "이름: "
     label.textAlignment = .center
     return label
   }()
-  
   private lazy var userImage: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFill
@@ -30,21 +30,18 @@ class MyPageView: UIView {
     imageView.clipsToBounds = true
     return imageView
   }()
-  
   private lazy var phoneNumber: UILabel = {
     let label = UILabel()
     label.text = "휴대전화: "
     label.textAlignment = .center
     return label
   }()
-  
   private lazy var gender: UILabel = {
     let label = UILabel()
     label.text = "성별: "
     label.textAlignment = .center
     return label
   }()
-  
   private lazy var isUsing: UILabel = {
     let label = UILabel()
     label.text = "미사용중"
@@ -52,30 +49,23 @@ class MyPageView: UIView {
     label.textAlignment = .center
     return label
   }()
-  
   private lazy var myPageStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.spacing = 30
-//    stackView.distribution = .fillEqually
     return stackView
   }()
-  
   private lazy var infoStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.spacing = 10
-//    stackView.distribution = .fillEqually
     stackView.backgroundColor = .clear
-//    stackView.layer.cornerRadius = 10
     return stackView
   }()
-  
   private lazy var userImageView: UIView = {
     let stackView = UIView()
     return stackView
   }()
-  
   lazy var logOut: UIButton = {
     let button = UIButton()
     button.setTitle("로그아웃", for: .normal)
@@ -83,25 +73,14 @@ class MyPageView: UIView {
     button.layer.cornerRadius = 10
     return button
   }()
-  
-  let uiView = UIView()
-  
   lazy var moveUsageList: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("나의 이용 내역", for: .normal)
-//    button.setTitleColor(.white, for: .normal)
-//    button.backgroundColor = UIColor(named: "KickColor")
-//    button.layer.cornerRadius = 10
     return button
   }()
-
-  
   lazy var moveHistoryList: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("나의 등록 내역", for: .normal)
-//    button.setTitleColor(.white, for: .normal)
-//    button.backgroundColor = UIColor(named: "KickColor")
-//    button.layer.cornerRadius = 10
     return button
   }()
   
@@ -109,7 +88,6 @@ class MyPageView: UIView {
     super.init(frame: frame)
     configureUI()
     setConstraints()
-//    getData()
   }
   
   required init?(coder: NSCoder) {
@@ -189,4 +167,3 @@ class MyPageView: UIView {
     }
   }
 }
-

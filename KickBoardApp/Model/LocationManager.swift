@@ -13,8 +13,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
   
   private let locationManager = CLLocationManager()
   var currentLocation: CLLocation?
-//  var currentLongitude: Double?
-//  var currentLatitude: Double?
   var onLocationUpdate: ((Double, Double) -> Void)?
   var onAuthorizationChange: ((CLAuthorizationStatus) -> Void)?
   

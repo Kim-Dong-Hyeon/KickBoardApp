@@ -27,13 +27,31 @@ class JoinController: UIViewController, UITextFieldDelegate {
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardUp),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardDown),
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
   }
   
   override func viewWillDisappear(_ animated: Bool) {
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    NotificationCenter.default.removeObserver(
+      self, 
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    NotificationCenter.default.removeObserver(
+      self, 
+      name: UIResponder.keyboardWillHideNotification, 
+      object: nil
+    )
   }
   
   // 키보드 닫기
@@ -62,7 +80,10 @@ class JoinController: UIViewController, UITextFieldDelegate {
   }
   
   private func userDataCreate() {
-    guard let entity = NSEntityDescription.entity(forEntityName: User.className, in: container.viewContext) else { return }
+    guard let entity = NSEntityDescription.entity(
+      forEntityName: User.className,
+      in: container.viewContext
+    ) else { return }
     let newUser = NSManagedObject(entity: entity, insertInto: container.viewContext)
     newUser.setValue(joinView.idField.text, forKey: User.Key.id)
     newUser.setValue(joinView.pwdChkField.text, forKey: User.Key.password)
@@ -83,7 +104,11 @@ class JoinController: UIViewController, UITextFieldDelegate {
   }
   
   private func joinUser() {
-    let alert = UIAlertController(title: "회원가입", message: "입력하신 정보로\n회원가입 하시겠습니까?", preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: "회원가입",
+      message: "입력하신 정보로\n회원가입 하시겠습니까?",
+      preferredStyle: .alert
+    )
     alert.addAction(UIAlertAction(title: "취소", style: .default) { _ in
       return
     })
@@ -94,7 +119,8 @@ class JoinController: UIViewController, UITextFieldDelegate {
         return
       } else if let name = joinView.nameField.text, name.count == 0 {
         customAlert(msg: "이름을 입력해 주세요.")
-      } else if let phoneNumber = joinView.phoneNumberField.text, validatePhoneNumber(phoneNumber) {
+      } else if let phoneNumber = joinView.phoneNumberField.text,
+                validatePhoneNumber(phoneNumber) {
         customAlert(msg: "전화번호 형식을 확인해 주세요.\n(000-0000-0000)")
       } else {
         self.userDataCreate()
@@ -154,7 +180,11 @@ class JoinController: UIViewController, UITextFieldDelegate {
   }
   
   // UITextFieldDelegate 메서드
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+  func textField(
+    _ textField: UITextField,
+    shouldChangeCharactersIn range: NSRange,
+    replacementString string: String
+  ) -> Bool {
     if textField == joinView.phoneNumberField {
       let currentText = textField.text ?? ""
       let newString = (currentText as NSString).replacingCharacters(in: range, with: string)
@@ -165,14 +195,19 @@ class JoinController: UIViewController, UITextFieldDelegate {
         return false
       }
       
-      textField.text = newString.applyPatternOnNumbers(pattern: "###-####-####", replacementCharacter: "#")
+      textField.text = newString.applyPatternOnNumbers(
+        pattern: "###-####-####",
+        replacementCharacter: "#"
+      )
       return false
     }
     return true
   }
   
   @objc func keyboardUp(notification:NSNotification) {
-    if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+    if let keyboardFrame:NSValue = notification.userInfo?[
+      UIResponder.keyboardFrameEndUserInfoKey
+    ] as? NSValue {
       let keyboardRectangle = keyboardFrame.cgRectValue
       
       UIView.animate(

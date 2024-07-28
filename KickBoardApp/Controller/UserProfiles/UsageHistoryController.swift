@@ -22,7 +22,9 @@ class UsageHistoryController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    models = dataManager.readCoreData(entityType: Ride.self).filter { $0.name == dataManager.readUserDefault(key: "userName")}
+    models = dataManager.readCoreData(entityType: Ride.self).filter {
+      $0.name == dataManager.readUserDefault(key: "userName")
+    }
     usageList.reloadData()
   }
   
@@ -57,7 +59,10 @@ extension UsageHistoryController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: UsageListCell.identifier, for: indexPath) as? UsageListCell else {
+    guard let cell = tableView.dequeueReusableCell(
+      withIdentifier: UsageListCell.identifier,
+      for: indexPath
+    ) as? UsageListCell else {
       return UITableViewCell()
     }
     return cell

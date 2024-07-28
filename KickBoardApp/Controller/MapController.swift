@@ -28,7 +28,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
   private var positions = [MapPoint]()
   private var options = [PoiOptions]()
   private var pois = [String: Poi]()
-  private var _clickedPoiID: String = ""
+  private var _clickedPoiID: (String, Bool) = ("", false)
   
   // homeContorllerDelegate 설정
   var homeDelegate: HomeControllerDelegate!
@@ -46,7 +46,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     mapController = KMController(viewContainer: mapView.mapContainer)
     mapController?.delegate = self
     
@@ -59,8 +58,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
       self?.handleAuthorizationChange(status)
     }
     
-    poisConfigure()
-    
     // 초기 위치 설정 (지도가 준비된 후)
     mapController?.prepareEngine()
     mapController?.activateEngine()
@@ -68,6 +65,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    poisConfigure()
     addObservers()
     isAppear = true
     if mapController?.isEnginePrepared == false {
@@ -433,33 +431,59 @@ extension MapController {
   
   // Poi 탭 이벤트 핸들러
   func poiTapped(_ param: PoiInteractionEventParam) {
-    print("하이")
-    print(param.poiItem.itemID)
     let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
     let manager = mapView.getLabelManager()
     let layer = manager.getLabelLayer(layerID: param.poiItem.layerID)
     let trackingManager = mapView.getTrackingManager()
     
     if let poi = layer?.getPoi(poiID: param.poiItem.itemID) {
-      if let clickedPoi = layer?.getPoi(poiID: _clickedPoiID), clickedPoi.itemID == poi.itemID {
+      if let clickedPoi = layer?.getPoi(poiID: _clickedPoiID.0), _clickedPoiID.1 {
         print("이미 선택됨")
+        poi.hide()
         clickedPoi.changeStyle(styleID: "label_default_style")
+        poi.show()
         trackingManager.stopTracking()
+        _clickedPoiID = (poi.itemID, false)
         homeDelegate.closeHalfModal()
       } else {
         poi.hide()
         poi.changeStyle(styleID: "label_clicked_style")
         poi.show()
         trackingManager.startTrackingPoi(poi)
+        _clickedPoiID = (poi.itemID, true)
         homeDelegate.setupHalfModal(id: poi.itemID)
       }
-      
-      _clickedPoiID = poi.itemID
       
       homeDelegate.readCurrentAddress(
         latitude: poi.position.wgsCoord.latitude,
         longitude: poi.position.wgsCoord.longitude
       )
+    }
+  }
+  
+  func poiVisible(_ state: Bool) {
+    let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
+    let labelManager = mapView.getLabelManager()
+    let layer = labelManager.getLabelLayer(layerID: "poiLayer")
+    
+    // POI들 가져와서 이벤트 적용
+    if state {
+      layer?.showAllPois()
+    } else {
+      layer?.hideAllPois()
+    }
+  }
+  
+  func closedModal() {
+    let mapView: KakaoMap = mapController?.getView("mapview") as! KakaoMap
+    let manager = mapView.getLabelManager()
+    let layer = manager.getLabelLayer(layerID: "poiLayer")
+    let trackingManager = mapView.getTrackingManager()
+    
+    if let clickedPoi = layer?.getPoi(poiID: _clickedPoiID.0) {
+      clickedPoi.changeStyle(styleID: "label_default_style")
+      trackingManager.stopTracking()
+      _clickedPoiID.1 = false
     }
   }
 }

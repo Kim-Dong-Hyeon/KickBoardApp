@@ -51,6 +51,7 @@ class RegisterKickboardController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    mapController.poiVisible(false)
     mapController.prepareEngine()
     mapController.activateEngine()
     
@@ -71,7 +72,13 @@ class RegisterKickboardController: UIViewController {
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
+    mapController.poiVisible(true)
     mapController.pauseEngine()
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    mapController.poisConfigure()
+    mapController.viewInit(viewName: "mapview")
   }
   
   func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 10) {
@@ -207,7 +214,7 @@ class RegisterKickboardController: UIViewController {
       }
     }
     do {
-      try container.viewContext.save()
+      try container.viewContext.save()      
       print("등록 성공/현재 위도: \(currentLatitude ?? 0), 경도: \(currentLongitude ?? 0)") // 위도 경도 확인
     } catch {
       print("생성 실패")

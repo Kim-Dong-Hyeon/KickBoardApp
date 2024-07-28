@@ -19,9 +19,6 @@ struct PoiData {
 // dummy data 생성
 class PoiDataSample {
   static func createPoiData() -> [PoiData] {
-    if datas.isEmpty == false {
-      return datas
-    }
     
     var list: [KickBoard] = []
     let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
@@ -37,15 +34,6 @@ class PoiDataSample {
     } catch {
       print("리스트 불러오기 실패")
     }
-    
-//    let center = CLLocationCoordinate2D(latitude: 37.533, longitude: 126.996)
-    
-//    let styleIds = [
-//      "orange",
-//      "red",
-//      "green",
-//      "blue"
-//    ]
     
     for kickBoard in list {
       let position = CLLocationCoordinate2D(latitude: kickBoard.currentLatitude,

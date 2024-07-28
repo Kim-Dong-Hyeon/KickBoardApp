@@ -55,6 +55,7 @@ class HomeController: UIViewController {
     mapController.pauseEngine() // pauseEngine 호출
   }
   
+  // MapController를 설정하는 메서드
   private func setupMapController() {
     mapController = MapController()
     addChild(mapController)
@@ -65,6 +66,7 @@ class HomeController: UIViewController {
     }
   }
   
+  // 위치에 따라 주소 레이블을 업데이트하는 메서드
   func updatePlaceNameLabel(latitude: Double, longitude: Double) {
     let regionFetcher = RegionFetcher()
     regionFetcher.fetchRegion(longitude: longitude, latitude: latitude) {
@@ -81,6 +83,7 @@ class HomeController: UIViewController {
     }
   }
   
+  // 현재 위치로 이동하는 메서드
   @objc private func goToCurrentLocation() {
     if let currentLocation = LocationManager.shared.currentLocation {
       let latitude = currentLocation.coordinate.latitude
@@ -170,6 +173,7 @@ protocol HomeControllerDelegate: AnyObject {
 }
 
 extension HomeController: HomeControllerDelegate {
+  // 현재 주소를 읽는 메서드
   func readCurrentAddress(latitude: Double, longitude: Double) {
     let addressFetcher = AddressFetcher()
     addressFetcher.fetchAddress(

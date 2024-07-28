@@ -91,22 +91,27 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     removeObservers()
   }
   
+  // 지도 엔진을 준비하는 메서드
   func prepareEngine() {
     mapController?.prepareEngine()
   }
   
+  // 지도 엔진을 활성화하는 메서드
   func activateEngine() {
     mapController?.activateEngine()
   }
   
+  // 지도 엔진을 일시 중지하는 메서드
   func pauseEngine() {
     mapController?.pauseEngine()
   }
   
+  // 지도 엔진을 재설정하는 메서드
   func resetEngine() {
     mapController?.resetEngine()
   }
   
+  // 인증 성공 시 호출되는 메서드
   func authenticationSucceeded() {
     if !isAuth {
       isAuth = true
@@ -116,6 +121,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     }
   }
   
+  // 인증 실패시 호출되는 메서드
   func authenticationFailed(_ errorCode: Int, desc: String) {
     print("error code: \(errorCode)")
     print("desc: \(desc)")
@@ -140,6 +146,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     }
   }
   
+  // View를 추가하는 메서드
   func addViews() {
     // 여기에서 그릴 View(KakaoMap, Roadview)들을 추가한다.
     let defaultPosition: MapPoint = MapPoint(longitude: 127.04444, latitude: 37.50236)
@@ -155,6 +162,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     mapController?.addView(mapviewInfo)
   }
   
+  // View 초기화 메서드
   func viewInit(viewName: String) {
     print("OK")
     // Style 생성
@@ -165,6 +173,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     createPois()
   }
   
+  // View 추가 성공 시 호출되는 메서드
   func addViewSucceeded(_ viewName: String, viewInfoName: String) {
     if let view = mapController?.getView("mapview") as? KakaoMap {
       view.viewRect = mapView.mapContainer.bounds
@@ -183,17 +192,19 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
       }
     }
   }
-  
+  // View 추가 실패 시 호출되는 메서드
   func addViewFailed(_ viewName: String, viewInfoName: String) {
     print("Failed")
   }
   
+  // 컨테이너 크기 변경 시 호출되는 메서드
   func containerDidResized(_ size: CGSize) {
     if let mapView = mapController?.getView("mapview") as? KakaoMap {
       mapView.viewRect = CGRect(origin: .zero, size: size)
     }
   }
   
+  // 옵저버를 추가하는 메서드
   private func addObservers() {
     NotificationCenter.default.addObserver(
       self,
@@ -210,6 +221,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     observerAdded = true
   }
   
+  // 옵저버를 제거하는 메서드
   private func removeObservers() {
     NotificationCenter.default.removeObserver(
       self,
@@ -224,14 +236,17 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     observerAdded = false
   }
   
+  // 앱이 비활성화되기 전에 호출되는 메서드
   @objc private func willResignActive() {
     mapController?.pauseEngine()
   }
   
+  // 앱이 활성화된 후 호출되는 메서드
   @objc private func didBecomeActive() {
     mapController?.activateEngine()
   }
   
+  // 카메라를 현재 위치로 이동시키는 메서드
   func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 17) {
     let currentPosition = MapPoint(longitude: longitude, latitude: latitude)
     guard let kakaoMapView = kakaoMapView else { return }
@@ -246,6 +261,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     print("Camera moved to current position")
   }
   
+  // 현재 위치를 업데이트하는 메서드
   func updateCurrentLocation(latitude: Double, longitude: Double) {
     let currentPosition = MapPoint(longitude: longitude, latitude: latitude)
     guard let kakaoMapView = kakaoMapView else { return }
@@ -288,12 +304,14 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
   }
   
+  // 지도 상태를 저장하는 메서드
   func saveMapState() {
     guard let kakaoMapView = kakaoMapView else { return }
     lastMarkerPosition = currentLocationMarker?.position
     lastZoomLevel = Int(kakaoMapView.zoomLevel)
   }
   
+  // 지도 상태를 복원하는 메서드
   func restoreMapState() {
     guard let kakaoMapView = kakaoMapView,
           let position = lastMarkerPosition,
@@ -329,6 +347,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     }
   }
   
+  // 위치 권한 변경 처리 메서드
   private func handleAuthorizationChange(_ status: CLAuthorizationStatus) {
     switch status {
     case .authorizedAlways, .authorizedWhenInUse:
@@ -441,7 +460,6 @@ extension MapController {
         latitude: poi.position.wgsCoord.latitude,
         longitude: poi.position.wgsCoord.longitude
       )
-      
     }
   }
 }

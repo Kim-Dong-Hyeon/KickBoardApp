@@ -28,6 +28,7 @@ class MapView: UIView {
     setupViews()
   }
   
+  // 뷰 구성 요소들을 추가하고 레이아웃을 설정하는 메서드
   private func setupViews() {
     [mapContainer].forEach { self.addSubview($0) }
     
@@ -36,6 +37,7 @@ class MapView: UIView {
     }
   }
   
+  // 토스트 메시지를 표시하는 메서드
   func showToast(message: String, duration: TimeInterval = 2.0) {
     let toastLabel = UILabel()
     toastLabel.backgroundColor = UIColor.black

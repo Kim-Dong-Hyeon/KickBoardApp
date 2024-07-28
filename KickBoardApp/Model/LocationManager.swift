@@ -56,6 +56,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
   }
   
+  // 위치 업데이트 콜백
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let location = locations.last else { return }
     let latitude = location.coordinate.latitude
@@ -65,6 +66,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     onLocationUpdate?(latitude, longitude)
   }
   
+  // 위치 권한 변경 콜백
   func locationManager(
     _ manager: CLLocationManager,
     didChangeAuthorization status: CLAuthorizationStatus

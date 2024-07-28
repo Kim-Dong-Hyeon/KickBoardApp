@@ -145,6 +145,7 @@ class HomeView: UIView {
     fatalError("*T_T*")
   }
   
+  // 뷰 구성 요소들을 추가하고 레이아웃을 설정하는 메서드
   private func setupViews() {
     [
       mapView,
@@ -179,7 +180,7 @@ class HomeView: UIView {
     }
   }
   
-  //모달 내부 세팅
+  // 모달 UI를 설정하는 메서드
   func halfModalUI() {
     halfModal.view.backgroundColor = .white
     

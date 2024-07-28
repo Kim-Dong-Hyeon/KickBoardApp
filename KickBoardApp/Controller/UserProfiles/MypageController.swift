@@ -24,7 +24,11 @@ class MypageController: UIViewController {
     self.navigationItem.largeTitleDisplayMode = .always
     self.myPageView.backgroundColor = .white
     self.navigationItem.largeTitleDisplayMode = .automatic
-    myPageView.moveHistoryList.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
+    myPageView.moveHistoryList.addTarget(
+      self,
+      action: #selector(registerTapped),
+      for: .touchUpInside
+    )
     myPageView.moveUsageList.addTarget(self, action: #selector(usageTapped), for: .touchUpInside)
     myPageView.logOut.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
   }
@@ -40,7 +44,6 @@ class MypageController: UIViewController {
        let window = scene.windows.first {
       window.rootViewController = UINavigationController(rootViewController: LoginController())
     }
-
   }
   
   @objc func registerTapped() {

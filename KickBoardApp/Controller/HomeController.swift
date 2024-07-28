@@ -6,16 +6,15 @@
 //
 
 import UIKit
+import CoreData
 import CoreLocation
 
 import KakaoMapsSDK
-import CoreData
 
 class HomeController: UIViewController {
   var homeView: HomeView!
   var mapController: MapController!
   var state: Bool = false
-//  var shouldDismissModal = false
   
   override func loadView() {
     homeView = HomeView(frame: UIScreen.main.bounds)
@@ -112,11 +111,6 @@ class HomeController: UIViewController {
   
   // 모달 내부 세팅
   func setupHalfModal(id: String) {
-    // 모달 버튼 입력값(대여하기, 닫기)
-//    homeView.modalButton1.addAction(UIAction { [weak self] _ in
-//      guard let self = self else { return }
-//      self.setupAlert()
-//    }, for: .touchDown)
     
     homeView.modalButton2.addAction(UIAction { [weak self] _ in
       guard let self = self else { return }
@@ -152,13 +146,6 @@ class HomeController: UIViewController {
     dismiss(animated: true, completion: nil)
   }
   
-//  // 빈 화면 터치 시 모달 창 내리기
-//  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    if !state {
-//      self.dismiss(animated: true, completion: nil)
-//    }
-//  }
-  
   // 대여하기 클릭 시 알럿
   func setupAlert() {
     let id = UserDefaults.standard.object(forKey: "userName") as? String
@@ -186,7 +173,9 @@ class HomeController: UIViewController {
           
           // 알럿이 모달 위로 뜨도록 설정
           if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-             let topController = windowScene.windows.first?.rootViewController?.presentedViewController ?? windowScene.windows.first?.rootViewController {
+             let topController = windowScene.windows.first?
+            .rootViewController?.presentedViewController
+              ?? windowScene.windows.first?.rootViewController {
             topController.present(alert, animated: true, completion: nil)
           } else {
             self.present(alert, animated: true, completion: nil)
@@ -259,11 +248,9 @@ extension HomeController: HomeControllerDelegate {
 }
 
 extension HomeController: UISheetPresentationControllerDelegate {
-  func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+  func presentationControllerShouldDismiss(
+    _ presentationController: UIPresentationController
+  ) -> Bool {
     return false
   }
-  
-//  func setShouldDismissModal(_ shouldDismiss: Bool) {
-//      self.shouldDismissModal = shouldDismiss
-//  }
 }

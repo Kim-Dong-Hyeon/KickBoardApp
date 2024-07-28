@@ -36,39 +36,39 @@ class AddressFetcher {
     latitude: Double,
     longitude: Double,
     completion: @escaping (String?, Error?) -> Void) {
-    guard let kakaoDevApiKey = Bundle.main.object(
-      forInfoDictionaryKey: "KAKAO_DEV_API_KEY"
-    ) as? String else { return }
-    
-    let url = "https://dapi.kakao.com/v2/local/geo/coord2address"
-    let parameters: [String: Any] = [
-      "x": "\(longitude)",
-      "y": "\(latitude)"
-    ]
-    let headers: HTTPHeaders = [
-      "Authorization": "KakaoAK \(kakaoDevApiKey)"
-    ]
-    
-    AF.request(url, method: .get, parameters: parameters, headers: headers)
-      .validate()
-      .responseDecodable(of: AddressResponse.self) { response in
-        switch response.result {
-        case .success(let addressResponse):
-          print("-----\(addressResponse)")
-          if let firstDocument = addressResponse.documents.first {
-            let address = [
-              firstDocument.address.region3DepthName,
-              " ",
-              firstDocument.address.mainAddressNo,
-              "-",
-              firstDocument.address.subAddressNo
-            ].joined()
-            completion(address, nil)
+      guard let kakaoDevApiKey = Bundle.main.object(
+        forInfoDictionaryKey: "KAKAO_DEV_API_KEY"
+      ) as? String else { return }
+      
+      let url = "https://dapi.kakao.com/v2/local/geo/coord2address"
+      let parameters: [String: Any] = [
+        "x": "\(longitude)",
+        "y": "\(latitude)"
+      ]
+      let headers: HTTPHeaders = [
+        "Authorization": "KakaoAK \(kakaoDevApiKey)"
+      ]
+      
+      AF.request(url, method: .get, parameters: parameters, headers: headers)
+        .validate()
+        .responseDecodable(of: AddressResponse.self) { response in
+          switch response.result {
+          case .success(let addressResponse):
+            print("-----\(addressResponse)")
+            if let firstDocument = addressResponse.documents.first {
+              let address = [
+                firstDocument.address.region3DepthName,
+                " ",
+                firstDocument.address.mainAddressNo,
+                "-",
+                firstDocument.address.subAddressNo
+              ].joined()
+              completion(address, nil)
+            }
+          case .failure(let error):
+            completion(nil, error)
+            print("error: \(completion(nil, error))")
           }
-        case .failure(let error):
-          completion(nil, error)
-          print("error: \(completion(nil, error))")
         }
-      }
-  }
+    }
 }

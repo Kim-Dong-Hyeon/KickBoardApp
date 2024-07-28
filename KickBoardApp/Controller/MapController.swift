@@ -51,7 +51,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
     
     LocationManager.shared.onLocationUpdate = { [weak self] latitude, longitude in
       self?.updateCurrentLocation(latitude: latitude, longitude: longitude)
-//      self?.moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
     }
     
     LocationManager.shared.onAuthorizationChange = { [weak self] status in
@@ -184,7 +183,6 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
         let latitude = currentLocation.coordinate.latitude
         let longitude = currentLocation.coordinate.longitude
         updateCurrentLocation(latitude: latitude, longitude: longitude)
-//        moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
       } else {
         LocationManager.shared.startUpdatingLocation()
       }
@@ -284,7 +282,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
         zOrder: 1000
       )
       let layer = manager.getLabelLayer(layerID: "default")
-          ?? manager.addLabelLayer(option: layerOptions)
+      ?? manager.addLabelLayer(option: layerOptions)
       let poiOption = PoiOptions(styleID: "currentLocationStyle")
       currentLocationMarker = layer?.addPoi(option: poiOption, at: currentPosition)
       print("POI added")
@@ -338,7 +336,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate,
         zOrder: 1000
       )
       let layer = manager.getLabelLayer(layerID: "default") 
-          ?? manager.addLabelLayer(option: layerOptions)
+      ?? manager.addLabelLayer(option: layerOptions)
       let poiOption = PoiOptions(styleID: "currentLocationStyle")
       currentLocationMarker = layer?.addPoi(option: poiOption, at: position)
       currentLocationMarker?.show()

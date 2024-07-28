@@ -31,32 +31,32 @@ class RegionFetcher {
     longitude: Double,
     latitude: Double,
     completion: @escaping ([RegionDocument]?, Error?) -> Void) {
-    guard let kakaoDevApiKey = Bundle.main.object(
-      forInfoDictionaryKey: "KAKAO_DEV_API_KEY"
-    ) as? String else {
-      print("Kakao API Key가 설정되어 있지 않습니다.")
-      return
-    }
-    
-    let url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json"
-    let parameters: [String: Any] = [
-      "x": "\(longitude)",
-      "y": "\(latitude)"
-    ]
-    let headers: HTTPHeaders = [
-      "Authorization": "KakaoAK \(kakaoDevApiKey)"
-    ]
-    
-    AF.request(url, method: .get, parameters: parameters, headers: headers)
-      .validate()
-      .responseDecodable(of: RegionResponse.self) { response in
-        switch response.result {
-        case .success(let regionResponse):
-          let filteredDocuments = regionResponse.documents.filter { $0.regionType == "H" }
-          completion(filteredDocuments, nil)
-        case .failure(let error):
-          completion(nil, error)
-        }
+      guard let kakaoDevApiKey = Bundle.main.object(
+        forInfoDictionaryKey: "KAKAO_DEV_API_KEY"
+      ) as? String else {
+        print("Kakao API Key가 설정되어 있지 않습니다.")
+        return
       }
-  }
+      
+      let url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json"
+      let parameters: [String: Any] = [
+        "x": "\(longitude)",
+        "y": "\(latitude)"
+      ]
+      let headers: HTTPHeaders = [
+        "Authorization": "KakaoAK \(kakaoDevApiKey)"
+      ]
+      
+      AF.request(url, method: .get, parameters: parameters, headers: headers)
+        .validate()
+        .responseDecodable(of: RegionResponse.self) { response in
+          switch response.result {
+          case .success(let regionResponse):
+            let filteredDocuments = regionResponse.documents.filter { $0.regionType == "H" }
+            completion(filteredDocuments, nil)
+          case .failure(let error):
+            completion(nil, error)
+          }
+        }
+    }
 }

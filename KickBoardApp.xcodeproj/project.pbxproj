@@ -150,9 +150,9 @@
 				748EDF4D2C50EC12000B74DB /* User+CoreDataClass.swift */,
 				748EDF4E2C50EC12000B74DB /* User+CoreDataProperties.swift */,
 				7674BCFE2C4E47DB000F5C53 /* Model.swift */,
+				DDB680702C5000FA0018F531 /* DataManager.swift */,
 				7674BD112C4F77D9000F5C53 /* LocationManager.swift */,
 				4F07CA262C4E8A2200A19E5C /* AnimaitionButton.swift */,
-				DDB680702C5000FA0018F531 /* DataManager.swift */,
 				4FDD782D2C5379A500BF041A /* AddressFetcher.swift */,
 				764533602C5513E000DF7DA8 /* RegionFetcher.swift */,
 			);
@@ -162,10 +162,10 @@
 		7674BCEA2C4E1095000F5C53 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7674BD162C4FD1C5000F5C53 /* HomeView.swift */,
-				7674BD002C4E47E8000F5C53 /* MapView.swift */,
-				7458E05E2C4E8855003BDAF3 /* JoinView.swift */,
 				7458E05D2C4E87F6003BDAF3 /* LoginView.swift */,
+				7458E05E2C4E8855003BDAF3 /* JoinView.swift */,
+				7674BD002C4E47E8000F5C53 /* MapView.swift */,
+				7674BD162C4FD1C5000F5C53 /* HomeView.swift */,
 				4F07CA222C4E83F800A19E5C /* RegisterKickboardView.swift */,
 				DDB6802E2C4E66E00018F531 /* UserProfiles */,
 			);
@@ -175,12 +175,12 @@
 		7674BCEB2C4E10A4000F5C53 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7674BD142C4FD0D7000F5C53 /* HomeController.swift */,
 				7458E0612C4E889C003BDAF3 /* LoginController.swift */,
-				7458E0542C4E461C003BDAF3 /* MapController.swift */,
-				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
-				4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */,
 				7458E0602C4E8884003BDAF3 /* JoinController.swift */,
+				7458E0572C4E461C003BDAF3 /* TabBarContorller.swift */,
+				7458E0542C4E461C003BDAF3 /* MapController.swift */,
+				7674BD142C4FD0D7000F5C53 /* HomeController.swift */,
+				4F07CA242C4E840F00A19E5C /* RegisterKickboardController.swift */,
 				DDB680292C4E66720018F531 /* UserProfiles */,
 			);
 			path = Controller;

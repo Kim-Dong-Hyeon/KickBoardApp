@@ -18,7 +18,6 @@ class JoinView: UIView {
     stackView.spacing = 5
     return stackView
   }()
-  
   let idField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
@@ -31,7 +30,6 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let pwdField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
@@ -46,7 +44,6 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let pwdChkField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
@@ -61,7 +58,6 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let nameField: UITextField = {
     let textField = UITextField()
     textField.textColor = .black
@@ -74,7 +70,6 @@ class JoinView: UIView {
     )
     return textField
   }()
-  
   let genderView: UIView = {
     let view = UIView()
     view.layer.borderWidth = 1.0
@@ -107,7 +102,6 @@ class JoinView: UIView {
     textField.keyboardType = .asciiCapableNumberPad
     return textField
   }()
-  
   let joinButton: UIButton = {
     let button = UIButton()
     button.setTitle("Join", for: .normal)

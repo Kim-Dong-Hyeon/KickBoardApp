@@ -16,27 +16,23 @@ class RegisterCell: UICollectionViewCell {
     imageView.backgroundColor = .gray
     return imageView
   }()
-  
   private lazy var addressLabel: UILabel = {
     let label = UILabel()
     label.text = "주소: "
     label.adjustsFontSizeToFitWidth = true
     return label
   }()
-  
   private lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.text = "위치: "
     return label
   }()
-  
   private lazy var modelName: UILabel = {
     let label = UILabel()
     label.text = "모델명: "
     label.adjustsFontSizeToFitWidth = true
     return label
   }()
-  
   private lazy var labelStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical

@@ -6,10 +6,11 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class RegisterKickboardView: UIView {
-
+  
   let mapView: UIView = {
     let view = UIView()
     view.layer.borderWidth = 1.0
@@ -94,29 +95,12 @@ class RegisterKickboardView: UIView {
     label.textColor = UIColor(named: "KickColor")
     return label
   }()
-//  let currentDateLabel: UILabel = {
-//    let label = UILabel()
-//    let currentDate = Date()
-//    let dateFormatter = DateFormatter()
-//    dateFormatter.dateFormat = "yyyy. MM. dd"
-//    label.text = dateFormatter.string(from: currentDate)
-//    label.font = UIFont.systemFont(ofSize: 15)
-//    label.textAlignment = .right
-//    return label
-//  }()
   let rentalStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
     stackView.spacing = 4
     return stackView
   }()
-//  let waveLabel: UILabel = {
-//    let label = UILabel()
-//    label.text = "~    "
-//    label.textAlignment = .right
-//    label.font = UIFont.systemFont(ofSize: 15)
-//    return label
-//  }()
   let rentalPeriodDatePicker: UIDatePicker = {
     let datePicker = UIDatePicker()
     datePicker.preferredDatePickerStyle = .automatic
@@ -183,7 +167,7 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 16
     return stackView
   }()
-
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     configureUI()
@@ -195,13 +179,11 @@ class RegisterKickboardView: UIView {
   }
   
   func configureUI() {
-    [mapView, aStackView, buttonStackView,currentLocationButton].forEach { self.addSubview($0)}
-    [addressLabel, addressValue].forEach { 
-        addressStackView.addArrangedSubview($0) }
+    [mapView, aStackView, buttonStackView,currentLocationButton].forEach { self.addSubview($0) }
+    [addressLabel, addressValue].forEach { addressStackView.addArrangedSubview($0) }
     [registrantLabel, registrantValue].forEach { registrantStackView.addArrangedSubview($0) }
     [modelNameLabel, modelNameTextField].forEach { modelNameStackView.addArrangedSubview($0) }
     [rentalPeriodLabel ,rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }
-//    [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach { rentalStackView2.addArrangedSubview($0) }
     [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
     [addressStackView, registrantStackView, modelNameStackView, rentalStackView].forEach {
       registerInformationStackView.addArrangedSubview($0)
@@ -216,52 +198,49 @@ class RegisterKickboardView: UIView {
   }
   
   func setConstraints() {
+    
     currentLocationButton.snp.makeConstraints {
       $0.bottom.equalTo(mapView.snp.bottom).inset(25)
       $0.trailing.equalTo(mapView.snp.trailing).inset(25)
       $0.width.height.equalTo(30)
     }
+    
     mapView.snp.makeConstraints {
       $0.top.equalToSuperview().inset(100)
       $0.leading.equalToSuperview().inset(30)
       $0.trailing.equalToSuperview().inset(30)
       $0.bottom.equalTo(aStackView.snp.top).inset(-30)
     }
-//    adressLabel.snp.makeConstraints {
-//      $0.trailing.equalTo(registrantLabel.snp.trailing)
-//    }
+    
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)
     }
+    
     addPhotoStackView.snp.makeConstraints {
       $0.width.equalTo(120)
     }
+    
     selectPhotoButton.snp.makeConstraints {
       $0.height.equalTo(20)
     }
-//    rentalPeriodDatePicker.snp.makeConstraints {
-//      $0.trailing.equalToSuperview()
-//    }
+    
     modelNameTextField.snp.makeConstraints {
       $0.height.equalTo(25)
     }
+    
     buttonStackView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.bottom.equalToSuperview().inset(90)
       $0.height.equalTo(46)
       $0.width.equalTo(320)
-//      $0.bottom.equalToSuperview().inset(90)
-//      $0.centerX.equalToSuperview()
-//      $0.width.equalTo(300)
-//      $0.height.equalTo(50)
     }
+    
     aStackView.snp.makeConstraints {
       $0.height.equalTo(200)
       $0.bottom.equalTo(buttonStackView.snp.top).offset(-20)
       $0.centerX.equalToSuperview()
       $0.leading.equalToSuperview().inset(30)
       $0.trailing.equalToSuperview().inset(30)
-//      $0.width.equalToSuperview().multipliedBy(0.8)
     }
   }
 }

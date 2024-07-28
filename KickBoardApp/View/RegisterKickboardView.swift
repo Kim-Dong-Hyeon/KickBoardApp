@@ -77,6 +77,7 @@ class RegisterKickboardView: UIView {
     textField.text = ""
     textField.borderStyle = .roundedRect
     textField.textAlignment = .right
+    textField.autocapitalizationType = .none
     return textField
   }()
   let modelNameStackView: UIStackView = {

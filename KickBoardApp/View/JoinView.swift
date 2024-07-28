@@ -37,6 +37,7 @@ class JoinView: UIView {
     textField.textColor = .black
     textField.backgroundColor = .white
     textField.isSecureTextEntry = true
+    textField.textContentType = .oneTimeCode
     textField.autocapitalizationType = .none
     textField.borderStyle = .roundedRect
     textField.attributedPlaceholder = NSAttributedString(
@@ -51,6 +52,7 @@ class JoinView: UIView {
     textField.textColor = .black
     textField.backgroundColor = .white
     textField.isSecureTextEntry = true
+    textField.textContentType = .oneTimeCode
     textField.autocapitalizationType = .none
     textField.borderStyle = .roundedRect
     textField.attributedPlaceholder = NSAttributedString(

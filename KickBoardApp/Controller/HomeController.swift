@@ -9,10 +9,13 @@ import UIKit
 import CoreLocation
 
 import KakaoMapsSDK
+import CoreData
 
 class HomeController: UIViewController {
   var homeView: HomeView!
   var mapController: MapController!
+  var state: Bool = false
+//  var shouldDismissModal = false
   
   override func loadView() {
     homeView = HomeView(frame: UIScreen.main.bounds)
@@ -30,6 +33,13 @@ class HomeController: UIViewController {
       for: .touchUpInside
     )
     
+    checkRideState()
+    
+    homeView.modalButton1.addAction(UIAction { [weak self] _ in
+      guard let self = self else { return }
+      self.setupAlert()
+    }, for: .touchDown)
+    
     setupMapController()
     
     mapController.homeDelegate = self
@@ -43,6 +53,10 @@ class HomeController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    if state {
+      setupHalfModal(id: UserDefaults.standard.object(forKey: "userName") as? String ?? "")
+      homeView.modalButton2.isHidden = true
+    }
     mapController.prepareEngine() // prepareEngine 호출
     mapController.activateEngine() // activateEngine 호출
     
@@ -99,10 +113,10 @@ class HomeController: UIViewController {
   // 모달 내부 세팅
   func setupHalfModal(id: String) {
     // 모달 버튼 입력값(대여하기, 닫기)
-    homeView.modalButton1.addAction(UIAction { [weak self] _ in
-      guard let self = self else { return }
-      self.setupAlert()
-    }, for: .touchDown)
+//    homeView.modalButton1.addAction(UIAction { [weak self] _ in
+//      guard let self = self else { return }
+//      self.setupAlert()
+//    }, for: .touchDown)
     
     homeView.modalButton2.addAction(UIAction { [weak self] _ in
       guard let self = self else { return }
@@ -127,41 +141,90 @@ class HomeController: UIViewController {
     // 모달 상세 정보 사이즈 설정
     if let sheet = homeView.halfModal.sheetPresentationController {
       sheet.detents = [.medium()]
+      sheet.delegate = self
     }
     present(homeView.halfModal, animated: true, completion: nil)
   }
   
   // 모달 닫는 버튼에 들어갈 메서드 설정
   func closeHalfModal() {
+    mapController.closedModal()
     dismiss(animated: true, completion: nil)
   }
   
-  // 빈 화면 터치 시 모달 창 내리기
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.dismiss(animated: true, completion: nil)
-  }
+//  // 빈 화면 터치 시 모달 창 내리기
+//  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    if !state {
+//      self.dismiss(animated: true, completion: nil)
+//    }
+//  }
   
   // 대여하기 클릭 시 알럿
   func setupAlert() {
-    let alert = UIAlertController(
-      title: "알림",
-      message: "대여가 완료되었습니다",
-      preferredStyle: .alert
-    )
+    let id = UserDefaults.standard.object(forKey: "userName") as? String
+    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     
-    let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
-    //    let cancel = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+    do {
+      let request = User.fetchRequest()
+      request.predicate = NSPredicate(format: "id == %@", id ?? "")
+      let users = try container.viewContext.fetch(request)
+      
+      for user in users as [NSManagedObject] {
+        if state {
+          state = false
+          user.setValue(state, forKey: User.Key.state)
+          homeView.modalButton2.isHidden = false
+          let alert = UIAlertController(
+            title: "알림",
+            message: "반납이 완료되었습니다",
+            preferredStyle: .alert
+          )
+          
+          let ok = UIAlertAction(title: "확인", style: .default, handler: nil)
+          
+          alert.addAction(ok)
+          
+          // 알럿이 모달 위로 뜨도록 설정
+          if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+             let topController = windowScene.windows.first?.rootViewController?.presentedViewController ?? windowScene.windows.first?.rootViewController {
+            topController.present(alert, animated: true, completion: nil)
+          } else {
+            self.present(alert, animated: true, completion: nil)
+          }
+        } else {
+          state = true
+          user.setValue(state, forKey: User.Key.state)
+          homeView.modalButton2.isHidden = true
+        }
+      }
+      
+      try container.viewContext.save()
+      
+      checkRideState()
+      print("수정 성공")
+    } catch {
+      print("수정 실패")
+    }  }
+  
+  func checkRideState() {
+    let id: String = UserDefaults.standard.object(forKey: "userName") as? String ?? ""
+    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    do {
+      let request = User.fetchRequest()
+      request.predicate = NSPredicate(format: "id == %@", id)
+      let users = try container.viewContext.fetch(request)
+      for user in users {
+        state = user.state
+      }
+      print("조건 불러오기 성공")
+    } catch {
+      print("조건 불러오기 실패")
+    }
     
-    alert.addAction(ok)
-    //    alert.addAction(cancel)
-    
-    // 알럿이 모달 위로 뜨도록 설정
-    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-       let topController = windowScene.windows.first?.rootViewController?.presentedViewController
-        ?? windowScene.windows.first?.rootViewController {
-      topController.present(alert, animated: true, completion: nil)
+    if state {
+      homeView.modalButton1.setTitle("반납하기", for: .normal)
     } else {
-      self.present(alert, animated: true, completion: nil)
+      homeView.modalButton1.setTitle("대여하기", for: .normal)
     }
   }
 }
@@ -193,4 +256,14 @@ extension HomeController: HomeControllerDelegate {
       }
     }
   }
+}
+
+extension HomeController: UISheetPresentationControllerDelegate {
+  func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+    return false
+  }
+  
+//  func setShouldDismissModal(_ shouldDismiss: Bool) {
+//      self.shouldDismissModal = shouldDismiss
+//  }
 }

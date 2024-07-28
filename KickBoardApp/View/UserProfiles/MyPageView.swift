@@ -109,7 +109,7 @@ class MyPageView: UIView {
     super.init(frame: frame)
     configureUI()
     setConstraints()
-    getData()
+//    getData()
   }
   
   required init?(coder: NSCoder) {
@@ -164,13 +164,14 @@ class MyPageView: UIView {
     }
   }
   
-  private func getData() {
+  func getData() {
     let results = coreDataManager.readCoreData(entityType: User.self)
     for result in results {
       if result.id! == UserDefaults.standard.object(forKey: "userName") as! String {
         nameLabel.text! += result.name ?? ""
         phoneNumber.text! += result.phoneNumber ?? ""
         gender.text! += result.gender ?? ""
+        print(result.state)
         if result.state {
           isUsing.text = "사용중"
           isUsing.textColor = .green

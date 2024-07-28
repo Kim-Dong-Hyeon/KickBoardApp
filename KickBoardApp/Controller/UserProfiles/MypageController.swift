@@ -29,6 +29,11 @@ class MypageController: UIViewController {
     myPageView.logOut.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    myPageView.getData()
+  }
+  
   @objc func logOutTapped() {
     dataManager.deleteUserDefault(key: "userName")
     if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

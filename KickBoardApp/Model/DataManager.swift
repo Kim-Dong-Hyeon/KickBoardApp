@@ -18,6 +18,7 @@ class DataManager: ReadCoreData {
   
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   
+  // CoreData에서 데이터 읽기
   func readCoreData<T: NSManagedObject>(entityType: T.Type) -> [T] {
     let fetchRequest = NSFetchRequest<T>(entityName: String(describing: entityType))
     
@@ -30,10 +31,12 @@ class DataManager: ReadCoreData {
     }
   }
   
+  // UserDefaults에서 데이터 읽기
   func readUserDefault(key: String) -> String? {
     return UserDefaults.standard.object(forKey: key) as? String
   }
   
+  // UserDefaults에서 데이터 삭제
   func deleteUserDefault(key: String) {
     UserDefaults.standard.removeObject(forKey: key)
   }

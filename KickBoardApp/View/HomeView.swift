@@ -14,8 +14,8 @@ class HomeView: UIView {
     let view = UIView()
     return view
   }()
-  
-  let homePlaceNameLabel = {
+
+  let homePlaceNameLabel: UILabel = {
     let label = UILabel()
     label.text = "서울특별시 관악구 신림동"
     label.textColor = .black
@@ -35,7 +35,7 @@ class HomeView: UIView {
     return button
   }()
   
-  private let tapBarBackgroundLabel = {
+  private let tapBarBackgroundLabel: UILabel = {
     let label = UILabel()
     label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
     label.layer.cornerRadius = 5
@@ -43,7 +43,7 @@ class HomeView: UIView {
     return label
   }()
   
-  let modalAddressLabel = {
+  let modalAddressLabel: UILabel = {
     let label = UILabel()
     label.text = "관악구 신림로 330 (신림동)"
     label.textColor = UIColor(named: "KickColor")
@@ -53,7 +53,7 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalKickboardLabel = {
+  private let modalKickboardLabel: UILabel = {
     let label = UILabel()
     label.text = "대여 킥보드 정보"
     label.textColor = .black
@@ -63,7 +63,7 @@ class HomeView: UIView {
     return label
   }()
   
-  private let modalKickboardImage = {
+  private let modalKickboardImage: UIImageView = {
     let image = UIImageView()
     image.contentMode = .scaleAspectFill
     image.image = UIImage(named: "testImage(Kickboard)")
@@ -74,28 +74,28 @@ class HomeView: UIView {
     return image
   }()
   
-  private let modalKickboardData1 = {
+  private let modalKickboardData1: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFont(ofSize: 13)
     label.text = "모델명"
     return label
   }()
   
-  let modalKickboardData2 = {
+  let modalKickboardData2: UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13)
     label.text = "Sparta1234"
     return label
   }()
   
-  private let modalKickboardData3 = {
+  private let modalKickboardData3: UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFont(ofSize: 13)
     label.text = "등록자"
     return label
   }()
   
-  let modalKickboardData4 = {
+  let modalKickboardData4: UILabel = {
     let label = UILabel()
     label.font = UIFont.systemFont(ofSize: 13)
     label.text = "전1성진"
@@ -103,19 +103,19 @@ class HomeView: UIView {
   }()
   
   
-  let modalButton1 = {
+  let modalButton1: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("대여하기", for: .normal)
     return button
   }()
   
-  let modalButton2 = {
+  let modalButton2: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("닫기", for: .normal)
     return button
   }()
   
-  private let modalButtonTemp = {
+  private let modalButtonTemp: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .horizontal
     stackview.backgroundColor = .clear
@@ -124,7 +124,7 @@ class HomeView: UIView {
     return stackview
   }()
   
-  private let modalKickboardDataTemp1 = {
+  private let modalKickboardDataTemp1: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .vertical
     stackview.backgroundColor = .clear
@@ -133,7 +133,7 @@ class HomeView: UIView {
     return stackview
   }()
   
-  private let modalKickboardDataTemp2 = {
+  private let modalKickboardDataTemp2: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .vertical
     stackview.backgroundColor = .clear
@@ -142,7 +142,7 @@ class HomeView: UIView {
     return stackview
   }()
   
-  private let modalKickboardDataTemp3 = {
+  private let modalKickboardDataTemp3: UIStackView = {
     let stackview = UIStackView()
     stackview.axis = .vertical
     stackview.backgroundColor = .clear
@@ -151,17 +151,6 @@ class HomeView: UIView {
     return stackview
   }()
   
-  //모달 테스트용 버튼(추후 지도 핑 클릭 시 오픈되도록 변경)
-  let testButton = {
-    let button = UIButton()
-    button.setTitle("모오달", for: .normal)
-    button.backgroundColor = .blue
-    button.frame = CGRect(x: 70, y: 200, width: 50, height: 50)
-    return button
-  }()
-  
-  //네비게이션바 검색 기능(+캔슬기능)
-//  let serchBar = UISearchController(searchResultsController: nil)
   let halfModal = UIViewController()
   
   override init(frame: CGRect) {
@@ -178,19 +167,12 @@ class HomeView: UIView {
     [
       mapView,
       homePlaceNameLabel,
-      testButton,
       currentLocationButton,
       tapBarBackgroundLabel
     ].forEach { self.addSubview($0) }
     
     mapView.snp.makeConstraints {
       $0.edges.equalToSuperview()
-    }
-    
-    testButton.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.top.equalToSuperview().offset(200)
-      $0.width.height.equalTo(50)
     }
     
     homePlaceNameLabel.snp.makeConstraints {
@@ -241,8 +223,6 @@ class HomeView: UIView {
     [modalKickboardDataTemp1, modalKickboardDataTemp2].forEach {
       modalKickboardDataTemp3.addArrangedSubview($0)
     }
-    
-    
     
     let subviews = [
       modalButtonTemp,

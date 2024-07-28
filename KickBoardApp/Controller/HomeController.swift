@@ -28,12 +28,6 @@ class HomeController: UIViewController {
     
     setupMapController()
     
-    // 테스트버튼(추후 삭제 예정)
-    homeView.testButton.addAction(UIAction { [weak self] _ in
-      guard let self = self else { return }
-      self.setupHalfModal(id: "")
-    }, for: .touchDown)
-    
     mapController.homeDelegate = self
     
     // 위치 업데이트 콜백 설정

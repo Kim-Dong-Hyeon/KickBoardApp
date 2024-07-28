@@ -51,7 +51,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     
     LocationManager.shared.onLocationUpdate = { [weak self] latitude, longitude in
       self?.updateCurrentLocation(latitude: latitude, longitude: longitude)
-      self?.moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
+//      self?.moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
     }
     
     LocationManager.shared.onAuthorizationChange = { [weak self] status in
@@ -171,7 +171,7 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
         let latitude = currentLocation.coordinate.latitude
         let longitude = currentLocation.coordinate.longitude
         updateCurrentLocation(latitude: latitude, longitude: longitude)
-        moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
+//        moveCameraToCurrentLocation(latitude: latitude, longitude: longitude)
       } else {
         LocationManager.shared.startUpdatingLocation()
       }
@@ -208,14 +208,14 @@ class MapController: UIViewController, MapControllerDelegate, GuiEventDelegate, 
     mapController?.activateEngine()
   }
   
-  @objc private func goToCurrentLocation() {
-    if let currentLatitude = LocationManager.shared.currentLocation?.coordinate.latitude,
-       let currentLongitude = LocationManager.shared.currentLocation?.coordinate.longitude {
-      updateCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
-    } else {
-      LocationManager.shared.startUpdatingLocation()
-    }
-  }
+//  @objc private func goToCurrentLocation() {
+//    if let currentLatitude = LocationManager.shared.currentLocation?.coordinate.latitude,
+//       let currentLongitude = LocationManager.shared.currentLocation?.coordinate.longitude {
+//      updateCurrentLocation(latitude: currentLatitude, longitude: currentLongitude)
+//    } else {
+//      LocationManager.shared.startUpdatingLocation()
+//    }
+//  }
   
   func moveCameraToCurrentLocation(latitude: Double, longitude: Double, zoomLevel: Int = 17) {
     let currentPosition = MapPoint(longitude: longitude, latitude: latitude)

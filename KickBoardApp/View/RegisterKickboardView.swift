@@ -24,14 +24,14 @@ class RegisterKickboardView: UIView {
     button.backgroundColor = .clear
     return button
   }()
-  let adressLabel: UILabel = {
+  let addressLabel: UILabel = {
     let label = UILabel()
     label.attributedText = NSAttributedString(string: "위 치", attributes: [.kern: 4.9])
     label.font = .systemFont(ofSize: 15)
     label.textColor = UIColor(named: "KickColor")
     return label
   }()
-  let adressValue: UILabel = {
+  let addressValue: UILabel = {
     let label = UILabel()
     label.text = ""
     label.font = .systemFont(ofSize: 15)
@@ -40,13 +40,12 @@ class RegisterKickboardView: UIView {
     label.lineBreakMode = .byWordWrapping
     return label
   }()
-  let adressStackView: UIStackView = {
+  let addressStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .horizontal
     stackView.spacing = 4
     return stackView
   }()
-  
   let registrantLabel: UILabel = {
     let label = UILabel()
     label.text = "등록자"
@@ -66,7 +65,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 4
     return stackView
   }()
-  
   let modelNameLabel: UILabel = {
     let label = UILabel()
     label.text = "모델명"
@@ -87,7 +85,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 4
     return stackView
   }()
-  
   let rentalPeriodLabel: UILabel = {
     let label = UILabel()
     label.text = "대여 만료일"
@@ -128,13 +125,6 @@ class RegisterKickboardView: UIView {
     datePicker.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     return datePicker
   }()
-//  let rentalStackView2: UIStackView = {
-//    let stackView = UIStackView()
-//    stackView.axis = .vertical
-//    stackView.spacing = 2
-//    return stackView
-//  }()
- 
   let registerButton: AnimationButton = {
     let button = AnimationButton()
     button.setTitle("등록", for: .normal)
@@ -152,7 +142,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 40
     return stackView
   }()
- 
   let registerInformationStackView: UIStackView = {
     let stackView = UIStackView()
     stackView.axis = .vertical
@@ -160,7 +149,6 @@ class RegisterKickboardView: UIView {
     stackView.spacing = 10
     return stackView
   }()
-  
   let PhotoView: UIImageView = {
     let imageView = UIImageView()
     imageView.backgroundColor = .gray
@@ -207,8 +195,8 @@ class RegisterKickboardView: UIView {
   
   func configureUI() {
     [mapView, aStackView, buttonStackView,currentLocationButton].forEach { self.addSubview($0)}
-    [adressLabel, adressValue].forEach { 
-        adressStackView.addArrangedSubview($0) }
+    [addressLabel, addressValue].forEach { 
+        addressStackView.addArrangedSubview($0) }
     [registrantLabel, registrantValue].forEach { registrantStackView.addArrangedSubview($0) }
     [modelNameLabel, modelNameTextField].forEach { modelNameStackView.addArrangedSubview($0) }
     [rentalPeriodLabel ,rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }

@@ -1,13 +1,15 @@
 //
-//  Address.swift
+//  AddressFetcher.swift
 //  KickBoardApp
 //
 //  Created by pc on 7/26/24.
 //
 
 import Foundation
-import Alamofire
 import CoreLocation
+
+import Alamofire
+
 // Kakao API의 응답 JSON 구조에 맞게 모델 정의
 struct AddressResponse: Decodable {
   let documents: [Document]
@@ -18,21 +20,25 @@ struct Document: Decodable {
 }
 
 struct Address: Decodable {
-  let addressName: String
+  let region3DepthName: String
+  let mainAddressNo: String
+  let subAddressNo: String
   enum CodingKeys: String, CodingKey {
-    case addressName = "address_name"
+    case region3DepthName = "region_3depth_name"
+    case mainAddressNo = "main_address_no"
+    case subAddressNo = "sub_address_no"
   }
 }
 
 class AddressFetcher {
-  func fetchAddress(completion: @escaping (String?, Error?) -> Void) {
-    guard let longitude = LocationManager.shared.currentLongitude,
-          let latitude = LocationManager.shared.currentLatitude else {
-      print("위치 정보를 가져올 수 없습니다.")
-      return
-    }
-    
-    guard let kakaoDevApiKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_DEV_API_KEY") as? String else { return }
+  // 현재 위치를 기반으로 주소를 가져오는 메서드
+  func fetchAddress(
+    latitude: Double,
+    longitude: Double,
+    completion: @escaping (String?, Error?) -> Void) {
+    guard let kakaoDevApiKey = Bundle.main.object(
+      forInfoDictionaryKey: "KAKAO_DEV_API_KEY"
+    ) as? String else { return }
     
     let url = "https://dapi.kakao.com/v2/local/geo/coord2address"
     let parameters: [String: Any] = [
@@ -48,8 +54,16 @@ class AddressFetcher {
       .responseDecodable(of: AddressResponse.self) { response in
         switch response.result {
         case .success(let addressResponse):
+          print("-----\(addressResponse)")
           if let firstDocument = addressResponse.documents.first {
-            completion(firstDocument.address.addressName, nil)
+            let address = [
+              firstDocument.address.region3DepthName,
+              " ",
+              firstDocument.address.mainAddressNo,
+              "-",
+              firstDocument.address.subAddressNo
+            ].joined()
+            completion(address, nil)
           }
         case .failure(let error):
           completion(nil, error)

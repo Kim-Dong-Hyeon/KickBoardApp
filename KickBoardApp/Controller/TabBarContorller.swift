@@ -16,7 +16,7 @@ class TabBarContorller: UITabBarController {
     controller.mapController = mapControllerInstance
     let navigationController = UINavigationController(rootViewController: controller)
     navigationController.tabBarItem.image = UIImage(systemName: "house")
-    navigationController.tabBarItem.title = "Home"
+    navigationController.tabBarItem.title = "킥보드 찾기"
     return navigationController
   }()
   
@@ -24,7 +24,8 @@ class TabBarContorller: UITabBarController {
     let controller = RegisterKickboardController()
     controller.mapController = mapControllerInstance
     let navigationController = UINavigationController(rootViewController: (controller))
-    controller.tabBarItem.image = UIImage(systemName: "play.house.fill")
+    navigationController.tabBarItem.image = UIImage(systemName: "person.fill")
+    navigationController.tabBarItem.title = "킥보드 등록"
     controller.view.backgroundColor = .white
     return navigationController
   }()
@@ -32,7 +33,8 @@ class TabBarContorller: UITabBarController {
   lazy var myPageController: UINavigationController = {
     let controller = MypageController()
     let navigationController = UINavigationController(rootViewController: controller)
-    navigationController.tabBarItem.image = UIImage(systemName: "play.house.fill")
+    navigationController.tabBarItem.image = UIImage(systemName: "person.fill")
+    navigationController.tabBarItem.title = "마이페이지"
     return navigationController
   }()
   

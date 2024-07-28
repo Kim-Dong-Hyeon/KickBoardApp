@@ -13,6 +13,9 @@ class LoginController: UIViewController {
   
   var loginView: LoginView!
   
+  // 키보드 표시 여부
+  var isKeyboardVisible = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     configureView()
@@ -117,6 +120,10 @@ class LoginController: UIViewController {
   
   // 키보드 올라오면 View 올려주기 구현
   @objc func keyboardUp(notification:NSNotification) {
+    if isKeyboardVisible { return }
+        
+    isKeyboardVisible = true
+
     if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
       let keyboardRectangle = keyboardFrame.cgRectValue
       
@@ -130,6 +137,10 @@ class LoginController: UIViewController {
   }
   
   @objc func keyboardDown() {
+    if !isKeyboardVisible { return }
+        
+    isKeyboardVisible = false
+    
     self.view.transform = .identity
   }
 }

@@ -146,7 +146,7 @@ class RegisterKickboardView: UIView {
     let stackView = UIStackView()
     stackView.axis = .vertical
     stackView.distribution = .fillEqually
-    stackView.spacing = 10
+    stackView.spacing = 5
     return stackView
   }()
   let PhotoView: UIImageView = {
@@ -202,7 +202,7 @@ class RegisterKickboardView: UIView {
     [rentalPeriodLabel ,rentalPeriodDatePicker].forEach { rentalStackView.addArrangedSubview($0) }
 //    [rentalStackView1, waveLabel, rentalPeriodDatePicker].forEach { rentalStackView2.addArrangedSubview($0) }
     [PhotoView, selectPhotoButton].forEach { addPhotoStackView.addArrangedSubview($0) }
-    [adressStackView, registrantStackView, modelNameStackView, rentalStackView].forEach {
+    [addressStackView, registrantStackView, modelNameStackView, rentalStackView].forEach {
       registerInformationStackView.addArrangedSubview($0)
     }
     [addPhotoStackView, registerInformationStackView].forEach { aStackView.addArrangedSubview($0) }
@@ -229,9 +229,6 @@ class RegisterKickboardView: UIView {
 //    adressLabel.snp.makeConstraints {
 //      $0.trailing.equalTo(registrantLabel.snp.trailing)
 //    }
-    adressValue.snp.makeConstraints {
-      $0.top.equalTo(adressLabel.snp.top)
-    }
     modelNameLabel.snp.makeConstraints {
       $0.width.equalTo(60)
     }

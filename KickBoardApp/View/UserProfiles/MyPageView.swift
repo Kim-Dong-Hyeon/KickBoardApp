@@ -146,10 +146,10 @@ class MyPageView: UIView {
     let results = coreDataManager.readCoreData(entityType: User.self)
     for result in results {
       if result.id! == UserDefaults.standard.object(forKey: "userName") as! String {
-        nameLabel.text! += result.name ?? ""
-        phoneNumber.text! += result.phoneNumber ?? ""
-        gender.text! += result.gender ?? ""
-        print(result.state)
+        nameLabel.text = "이름: \(result.name ?? "")"
+        phoneNumber.text = "전화번호: \(result.phoneNumber ?? "")"
+        gender.text = "성별: \(result.gender ?? "")"
+        
         if result.state {
           isUsing.text = "사용중"
           isUsing.textColor = .green
